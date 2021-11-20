@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class GraphAL<V> implements IGraph<V> {
 	
 	private ArrayList<ArrayList<Vertex<V>>> adjList;
-	private ArrayList<ArrayList<Integer>> weights;
 	private ArrayList<Vertex<V>> vertex;
 	
 	
@@ -18,13 +17,6 @@ public class GraphAL<V> implements IGraph<V> {
 		this.adjList = adjList;
 	}
 	
-	public ArrayList<ArrayList<Integer>> getWeights() {
-		return weights;
-	}
-
-	public void setWeights(ArrayList<ArrayList<Integer>> weights) {
-		this.weights = weights;
-	}
 	
 	public ArrayList<Vertex<V>> getVertex() {
 		return vertex;
