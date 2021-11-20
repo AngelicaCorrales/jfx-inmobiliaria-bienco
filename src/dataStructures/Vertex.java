@@ -4,6 +4,9 @@ public class Vertex<V> {
 	private V value;
 	private char color; //W=white; B=black; G=gray
 	private int distance;
+	private int iDistance;
+	private int fDistance;
+	
 	private Vertex<V> predecesor;
 	
 	public Vertex(V value) {
@@ -42,5 +45,24 @@ public class Vertex<V> {
 		this.value = value;
 	}
 	
+	public int getiDistance() {
+		return iDistance;
+	}
+
+
+	public void setiDistance(int iDistance) {
+		this.iDistance = iDistance;
+	}
+
+
+	public int getfDistance() {
+		return fDistance;
+	}
+
+
+	public void setfDistance(int fDistance) {
+		this.fDistance = fDistance;
+	}
+
 	
 }
