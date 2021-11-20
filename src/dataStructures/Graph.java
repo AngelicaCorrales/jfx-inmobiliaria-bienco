@@ -2,6 +2,9 @@ package dataStructures;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 
 public  class Graph<V> implements IGraph<V> {
 
@@ -11,9 +14,9 @@ public  class Graph<V> implements IGraph<V> {
 	private boolean isWeighted;
 	private boolean isDirected;
 	private int time;
-	ArrayList<Edge<V>> listEdges;
 
-
+	private ArrayList<Edge<V>> listEdges;
+	
 	public Graph(boolean isWeighted, boolean isDirected) {
 		this.isWeighted=isWeighted;
 		this.isDirected=isDirected;
@@ -74,7 +77,9 @@ public  class Graph<V> implements IGraph<V> {
 
 	@Override
 	public void addVertex(V value) {
-		// TODO Auto-generated method stub
+
+		Vertex<V> vertex = new Vertex<V>(value);
+		vertices.add(vertex);
 
 	}
 
@@ -106,8 +111,31 @@ public  class Graph<V> implements IGraph<V> {
 
 	@Override
 	public void dijkstra(Vertex<V> source) {
-		// TODO Auto-generated method stub
 
+		if(isWeighted && !isDirected) {
+			PriorityQueue<Vertex<V>> Q = new PriorityQueue<Vertex<V>>(vertices.size(), new Comparator<Vertex<V>>() {
+				@Override
+				public int compare(Vertex<V> v1, Vertex<V> v2) {
+					if(v2.getDistance()>v1.getDistance()){
+						return -1;
+					}else if(v2.getDistance()==v1.getDistance()){
+						return 0;
+					}else{
+						return 1;
+					}
+				}
+			});
+			for(int k=0; k<vertices.size();k++) {
+				if(vertices.get(k)==source) {
+					vertices.get(k).setDistance(0);
+				}else {
+					vertices.get(k).setDistance(Integer.MAX_VALUE);
+				}
+				vertices.get(k).setPredecesor(null);
+				Q.add(vertices.get(k));
+			}
+		}
+		
 	}
 
 	@Override

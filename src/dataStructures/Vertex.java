@@ -1,6 +1,6 @@
 package dataStructures;
 
-public class Vertex<V> {
+public class Vertex<V> implements Comparable<Vertex<V>>{
 	private V value;
 	private char color; //W=white; B=black; G=gray
 	private int distance;
@@ -16,7 +16,6 @@ public class Vertex<V> {
 		this.value=value;
 		
 	}
-	
 	
 	public char getColor() {
 		return color;
@@ -43,6 +42,12 @@ public class Vertex<V> {
 
 	public void setValue(V value) {
 		this.value = value;
+	}
+
+	@Override
+	public int compareTo(Vertex<V> compareVertex) {
+		
+		return this.distance-compareVertex.getDistance();
 	}
 	
 	public int getiDistance() {
