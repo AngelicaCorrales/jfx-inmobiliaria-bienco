@@ -4,6 +4,9 @@ public class Vertex<V> implements Comparable<Vertex<V>>{
 	private V value;
 	private char color; //W=white; B=black; G=gray
 	private int distance;
+	private int iDistance;
+	private int fDistance;
+	
 	private Vertex<V> predecesor;
 	
 	public Vertex(V value) {
@@ -47,5 +50,24 @@ public class Vertex<V> implements Comparable<Vertex<V>>{
 		return this.distance-compareVertex.getDistance();
 	}
 	
+	public int getiDistance() {
+		return iDistance;
+	}
+
+
+	public void setiDistance(int iDistance) {
+		this.iDistance = iDistance;
+	}
+
+
+	public int getfDistance() {
+		return fDistance;
+	}
+
+
+	public void setfDistance(int fDistance) {
+		this.fDistance = fDistance;
+	}
+
 	
 }

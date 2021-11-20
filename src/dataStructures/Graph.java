@@ -10,17 +10,20 @@ public  class Graph<V> implements IGraph<V> {
 
 	private ArrayList<Vertex<V>> vertices;
 	private ArrayList<Edge<V>> edges;
+	private ArrayList<ArrayList<Integer>> weights;
 	private boolean isWeighted;
 	private boolean isDirected;
-	private ArrayList<Vertex<V>> prev;
-	
-	ArrayList<Edge<V>> listEdges;
+	private int time;
+	private ArrayList<Edge<V>> listEdges;
 	
 	public Graph(boolean isWeighted, boolean isDirected) {
 		 this.isWeighted=isWeighted;
 		 this.isDirected=isDirected;
 		 vertices= new ArrayList<>();
 		 edges= new ArrayList<>();
+		 weights= new ArrayList<>();
+		 
+		
 		
 	}
 	
@@ -58,6 +61,22 @@ public  class Graph<V> implements IGraph<V> {
 	
 	
 
+	public int getTime() {
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+
+	public ArrayList<ArrayList<Integer>> getWeights() {
+		return weights;
+	}
+
+	public void setWeights(ArrayList<ArrayList<Integer>> weights) {
+		this.weights = weights;
+	}
+
 	@Override
 	public void addVertex(V value) {
 		Vertex<V> vertex = new Vertex<V>(value);
@@ -66,14 +85,16 @@ public  class Graph<V> implements IGraph<V> {
 
 	@Override
 	public void addEdge(Vertex<V> u, Vertex<V> v, int weight) {
-		// TODO Auto-generated method stub
+		Edge<V> edge= new Edge<>(u,v,weight);
+		edges.add(edge);
+		
 		Collections.sort(edges);
 	}
 	
 	@Override
 	public void addEdge(Vertex<V> u, Vertex<V> v) {
-		// TODO Auto-generated method stub
-		
+		Edge<V> edge= new Edge<>(u,v,0);
+		edges.add(edge);
 	}
 
 	@Override
@@ -91,7 +112,6 @@ public  class Graph<V> implements IGraph<V> {
 	@Override
 	public void dijkstra(Vertex<V> source) {
 		if(isWeighted && !isDirected) {
-			prev = new ArrayList<Vertex<V>>();
 			PriorityQueue<Vertex<V>> Q = new PriorityQueue<Vertex<V>>(vertices.size(), new Comparator<Vertex<V>>() {
 				@Override
 				public int compare(Vertex<V> v1, Vertex<V> v2) {
@@ -110,7 +130,7 @@ public  class Graph<V> implements IGraph<V> {
 				}else {
 					vertices.get(k).setDistance(Integer.MAX_VALUE);
 				}
-				prev.add(new Vertex<V>(null));
+				vertices.get(k).setPredecesor(null);
 				Q.add(vertices.get(k));
 			}
 		}
@@ -131,13 +151,29 @@ public  class Graph<V> implements IGraph<V> {
 
 	@Override
 	public void dfs() {
-		// TODO Auto-generated method stub
+		for(int i=0;i<vertices.size();i++) {
+			vertices.get(i).setColor('W');
+			vertices.get(i).setPredecesor(null);
+		}
 		
+		time=0;
+		
+		for(int i=0;i<vertices.size();i++) {
+			if(vertices.get(i).getColor()=='W') {
+				dfsVisit(vertices.get(i));
+			}
+			
+		}
+		
+	}
+	
+	public void dfsVisit(Vertex<V> u) {
+		//Needs adjacency vertices
 	}
 
 	@Override
 	public void kruskal() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
