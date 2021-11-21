@@ -3,8 +3,9 @@ package dataStructures;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
-
+import java.util.Queue;
 
 public  class Graph<V> implements IGraph<V> {
 
@@ -16,6 +17,8 @@ public  class Graph<V> implements IGraph<V> {
 	private int time;
 
 	private ArrayList<Edge<V>> listEdges;
+	private PriorityQueue<Vertex<V>> PQ; 
+	private Queue<Vertex<V>> Q;
 	
 	public Graph(boolean isWeighted, boolean isDirected) {
 		this.isWeighted=isWeighted;
@@ -56,8 +59,30 @@ public  class Graph<V> implements IGraph<V> {
 	public void setDirected(boolean isDirected) {
 		this.isDirected = isDirected;
 	}
+	
+	public ArrayList<Edge<V>> getListEdges() {
+		return listEdges;
+	}
 
+	public void setListEdges(ArrayList<Edge<V>> listEdges) {
+		this.listEdges = listEdges;
+	}
 
+	public PriorityQueue<Vertex<V>> getPQ() {
+		return PQ;
+	}
+
+	public void setPQ(PriorityQueue<Vertex<V>> q) {
+		PQ = q;
+	}
+
+	public Queue<Vertex<V>> getQ() {
+		return Q;
+	}
+
+	public void setQ(Queue<Vertex<V>> q) {
+		Q = q;
+	}
 
 	public int getTime() {
 		return time;
@@ -120,18 +145,7 @@ public  class Graph<V> implements IGraph<V> {
 	public void dijkstra(Vertex<V> source) {
 
 		if(isWeighted && !isDirected) {
-			PriorityQueue<Vertex<V>> Q = new PriorityQueue<Vertex<V>>(vertices.size(), new Comparator<Vertex<V>>() {
-				@Override
-				public int compare(Vertex<V> v1, Vertex<V> v2) {
-					if(v2.getDistance()>v1.getDistance()){
-						return -1;
-					}else if(v2.getDistance()==v1.getDistance()){
-						return 0;
-					}else{
-						return 1;
-					}
-				}
-			});
+			PQ = new PriorityQueue<Vertex<V>>(vertices.size());
 			for(int k=0; k<vertices.size();k++) {
 				if(vertices.get(k)==source) {
 					vertices.get(k).setDistance(0);
@@ -139,7 +153,7 @@ public  class Graph<V> implements IGraph<V> {
 					vertices.get(k).setDistance(Integer.MAX_VALUE);
 				}
 				vertices.get(k).setPredecesor(null);
-				Q.add(vertices.get(k));
+				PQ.add(vertices.get(k));
 			}
 		}
 		
@@ -153,8 +167,19 @@ public  class Graph<V> implements IGraph<V> {
 
 	@Override
 	public void bfs(Vertex<V> source) {
-		// TODO Auto-generated method stub
-
+		Q = new LinkedList<>();
+		for(int k=0;k<vertices.size();k++) {
+			if(vertices.get(k)==source) {
+				vertices.get(k).setColor('G');
+				vertices.get(k).setDistance(0);
+				vertices.get(k).setPredecesor(null);
+			}else {
+				vertices.get(k).setColor('W');
+				vertices.get(k).setDistance(Integer.MAX_VALUE);
+				vertices.get(k).setPredecesor(null);
+			}
+		}
+		Q.add(source);
 	}
 
 	@Override

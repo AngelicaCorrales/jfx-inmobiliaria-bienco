@@ -104,6 +104,26 @@ public class GraphAL<V> extends Graph<V> {
 		
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 
@@ -112,8 +132,47 @@ public class GraphAL<V> extends Graph<V> {
 
 
 
+	@Override
+	public void dijkstra(Vertex<V> source) {
+		super.dijkstra(source);
+		while(!super.getPQ().isEmpty()) {
+			Vertex<V> u = super.getPQ().poll();
+			int index=super.getVertices().indexOf(u);
+			for(int k=0;k<adjList.get(index).size();k++) {
+				Vertex<V> v = adjList.get(index).get(k);
+				int length = (u.getDistance())+(v.getDistance());
+				int alt = u.getDistance()+length;
+				if(alt<u.getDistance()) {
+					v.setDistance(alt);
+					v.setPredecesor(u);
+					super.getPQ().remove(v);
+					super.getPQ().add(v);
+				}
+			}
+		}
+	}
 
-
-
+	@Override
+	public void bfs(Vertex<V> source) {
+		super.bfs(source);
+		while(!super.getQ().isEmpty()) {
+			Vertex<V> u = super.getQ().remove();
+			int index=super.getVertices().indexOf(u);
+			for(int k=0;k<adjList.get(index).size();k++) {
+				Vertex<V> v = adjList.get(index).get(k);
+				if(v.getColor()=='W') {
+					v.setColor('G');
+					v.setDistance((u.getDistance())+1);
+					v.setPredecesor(u);
+					super.getQ().add(v);
+				}
+				u.setColor('B');
+			}
+		}
+	}
+	
+	
+	
+	
 
 }
