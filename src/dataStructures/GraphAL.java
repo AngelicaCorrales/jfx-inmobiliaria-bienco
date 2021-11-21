@@ -104,33 +104,6 @@ public class GraphAL<V> extends Graph<V> {
 		
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-
-
-
-
 
 	@Override
 	public void dijkstra(Vertex<V> source) {
@@ -152,6 +125,7 @@ public class GraphAL<V> extends Graph<V> {
 		}
 	}
 
+
 	@Override
 	public void bfs(Vertex<V> source) {
 		super.bfs(source);
@@ -171,9 +145,6 @@ public class GraphAL<V> extends Graph<V> {
 			}
 		}
 	}
-	
-	
-	
-	
+
 
 }
