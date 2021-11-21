@@ -100,13 +100,13 @@ public class GraphAM <V> extends Graph<V> {
 		Vertex<V> u= null;
 		while(!super.getPQ().isEmpty()) {
 			u= super.getPQ().poll();
-			int index=super.getVertices().indexOf(u);
+			int i=super.getVertices().indexOf(u);
 
-			for(int i=0;i<adjMatrix.get(index).size();i++) {
-				if(adjMatrix.get(index).get(i).getColor()=='W' && super.getWeights().get(index).get(i)<adjMatrix.get(index).get(i).getDistance()) {
-					adjMatrix.get(index).get(i).setDistance(super.getWeights().get(index).get(i));
-					super.getPQ().remove(adjMatrix.get(index).get(i));
-					adjMatrix.get(index).get(i).setPredecesor(u);
+			for(int j=0;j<adjMatrix.get(i).size();j++) {
+				if(adjMatrix.get(i).get(j).getValue()!=null && adjMatrix.get(i).get(j).getColor()=='W' && super.getWeights().get(i).get(j)<adjMatrix.get(i).get(j).getDistance()) {
+					adjMatrix.get(i).get(j).setDistance(super.getWeights().get(i).get(j));
+					super.getPQ().remove(adjMatrix.get(i).get(j));
+					adjMatrix.get(i).get(j).setPredecesor(u);
 					
 				}
 			}
