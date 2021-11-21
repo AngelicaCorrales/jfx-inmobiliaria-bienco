@@ -75,6 +75,14 @@ public  class Graph<V> implements IGraph<V> {
 		this.weights = weights;
 	}
 
+	public ArrayList<Edge<V>> getListEdges() {
+		return listEdges;
+	}
+
+	public void setListEdges(ArrayList<Edge<V>> listEdges) {
+		this.listEdges = listEdges;
+	}
+
 	@Override
 	public void addVertex(V value) {
 
@@ -88,7 +96,6 @@ public  class Graph<V> implements IGraph<V> {
 		Edge<V> edge= new Edge<>(u,v,weight);
 		edges.add(edge);
 
-		Collections.sort(edges);
 	}
 
 	@Override
@@ -174,6 +181,7 @@ public  class Graph<V> implements IGraph<V> {
 
 	@Override
 	public void kruskal() {
+		Collections.sort(edges);
 		listEdges= new ArrayList<>();
 
 		for(int i=0; i<vertices.size();i++) {
@@ -207,9 +215,19 @@ public  class Graph<V> implements IGraph<V> {
 	}
 
 	@Override
-	public void prim() {
-		// TODO Auto-generated method stub
-
+	public void prim(Vertex<V> r) {
+		for(int i=0;i<vertices.size();i++) {
+			vertices.get(i).setColor('W');
+			vertices.get(i).setDistance(Integer.MAX_VALUE);
+		}
+		int index=vertices.indexOf(r);
+		
+		vertices.get(index).setDistance(0);
+		vertices.get(index).setPredecesor(null);
+		
+		Q = new PriorityQueue<Vertex<V>>(vertices.size());
+		
+		
 	}
 
 

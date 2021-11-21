@@ -12,7 +12,7 @@ public interface IGraph<V> {
 	public void bfs(Vertex<V> source);
 	public void dfs();
 	public void kruskal();
-	public void prim();
+	public void prim(Vertex<V> r);
 	
 	
 	

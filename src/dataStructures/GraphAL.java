@@ -13,13 +13,6 @@ public class GraphAL<V> extends Graph<V> {
 
 		adjList= new ArrayList<>();
 
-		for(int i=0;i<super.getVertices().size();i++) {
-			adjList.add(new ArrayList<>());
-			if(isWeighted) {
-				super.getWeights().add(new ArrayList<>());
-			}
-		}
-
 	}
 
 
@@ -31,6 +24,17 @@ public class GraphAL<V> extends Graph<V> {
 		this.adjList = adjList;
 	}
 
+	@Override
+	public void addVertex(V value) {
+
+		super.addVertex(value);
+		adjList.add(new ArrayList<>());
+		if(super.isWeighted()) {
+			super.getWeights().add(new ArrayList<>());
+		}
+		
+	}
+	
 	@Override
 	public void addEdge(Vertex<V> u, Vertex<V> v, int weight) {
 		super.addEdge(u, v, weight);
@@ -79,7 +83,26 @@ public class GraphAL<V> extends Graph<V> {
 		u.setfDistance(super.getTime());
 		
 	}
+	@Override
+	public void prim(Vertex<V> r) {
+		super.prim(r);
+		Vertex<V> u= null;
+		while(!super.getQ().isEmpty()) {
+			u= super.getQ().poll();
+			int index=super.getVertices().indexOf(u);
 
+			for(int i=0;i<adjList.get(index).size();i++) {
+				if(adjList.get(index).get(i).getColor()=='W' && super.getWeights().get(index).get(i)<adjList.get(index).get(i).getDistance()) {
+					adjList.get(index).get(i).setDistance(super.getWeights().get(index).get(i));
+					Q.remove(adjList.get(index).get(i));
+					adjList.get(index).get(i).setPredecesor(u);
+					
+				}
+			}
+			u.setColor('B');
+		}
+		
+	}
 
 
 
