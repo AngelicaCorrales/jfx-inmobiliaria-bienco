@@ -98,14 +98,14 @@ public class GraphAM <V> extends Graph<V> {
 	public void prim(Vertex<V> r) {
 		super.prim(r);
 		Vertex<V> u= null;
-		while(!super.getQ().isEmpty()) {
-			u= super.getQ().poll();
+		while(!super.getPQ().isEmpty()) {
+			u= super.getPQ().poll();
 			int index=super.getVertices().indexOf(u);
 
 			for(int i=0;i<adjMatrix.get(index).size();i++) {
 				if(adjMatrix.get(index).get(i).getColor()=='W' && super.getWeights().get(index).get(i)<adjMatrix.get(index).get(i).getDistance()) {
 					adjMatrix.get(index).get(i).setDistance(super.getWeights().get(index).get(i));
-					Q.remove(adjMatrix.get(index).get(i));
+					super.getPQ().remove(adjMatrix.get(index).get(i));
 					adjMatrix.get(index).get(i).setPredecesor(u);
 					
 				}

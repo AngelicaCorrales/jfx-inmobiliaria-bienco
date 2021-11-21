@@ -100,13 +100,7 @@ public  class Graph<V> implements IGraph<V> {
 		this.weights = weights;
 	}
 
-	public ArrayList<Edge<V>> getListEdges() {
-		return listEdges;
-	}
-
-	public void setListEdges(ArrayList<Edge<V>> listEdges) {
-		this.listEdges = listEdges;
-	}
+	
 
 	@Override
 	public void addVertex(V value) {
@@ -250,7 +244,7 @@ public  class Graph<V> implements IGraph<V> {
 		vertices.get(index).setDistance(0);
 		vertices.get(index).setPredecesor(null);
 		
-		Q = new PriorityQueue<Vertex<V>>(vertices.size());
+		PQ = new PriorityQueue<Vertex<V>>(vertices.size());
 		
 		
 	}
