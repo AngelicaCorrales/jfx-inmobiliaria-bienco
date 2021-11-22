@@ -12,7 +12,7 @@ public class GraphAM <V> extends Graph<V> {
 
 		adjMatrix= new ArrayList<>();
 
-		
+
 	}
 
 
@@ -23,7 +23,7 @@ public class GraphAM <V> extends Graph<V> {
 	public void setadjMatrix(ArrayList<ArrayList<Vertex<V>>> adjMatrix) {
 		this.adjMatrix = adjMatrix;
 	}
-	
+
 	@Override
 	public void addVertex(V value) {
 
@@ -32,14 +32,14 @@ public class GraphAM <V> extends Graph<V> {
 		if(super.isWeighted()) {
 			super.getWeights().add(new ArrayList<>());
 		}
-		
+
 		for(int i=0;i<adjMatrix.size();i++) {
 			adjMatrix.get(i).add(new Vertex<>(null));
 			if(super.isWeighted()) {
 				super.getWeights().get(i).add(Integer.MAX_VALUE);
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -49,12 +49,12 @@ public class GraphAM <V> extends Graph<V> {
 		int j=super.getVertices().indexOf(v);
 
 		adjMatrix.get(i).set(j, v);
-		
+
 		super.getWeights().get(i).set(j, weight);
 
 		if(!super.isDirected()) {
 			adjMatrix.get(j).set(i, v);
-			
+
 			super.getWeights().get(j).set(i, weight);
 		}
 	}
@@ -67,10 +67,10 @@ public class GraphAM <V> extends Graph<V> {
 		int j=super.getVertices().indexOf(v);
 
 		adjMatrix.get(i).set(j, v);
-		
+
 		if(!super.isDirected()) {
 			adjMatrix.get(j).set(i, v);
-			
+
 		}
 
 	}
@@ -91,9 +91,9 @@ public class GraphAM <V> extends Graph<V> {
 		u.setColor('B');
 		super.setTime(super.getTime()+1);
 		u.setfDistance(super.getTime());
-		
+
 	}
-	
+
 	@Override
 	public void prim(Vertex<V> r) {
 		super.prim(r);
@@ -107,16 +107,60 @@ public class GraphAM <V> extends Graph<V> {
 					adjMatrix.get(i).get(j).setDistance(super.getWeights().get(i).get(j));
 					super.getPQ().remove(adjMatrix.get(i).get(j));
 					adjMatrix.get(i).get(j).setPredecesor(u);
-					
+
 				}
 			}
 			u.setColor('B');
 		}
-		
+
 	}
 
 
+	@Override
+	public void dijkstra(Vertex<V> source) {
+		super.dijkstra(source);
+		while(!super.getPQ().isEmpty()) {
+			Vertex<V> u = super.getPQ().poll();
+			int i=super.getVertices().indexOf(u);
 
+			for(int j=0;j<adjMatrix.size();j++) {
+				if(adjMatrix.get(i).get(j).getValue()!=null) {
+					Vertex<V> v = adjMatrix.get(i).get(j);
+					int length = (u.getDistance())+(v.getDistance());
+					int alt = u.getDistance()+length;
+					if(alt<u.getDistance()) {
+						v.setDistance(alt);
+						v.setPredecesor(u);
+						super.getPQ().remove(v);
+						super.getPQ().add(v);
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void bfs(Vertex<V> source) {
+		super.bfs(source);
+		while(!super.getQ().isEmpty()) {
+			Vertex<V> u = super.getQ().remove();
+			int i=super.getVertices().indexOf(u);
+
+			for(int j=0;j<adjMatrix.size();j++) {
+				if(adjMatrix.get(i).get(j).getValue()!=null) {
+					Vertex<V> v = adjMatrix.get(i).get(j);
+					if(v.getColor()=='W') {
+						super.getBF().insertNode(v);
+						v.setColor('G');
+						v.setDistance((u.getDistance())+1);
+						v.setPredecesor(u);
+						super.getQ().add(v);
+					}
+					u.setColor('B');
+				}
+			}
+		}
+	}
 
 
 
