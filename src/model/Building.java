@@ -10,8 +10,14 @@ public class Building {
 	private boolean forSale;
 	private String observations;
 	
-	public Building() {
-		
+	public Building(String address, String neighborhood,Zone zone,TypeOfBuilding type, double price, boolean forSale,String observations) {
+		  this.address=address;
+		  this.neighborhood=neighborhood;
+		  this.zone=zone;
+		  this.type=type;
+		  this.price=price;
+		  this.forSale=forSale;
+		  this.observations=observations;
 	}
 
 	public String getAddress() {
