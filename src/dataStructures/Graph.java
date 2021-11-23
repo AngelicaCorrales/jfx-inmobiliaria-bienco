@@ -142,7 +142,7 @@ public  class Graph<V> implements IGraph<V> {
 	public void removeVertex(Vertex<V> u) {
             boolean exit=false;
             for (int i=0;i<vertices.size() && !exit; i++){
-                if (vertices.get(i).getPredecesor()==u){
+                if (vertices.get(i).compareTo(u)==0){
                     vertices.remove(i);
                     exit=true;
                 }

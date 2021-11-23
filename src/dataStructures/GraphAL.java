@@ -64,6 +64,39 @@ public class GraphAL<V> extends Graph<V> {
 		}
 
 	}
+        
+        @Override
+	public void removeVertex(Vertex<V> u) {
+            super.removeVertex(u);
+            int index=super.getVertices().indexOf(u);
+            adjList.get(index);
+            
+            if(super.isWeighted()) {
+                index=super.getWeights().indexOf(u);
+                adjList.get(index).remove(u);
+            }
+            
+            else{
+                adjList.get(index).remove(u);
+            }
+	}
+
+        @Override
+	public void removeEdge(Vertex<V> u, Vertex<V> v) {
+            super.removeEdge(u,v);
+            int index=super.getVertices().indexOf(u);
+            super.getWeights().get(index);
+            
+            if(!super.isDirected()) {
+                index=super.getVertices().indexOf(v);
+                adjList.get(index).remove(u);
+            }
+            
+            else if(super.isWeighted()) {
+                index=super.getWeights().indexOf(v);
+                adjList.get(index).remove(u);
+            }
+	}
 
 	@Override
 	public void dfsVisit(Vertex<V> u) {
@@ -104,6 +137,10 @@ public class GraphAL<V> extends Graph<V> {
 		
 	}
 
+        @Override
+	public void floydWarshall() {
+            super.floydWarshall();
+	}
 
 	@Override
 	public void dijkstra(Vertex<V> source) {
