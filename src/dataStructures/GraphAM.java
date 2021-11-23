@@ -74,6 +74,39 @@ public class GraphAM <V> extends Graph<V> {
 		}
 
 	}
+        
+        @Override
+	public void removeVertex(Vertex<V> u) {
+            super.removeVertex(u);
+            
+            if(super.isWeighted()){
+                int index=super.getWeights().indexOf(u);
+                adjMatrix.get(index).remove(u);
+            }
+            
+            for(int i=0;i<adjMatrix.size();i++){
+                adjMatrix.get(i).remove(i);
+                if(super.isWeighted()){
+                    super.getWeights().get(i).remove(i);
+                }
+            }
+	}
+
+        @Override
+	public void removeEdge(Vertex<V> u, Vertex<V> v) {
+            super.removeEdge(u,v);
+            int i=super.getVertices().indexOf(u);
+            int j=super.getVertices().indexOf(v);
+            
+            adjMatrix.get(i).remove(v);
+            
+            super.getWeights().get(i).remove(j);
+            
+            if(!super.isDirected() && super.isWeighted()) {
+                adjMatrix.get(j).remove(v);
+                super.getWeights().get(j).remove(i);
+            }
+	}
 
 	@Override
 	public void dfsVisit(Vertex<V> u) {
@@ -115,6 +148,10 @@ public class GraphAM <V> extends Graph<V> {
 
 	}
 
+        @Override
+	public void floydWarshall() {
+            super.floydWarshall();
+	}
 
 	@Override
 	public void dijkstra(Vertex<V> source) {
