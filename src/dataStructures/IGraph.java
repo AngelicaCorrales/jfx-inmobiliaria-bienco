@@ -12,7 +12,7 @@ public interface IGraph<V> {
 	public Vertex<V> searchVertex(V value);
 	public Edge<V> searchEdge(Vertex<V> u, Vertex<V> v);
 	public void dijkstra(Vertex<V> source);
-	public void floydWarshall();
+	public int[][] floydWarshall();
 	public void bfs(Vertex<V> source);
 	public void dfs();
 	public void kruskal();

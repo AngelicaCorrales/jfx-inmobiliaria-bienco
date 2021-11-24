@@ -204,7 +204,7 @@ public  class Graph<V> implements IGraph<V> {
 		}
 
 	}
-
+	/*
 	@Override
 	public void floydWarshall() {
 		int size=vertices.size();
@@ -235,6 +235,43 @@ public  class Graph<V> implements IGraph<V> {
 				}
 			}
 		}
+	}
+	*/
+	
+	@Override
+	public int[][] floydWarshall() {
+		int size=vertices.size();
+		int dist[][] = new int[size][size];
+
+		for (int i=0;i<size;i++) {
+			for (int j=0;j<size;j++) {
+				dist[i][j] = Integer.MAX_VALUE;
+			
+			}
+		}
+
+		for (int i = 0; i < size; i++) {
+			dist[i][i] = 0;
+		}
+
+		distWeights(dist);
+		
+		for (int k = 0; k < size; k++) {
+			for (int i = 0; i < size; i++) {
+				for (int j = 0; j < size; j++) {
+					if(dist[i][k] + dist[k][j] < dist[i][j]){
+						dist[i][j] = dist[i][k] + dist[k][j];
+					
+					}
+				}
+			}
+		}
+		
+		return dist;
+	}
+	
+	public void distWeights(int[][] dist) {
+		//needs adjacency 
 	}
 
 	@Override

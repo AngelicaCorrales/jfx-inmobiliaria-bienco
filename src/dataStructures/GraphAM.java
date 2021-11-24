@@ -176,10 +176,7 @@ public class GraphAM <V> extends Graph<V> {
 
 	}
 
-	@Override
-	public void floydWarshall() {
-		super.floydWarshall();
-	}
+	
 
 	@Override
 	public void dijkstra(Vertex<V> source) {
@@ -240,6 +237,15 @@ public class GraphAM <V> extends Graph<V> {
 		}
 	}
 
+	@Override
+	public void distWeights(int[][] dist) {
+		for(int i=0; i<adjMatrix.size();i++) {
+			for(int j=0; j<adjMatrix.size();j++) {
+				dist[i][j]=super.getWeights().get(i).get(j);
+				
+			}
+		}
 
+	}
 
 }

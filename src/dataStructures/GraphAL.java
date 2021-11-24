@@ -34,17 +34,17 @@ public class GraphAL<V> extends Graph<V> {
 		if(super.isWeighted()) {
 			super.getWeights().add(new ArrayList<>());
 		}
-		
+
 	}
-	
+
 	@Override
 	public void addEdge(Vertex<V> u, Vertex<V> v, int weight) throws SimpleGraphException {
-		
+
 		int index=super.getVertices().indexOf(u);
 		if(adjList.get(index).indexOf(v)!=-1) {
 			throw new SimpleGraphException();
 		}
-		
+
 		adjList.get(index).add(v);
 		super.getWeights().get(index).add(weight);
 
@@ -58,10 +58,10 @@ public class GraphAL<V> extends Graph<V> {
 
 	@Override
 	public void addEdge(Vertex<V> u, Vertex<V> v) throws SimpleGraphException {
-		
+
 
 		int index=super.getVertices().indexOf(u);
-		
+
 		if(adjList.get(index).indexOf(v)!=-1) {
 			throw new SimpleGraphException();
 		}
@@ -74,36 +74,36 @@ public class GraphAL<V> extends Graph<V> {
 
 		super.addEdge(u, v);
 	}
-        
-        @Override
+
+	@Override
 	public void removeVertex(Vertex<V> u) {
-            int index=super.getVertices().indexOf(u);
-            adjList.remove(index);
-            
-            if(super.isWeighted()) {
-                super.getWeights().remove(index);
-            }
-            super.removeVertex(u);
+		int index=super.getVertices().indexOf(u);
+		adjList.remove(index);
+
+		if(super.isWeighted()) {
+			super.getWeights().remove(index);
+		}
+		super.removeVertex(u);
 	}
 
-        @Override
+	@Override
 	public void removeEdge(Vertex<V> u, Vertex<V> v) {
-            super.removeEdge(u,v);
-            int index=super.getVertices().indexOf(u);
-            
-            if(adjList.get(index).indexOf(v)!=-1){
-                int i=adjList.get(index).indexOf(v);
-                adjList.get(index).remove(i);
-                super.getWeights().get(index).remove(i);
-            }
-            if(!super.isDirected()){
-                index=super.getVertices().indexOf(v);
-                if(adjList.get(index).indexOf(u)!=-1){
-                    int i=adjList.get(index).indexOf(u);
-                    adjList.get(index).remove(i);
-                    super.getWeights().get(index).remove(i);
-                }
-            }
+		super.removeEdge(u,v);
+		int index=super.getVertices().indexOf(u);
+
+		if(adjList.get(index).indexOf(v)!=-1){
+			int i=adjList.get(index).indexOf(v);
+			adjList.get(index).remove(i);
+			super.getWeights().get(index).remove(i);
+		}
+		if(!super.isDirected()){
+			index=super.getVertices().indexOf(v);
+			if(adjList.get(index).indexOf(u)!=-1){
+				int i=adjList.get(index).indexOf(u);
+				adjList.get(index).remove(i);
+				super.getWeights().get(index).remove(i);
+			}
+		}
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class GraphAL<V> extends Graph<V> {
 		u.setColor('B');
 		super.setTime(super.getTime()+1);
 		u.setfDistance(super.getTime());
-		
+
 	}
 	@Override
 	public void prim(Vertex<V> r) {
@@ -138,19 +138,15 @@ public class GraphAL<V> extends Graph<V> {
 					super.getPQ().remove(adjList.get(index).get(i));
 					super.getPQ().offer(adjList.get(index).get(i));
 					adjList.get(index).get(i).setPredecesor(u);
-					
+
 				}
 			}
 			u.setColor('B');
 		}
-		
+
 	}
 
-        @Override
-	public void floydWarshall() {
-            super.floydWarshall();
-	}
-
+	
 	@Override
 	public void dijkstra(Vertex<V> source) {
 		super.dijkstra(source);
@@ -192,19 +188,30 @@ public class GraphAL<V> extends Graph<V> {
 		}
 	}
 
-	
+
 	@Override
 	public Edge<V> searchEdge(Vertex<V> u, Vertex<V> v) {
 		int iu=super.getVertices().indexOf(u);
-		
+
 		if(adjList.get(iu).indexOf(v)!=-1) {
 
 			return super.searchEdge(u, v);
 		}else {
 			return null;
 		}
-		
-		
+
+
 	}
 
+	@Override
+	public void distWeights(int[][] dist) {
+		for(int i=0; i<adjList.size();i++) {
+			for(int j=0; j<adjList.get(i).size();j++) {
+				int index=super.getVertices().indexOf(adjList.get(i).get(j));
+				dist[i][index]=super.getWeights().get(i).get(j);
+				
+			}
+		}
+
+	}
 }
