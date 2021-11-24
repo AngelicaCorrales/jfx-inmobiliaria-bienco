@@ -824,5 +824,110 @@ public class GraphTest {
 		
 	}
 	
+
+	@Test
+	public void testSearchEdge1() throws SimpleGraphException {
+		setupScenary2();
+		Vertex<Building> u= graph.getVertices().get(1);
+		Vertex<Building> v= graph.getVertices().get(3);
+		
+		Edge<Building> edge= graph.searchEdge(u, v);
+		
+		assertTrue(edge.getScr()==u);
+		assertTrue(edge.getDest()==v);
+		assertTrue(edge.getWeight()==1);
+		
+	}
+
+	@Test
+	public void testSearchEdge2() throws SimpleGraphException {
+		setupScenary4();
+		Vertex<Building> u= graph.getVertices().get(3);
+		Vertex<Building> v= graph.getVertices().get(1);
+		
+		Edge<Building> edge= graph.searchEdge(u, v);
+		
+		assertTrue(edge.getScr()==u);
+		assertTrue(edge.getDest()==v);
+		assertTrue(edge.getWeight()==4);
+		
+	}
+	
+	@Test
+	public void testSearchEdge3() throws SimpleGraphException {
+		setupScenary6();
+		Vertex<Building> u= graph.getVertices().get(1);
+		Vertex<Building> v= graph.getVertices().get(3);
+		
+		Edge<Building> edge= graph.searchEdge(u, v);
+		
+		assertTrue(edge.getScr()==u);
+		assertTrue(edge.getDest()==v);
+		assertTrue(edge.getWeight()==1);
+		
+	}
+	
+	
+	@Test
+	public void testSearchEdge4() throws SimpleGraphException {
+		setupScenary8();
+		Vertex<Building> u= graph.getVertices().get(3);
+		Vertex<Building> v= graph.getVertices().get(1);
+		
+		Edge<Building> edge= graph.searchEdge(u, v);
+		
+		assertTrue(edge.getScr()==u);
+		assertTrue(edge.getDest()==v);
+		assertTrue(edge.getWeight()==4);
+		
+	}
+	
+	@Test
+	public void testSearchEdge5() throws SimpleGraphException {
+		setupScenary2();
+		Vertex<Building> u= graph.getVertices().get(4);
+		Vertex<Building> v= graph.getVertices().get(1);
+		
+		Edge<Building> edge= graph.searchEdge(u, v);
+		
+		assertTrue(edge==null);
+		
+	}
+	
+	@Test
+	public void testSearchEdge6() throws SimpleGraphException {
+		setupScenary6();
+		Vertex<Building> u= graph.getVertices().get(4);
+		Vertex<Building> v= graph.getVertices().get(1);
+		
+		Edge<Building> edge= graph.searchEdge(u, v);
+		
+		assertTrue(edge==null);
+		
+	}
+	
+	@Test
+	public void testSearchEdge7() throws SimpleGraphException {
+		setupScenary4();
+		Vertex<Building> u= graph.getVertices().get(1);
+		Vertex<Building> v= graph.getVertices().get(3);
+		
+		Edge<Building> edge= graph.searchEdge(u, v);
+		
+		assertTrue(edge==null);
+		
+	}
+	
+	@Test
+	public void testSearchEdge8() throws SimpleGraphException {
+		setupScenary8();
+		Vertex<Building> u= graph.getVertices().get(1);
+		Vertex<Building> v= graph.getVertices().get(3);
+		
+		Edge<Building> edge= graph.searchEdge(u, v);
+		
+		assertTrue(edge==null);
+		
+	}
 	
 }
