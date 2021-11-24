@@ -325,20 +325,6 @@ public  class Graph<V> implements IGraph<V> {
 
 	}
 
-	@Override
-	public Vertex<V> searchVertex(V value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
