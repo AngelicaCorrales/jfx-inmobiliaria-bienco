@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import exceptions.SimpleGraphException;
 import model.Building;
 import model.TypeOfBuilding;
 import model.Zone;
@@ -26,7 +27,7 @@ public class GraphTest {
 
 	}
 	
-	public void addEdgesNoDirected() {
+	public void addEdgesNoDirected() throws SimpleGraphException {
 		graph.addEdge(graph.getVertices().get(0), graph.getVertices().get(1), 4);
 		graph.addEdge(graph.getVertices().get(1), graph.getVertices().get(2), 5);
 		graph.addEdge(graph.getVertices().get(2), graph.getVertices().get(3), 8);
@@ -38,7 +39,7 @@ public class GraphTest {
 		graph.addEdge(graph.getVertices().get(2), graph.getVertices().get(5), 6);
 
 	}
-	public void addEdgesDirected() {
+	public void addEdgesDirected() throws SimpleGraphException {
 		graph.addEdge(graph.getVertices().get(0), graph.getVertices().get(2), 2);
 		graph.addEdge(graph.getVertices().get(1), graph.getVertices().get(0), 2);
 		graph.addEdge(graph.getVertices().get(1), graph.getVertices().get(4), 6);
@@ -52,7 +53,7 @@ public class GraphTest {
 	
 	
 	
-	public void setupScenary2() {
+	public void setupScenary2() throws SimpleGraphException {
 		graph= new GraphAL<>(true, false);
 		addVertices();
 		addEdgesNoDirected();
@@ -63,7 +64,7 @@ public class GraphTest {
 		graph= new GraphAL<>(true, true);
 	}
 	
-	public void setupScenary4() {
+	public void setupScenary4() throws SimpleGraphException {
 		graph= new GraphAL<>(true, true);
 		addVertices();
 		addEdgesDirected();
@@ -74,7 +75,7 @@ public class GraphTest {
 		graph= new GraphAM<>(true, false);
 	}
 	
-	public void setupScenary6() {
+	public void setupScenary6() throws SimpleGraphException {
 		graph= new GraphAM<>(true, false);
 		addVertices();
 		addEdgesNoDirected();
@@ -85,7 +86,7 @@ public class GraphTest {
 		graph= new GraphAM<>(true, true);
 	}
 	
-	public void setupScenary8() {
+	public void setupScenary8() throws SimpleGraphException {
 		graph= new GraphAM<>(true, true);
 		addVertices();
 		addEdgesDirected();
@@ -106,7 +107,7 @@ public class GraphTest {
 	
 	@SuppressWarnings("rawtypes")
 	@Test
-	public void testAddVertex2() {
+	public void testAddVertex2() throws SimpleGraphException {
 		setupScenary2();
 		Building objBuilding = new Building("Calle 8B # 2-18", "Vipasa", Zone.NORTE, TypeOfBuilding.OFICINA, 500000.0, false, "Oficina de 200 metros con baño incluido, buena ubicación en zona comercial, se encuentra en un primer piso");
 		graph.addVertex(objBuilding);
@@ -130,7 +131,7 @@ public class GraphTest {
 	
 	@SuppressWarnings("rawtypes")
 	@Test
-	public void testAddVertex4() {
+	public void testAddVertex4() throws SimpleGraphException {
 		setupScenary6();
 		Building objBuilding = new Building("Calle 8B # 2-18", "Vipasa", Zone.NORTE, TypeOfBuilding.OFICINA, 500000.0, false, "Oficina de 200 metros con baño incluido, buena ubicación en zona comercial, se encuentra en un primer piso");
 		graph.addVertex(objBuilding);
@@ -140,14 +141,215 @@ public class GraphTest {
 		assertEquals(graph.getVertices().get(6).getValue().getAddress(), "Calle 8B # 2-18");
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Test
-	public void testAddEdge1() {
-		fail("Not yet implemented");
+	public void testAddEdge1() throws SimpleGraphException {
+		setupScenary2();
+		Vertex<Building> u= graph.getVertices().get(1);
+		Vertex<Building> v= graph.getVertices().get(4);
+		int weight=12;
+		try {
+			graph.addEdge(u, v, weight);
+		} catch (SimpleGraphException e) {
+			fail("SimpleGraphException not expected");
+		}
+		
+		assertTrue(graph.getEdges().get(9).getScr()==u);
+		assertTrue(graph.getEdges().get(9).getDest()==v);
+		assertTrue(graph.getEdges().get(9).getWeight()==weight);
+		
+		assertTrue(((GraphAL<Building>) graph).getAdjList().get(1).get(3)==v);
+		assertTrue(((GraphAL<Building>) graph).getAdjList().get(4).get(3)==u);
+		
+		assertTrue(graph.getWeights().get(1).get(3)==weight);
+		assertTrue(graph.getWeights().get(4).get(3)==weight);
+		
+		
 	}
 	
 	@Test
-	public void testAddEdge1() {
-		fail("Not yet implemented");
+	public void testAddEdge2() throws SimpleGraphException {
+		setupScenary2();
+		Vertex<Building> u= graph.getVertices().get(1);
+		Vertex<Building> v= graph.getVertices().get(3);
+		int weight=3;
+		
+		try {
+			graph.addEdge(u, v, weight);
+		} catch (SimpleGraphException e) {
+			assertTrue(graph.getEdges().size()==9);
+			
+			assertTrue(((GraphAL<Building>) graph).getAdjList().get(1).get(2)==v);
+			assertTrue(((GraphAL<Building>) graph).getAdjList().get(3).get(3)==u);
+			
+			assertTrue(graph.getWeights().get(1).get(2)!=weight);
+			assertTrue(graph.getWeights().get(3).get(3)!=weight);
+			
+		}
+		
+		
 	}
+	
+	@Test
+	public void testAddEdge3() throws SimpleGraphException {
+		setupScenary6();
+		Vertex<Building> u= graph.getVertices().get(1);
+		Vertex<Building> v= graph.getVertices().get(4);
+		int weight=12;
+		try {
+			graph.addEdge(u, v, weight);
+		} catch (SimpleGraphException e) {
+			fail("SimpleGraphException not expected");
+		}
+		
+		assertTrue(graph.getEdges().get(9).getScr()==u);
+		assertTrue(graph.getEdges().get(9).getDest()==v);
+		assertTrue(graph.getEdges().get(9).getWeight()==weight);
+		
+		assertTrue(((GraphAM<Building>) graph).getAdjMatrix().get(1).get(4)==v);
+		assertTrue(((GraphAM<Building>) graph).getAdjMatrix().get(4).get(1)==u);
+		
+		assertTrue(graph.getWeights().get(1).get(4)==weight);
+		assertTrue(graph.getWeights().get(4).get(1)==weight);
+		
+		
+	}
+	
+	@Test
+	public void testAddEdge4() throws SimpleGraphException {
+		setupScenary6();
+		Vertex<Building> u= graph.getVertices().get(1);
+		Vertex<Building> v= graph.getVertices().get(3);
+		int weight=3;
+		
+		try {
+			graph.addEdge(u, v, weight);
+		} catch (SimpleGraphException e) {
+			assertTrue(graph.getEdges().size()==9);
+			
+			assertTrue(((GraphAM<Building>) graph).getAdjMatrix().get(1).get(3)==v);
+			assertTrue(((GraphAM<Building>) graph).getAdjMatrix().get(3).get(1)==u);
+			
+			assertTrue(graph.getWeights().get(1).get(3)!=weight);
+			assertTrue(graph.getWeights().get(3).get(1)!=weight);
+			
+		}
+	}
+	
+	@Test
+	public void testAddEdge5() throws SimpleGraphException {
+		setupScenary4();
+		Vertex<Building> u= graph.getVertices().get(4);
+		Vertex<Building> v= graph.getVertices().get(1);
+		int weight=12;
+		try {
+			graph.addEdge(u, v, weight);
+		} catch (SimpleGraphException e) {
+			fail("SimpleGraphException not expected");
+		}
+		
+		assertTrue(graph.getEdges().get(9).getScr()==u);
+		assertTrue(graph.getEdges().get(9).getDest()==v);
+		assertTrue(graph.getEdges().get(9).getWeight()==weight);
+		
+		assertTrue(((GraphAL<Building>) graph).getAdjList().get(4).get(0)==v);
+				
+		assertTrue(graph.getWeights().get(4).get(0)==weight);
+		assertTrue(graph.getWeights().get(1).get(1)!=weight);
+		
+		
+	}
+	
+	@Test
+	public void testAddEdge6() throws SimpleGraphException {
+		setupScenary2();
+		Vertex<Building> u= graph.getVertices().get(1);
+		Vertex<Building> v= graph.getVertices().get(4);
+		int weight=3;
+		
+		try {
+			graph.addEdge(u, v, weight);
+		} catch (SimpleGraphException e) {
+			assertTrue(graph.getEdges().size()==9);
+			
+			assertTrue(((GraphAL<Building>) graph).getAdjList().get(1).get(1)==v);
+			
+			assertTrue(graph.getWeights().get(1).get(1)!=weight);
+			assertTrue(((GraphAL<Building>) graph).getAdjList().get(4).isEmpty());
+			
+		}
+		
+		
+	}
+	
+	@Test
+	public void testAddEdge7() throws SimpleGraphException {
+		setupScenary8();
+		Vertex<Building> u= graph.getVertices().get(4);
+		Vertex<Building> v= graph.getVertices().get(1);
+		int weight=12;
+		try {
+			graph.addEdge(u, v, weight);
+		} catch (SimpleGraphException e) {
+			fail("SimpleGraphException not expected");
+		}
+		
+		assertTrue(graph.getEdges().get(9).getScr()==u);
+		assertTrue(graph.getEdges().get(9).getDest()==v);
+		assertTrue(graph.getEdges().get(9).getWeight()==weight);
+		
+		assertTrue(((GraphAM<Building>) graph).getAdjMatrix().get(4).get(1)==v);
+		
+		assertTrue(graph.getWeights().get(1).get(4)!=weight);
+		assertTrue(graph.getWeights().get(4).get(1)==weight);
+		
+		
+	}
+	@Test
+	public void testAddEdge8() throws SimpleGraphException {
+		setupScenary8();
+		Vertex<Building> u= graph.getVertices().get(1);
+		Vertex<Building> v= graph.getVertices().get(4);
+		int weight=3;
+		
+		try {
+			graph.addEdge(u, v, weight);
+		} catch (SimpleGraphException e) {
+			assertTrue(graph.getEdges().size()==9);
+			
+			assertTrue(((GraphAM<Building>) graph).getAdjMatrix().get(1).get(4)==v);
+			assertTrue(((GraphAM<Building>) graph).getAdjMatrix().get(4).get(1).getValue()==null);
+			
+			assertTrue(graph.getWeights().get(1).get(4)!=weight);
+			
+		}
+	}
+	
+		
 	
 }
