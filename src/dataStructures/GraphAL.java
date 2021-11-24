@@ -138,6 +138,7 @@ public class GraphAL<V> extends Graph<V> {
 				if(adjList.get(index).get(i).getColor()=='W' && super.getWeights().get(index).get(i)<adjList.get(index).get(i).getDistance()) {
 					adjList.get(index).get(i).setDistance(super.getWeights().get(index).get(i));
 					super.getPQ().remove(adjList.get(index).get(i));
+					super.getPQ().offer(adjList.get(index).get(i));
 					adjList.get(index).get(i).setPredecesor(u);
 					
 				}

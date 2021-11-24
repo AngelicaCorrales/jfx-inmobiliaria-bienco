@@ -518,4 +518,80 @@ public class GraphTest {
 		
 	}
 	
+	@Test
+	public void testPrim1() throws SimpleGraphException {
+		setupScenary2();
+		Vertex<Building> r=graph.getVertices().get(0);
+		
+		graph.prim(r);
+		
+		assertTrue(graph.getVertices().get(0).getDistance()==0);
+		assertTrue(graph.getVertices().get(0).getPredecesor()==null);
+		assertTrue(graph.getVertices().get(0).getColor()=='B');
+		
+		assertTrue(graph.getVertices().get(1).getDistance()==1);
+		assertTrue(graph.getVertices().get(1).getPredecesor()==graph.getVertices().get(3));
+		assertTrue(graph.getVertices().get(1).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(2).getDistance()==5);
+		assertTrue(graph.getVertices().get(2).getPredecesor()==graph.getVertices().get(1));
+		assertTrue(graph.getVertices().get(2).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(3).getDistance()==2);
+		assertTrue(graph.getVertices().get(3).getPredecesor()==graph.getVertices().get(0));
+		assertTrue(graph.getVertices().get(3).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(4).getDistance()==2);
+		assertTrue(graph.getVertices().get(4).getPredecesor()==graph.getVertices().get(2));
+		assertTrue(graph.getVertices().get(4).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(5).getDistance()==3);
+		assertTrue(graph.getVertices().get(5).getPredecesor()==graph.getVertices().get(4));
+		assertTrue(graph.getVertices().get(5).getColor()=='B');
+		
+		
+	}
+	
+	@Test
+	public void testPrim2() throws SimpleGraphException {
+		setupScenary6();
+		Vertex<Building> r=graph.getVertices().get(0);
+		
+		graph.prim(r);
+		
+		assertTrue(graph.getVertices().get(0).getDistance()==0);
+		assertTrue(graph.getVertices().get(0).getPredecesor()==null);
+		assertTrue(graph.getVertices().get(0).getColor()=='B');
+		
+		assertTrue(graph.getVertices().get(1).getDistance()==1);
+		assertTrue(graph.getVertices().get(1).getPredecesor()==graph.getVertices().get(3));
+		assertTrue(graph.getVertices().get(1).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(2).getDistance()==5);
+		assertTrue(graph.getVertices().get(2).getPredecesor()==graph.getVertices().get(1));
+		assertTrue(graph.getVertices().get(2).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(3).getDistance()==2);
+		assertTrue(graph.getVertices().get(3).getPredecesor()==graph.getVertices().get(0));
+		assertTrue(graph.getVertices().get(3).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(4).getDistance()==2);
+		assertTrue(graph.getVertices().get(4).getPredecesor()==graph.getVertices().get(2));
+		assertTrue(graph.getVertices().get(4).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(5).getDistance()==3);
+		assertTrue(graph.getVertices().get(5).getPredecesor()==graph.getVertices().get(4));
+		assertTrue(graph.getVertices().get(5).getColor()=='B');
+		
+		
+	}
+	
 }

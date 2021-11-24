@@ -163,6 +163,7 @@ public class GraphAM <V> extends Graph<V> {
 				if(adjMatrix.get(i).get(j).getValue()!=null && adjMatrix.get(i).get(j).getColor()=='W' && super.getWeights().get(i).get(j)<adjMatrix.get(i).get(j).getDistance()) {
 					adjMatrix.get(i).get(j).setDistance(super.getWeights().get(i).get(j));
 					super.getPQ().remove(adjMatrix.get(i).get(j));
+					super.getPQ().offer(adjMatrix.get(i).get(j));
 					adjMatrix.get(i).get(j).setPredecesor(u);
 
 				}
