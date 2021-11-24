@@ -39,7 +39,15 @@ public class GraphTest {
 
 	}
 	public void addEdgesDirected() {
-		
+		graph.addEdge(graph.getVertices().get(0), graph.getVertices().get(2), 2);
+		graph.addEdge(graph.getVertices().get(1), graph.getVertices().get(0), 2);
+		graph.addEdge(graph.getVertices().get(1), graph.getVertices().get(4), 6);
+		graph.addEdge(graph.getVertices().get(2), graph.getVertices().get(1), 2);
+		graph.addEdge(graph.getVertices().get(2), graph.getVertices().get(4), 3);
+		graph.addEdge(graph.getVertices().get(3), graph.getVertices().get(1), 4);
+		graph.addEdge(graph.getVertices().get(3), graph.getVertices().get(4), 8);
+		graph.addEdge(graph.getVertices().get(5), graph.getVertices().get(5), 10);
+		graph.addEdge(graph.getVertices().get(5), graph.getVertices().get(4), 5);
 	}
 	
 	
@@ -58,7 +66,7 @@ public class GraphTest {
 	public void setupScenary4() {
 		graph= new GraphAL<>(true, true);
 		addVertices();
-		//BUILDINGS!!
+		addEdgesDirected();
 	}
 	
 	
@@ -80,13 +88,66 @@ public class GraphTest {
 	public void setupScenary8() {
 		graph= new GraphAM<>(true, true);
 		addVertices();
+		addEdgesDirected();
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void testAddVertex1() {
+		setupScenary1();
+		Building objBuilding = new Building("Calle 11B # 2-16", "Vipasa", Zone.NORTE, TypeOfBuilding.APARTAMENTO, 2750000.0, false, "Apartamento de 300 metros cuadrados que tiene 2 habitaciones, baño,  comedor, sitio para lavado y un pequeño balcón.");
+		graph.addVertex(objBuilding);
+		assertTrue(graph.getVertices().size()==1);
+		assertFalse(((GraphAL) graph).getAdjList().isEmpty());
+		assertFalse(graph.getWeights().isEmpty());
+		assertEquals(graph.getVertices().get(0).getValue().getAddress(), "Calle 11B # 2-16");
 	}
 	
 	
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void testAddVertex2() {
+		setupScenary2();
+		Building objBuilding = new Building("Calle 8B # 2-18", "Vipasa", Zone.NORTE, TypeOfBuilding.OFICINA, 500000.0, false, "Oficina de 200 metros con baño incluido, buena ubicación en zona comercial, se encuentra en un primer piso");
+		graph.addVertex(objBuilding);
+		assertTrue(graph.getVertices().size()==7);
+		assertEquals(((GraphAL) graph).getAdjList().size(), 7);
+		assertEquals(graph.getWeights().size(), 7);
+		assertEquals(graph.getVertices().get(6).getValue().getAddress(), "Calle 8B # 2-18");
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void testAddVertex3() {
+		setupScenary5();
+		Building objBuilding = new Building("Calle 11B # 2-16", "Vipasa", Zone.NORTE, TypeOfBuilding.APARTAMENTO, 2750000.0, false, "Apartamento de 300 metros cuadrados que tiene 2 habitaciones, baño,  comedor, sitio para lavado y un pequeño balcón.");
+		graph.addVertex(objBuilding);
+		assertTrue(graph.getVertices().size()==1);
+		assertFalse(((GraphAM) graph).getadjMatrix().isEmpty());
+		assertFalse(graph.getWeights().isEmpty());
+		assertEquals(graph.getVertices().get(0).getValue().getAddress(), "Calle 11B # 2-16");
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void testAddVertex4() {
+		setupScenary6();
+		Building objBuilding = new Building("Calle 8B # 2-18", "Vipasa", Zone.NORTE, TypeOfBuilding.OFICINA, 500000.0, false, "Oficina de 200 metros con baño incluido, buena ubicación en zona comercial, se encuentra en un primer piso");
+		graph.addVertex(objBuilding);
+		assertTrue(graph.getVertices().size()==7);
+		assertEquals(((GraphAM) graph).getadjMatrix().size(), 7);
+		assertEquals(graph.getWeights().size(), 7);
+		assertEquals(graph.getVertices().get(6).getValue().getAddress(), "Calle 8B # 2-18");
+	}
 	
 	@Test
 	public void testAddEdge1() {
 		fail("Not yet implemented");
 	}
-
+	
+	@Test
+	public void testAddEdge1() {
+		fail("Not yet implemented");
+	}
+	
 }
