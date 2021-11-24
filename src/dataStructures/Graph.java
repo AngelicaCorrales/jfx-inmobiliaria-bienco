@@ -144,32 +144,38 @@ public  class Graph<V> implements IGraph<V> {
 	public void removeVertex(Vertex<V> u) {
 		boolean exit=false;
 		for (int i=0;i<vertices.size() && !exit; i++){
-			if (vertices.get(i).compareTo(u)==0){
+			if (vertices.get(i)==u){
 				vertices.remove(i);
 				exit=true;
 			}
 		}
+                if(exit){
+                    exit=false;
+                    for(int j=0;j<edges.size() && !exit;j++){
+                        if(edges.get(j).getScr()==u || edges.get(j).getDest()==u){
+                            edges.remove(j);
+                        }
+                    }
+                }
 	}
 
 	@Override
 	public void removeEdge(Vertex<V> u, Vertex<V> v) {
-		boolean exit=false;
-		for (int i=0;i<edges.size() && !exit; i++){
-			if (edges.get(i).getScr()==u && edges.get(i).getDest()==v){
-				if(isWeighted){
-					for(int j=0;j<weights.size() && !exit; j++){
-						edges.remove(i);
-						weights.remove(j);
-						exit=true;
-					}
-				}
-				else{
-					edges.remove(i);
-					exit=true;
-				}
-			}
-		}
-
+            boolean exit=false;
+            for (int i=0;i<edges.size() && !exit; i++){
+                if (edges.get(i).getScr()==u && edges.get(i).getDest()==v){
+                    edges.remove(i);
+                    /*if(isWeighted){
+                        weights.remove(i);
+                        exit=true;
+                    }*/
+                    exit=true;
+                }
+                if(!isDirected && edges.get(i).getScr()==v && edges.get(i).getDest()==u){
+                    edges.remove(i);
+                    exit=true;
+                }
+            }
 	}
 	
 	@Override

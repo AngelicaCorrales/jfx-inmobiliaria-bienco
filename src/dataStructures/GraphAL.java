@@ -77,34 +77,32 @@ public class GraphAL<V> extends Graph<V> {
         
         @Override
 	public void removeVertex(Vertex<V> u) {
-            super.removeVertex(u);
             int index=super.getVertices().indexOf(u);
-            adjList.get(index);
+            adjList.remove(index);
             
             if(super.isWeighted()) {
-                index=super.getWeights().indexOf(u);
-                adjList.get(index).remove(u);
+                super.getWeights().remove(index);
             }
-            
-            else{
-                adjList.get(index).remove(u);
-            }
+            super.removeVertex(u);
 	}
 
         @Override
 	public void removeEdge(Vertex<V> u, Vertex<V> v) {
             super.removeEdge(u,v);
             int index=super.getVertices().indexOf(u);
-            super.getWeights().get(index);
             
-            if(!super.isDirected()) {
-                index=super.getVertices().indexOf(v);
-                adjList.get(index).remove(u);
+            if(adjList.get(index).indexOf(v)!=-1){
+                int i=adjList.get(index).indexOf(v);
+                adjList.get(index).remove(i);
+                super.getWeights().get(index).remove(i);
             }
-            
-            else if(super.isWeighted()) {
-                index=super.getWeights().indexOf(v);
-                adjList.get(index).remove(u);
+            if(!super.isDirected()){
+                index=super.getVertices().indexOf(v);
+                if(adjList.get(index).indexOf(u)!=-1){
+                    int i=adjList.get(index).indexOf(u);
+                    adjList.get(index).remove(i);
+                    super.getWeights().get(index).remove(i);
+                }
             }
 	}
 

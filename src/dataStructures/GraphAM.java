@@ -101,35 +101,38 @@ public class GraphAM <V> extends Graph<V> {
 
 	@Override
 	public void removeVertex(Vertex<V> u) {
-		super.removeVertex(u);
-
-		if(super.isWeighted()){
-			int index=super.getWeights().indexOf(u);
-			adjMatrix.get(index).remove(u);
-		}
-
-		for(int i=0;i<adjMatrix.size();i++){
-			adjMatrix.get(i).remove(i);
-			if(super.isWeighted()){
-				super.getWeights().get(i).remove(i);
-			}
-		}
+            int index=super.getVertices().indexOf(u);
+            adjMatrix.remove(index);
+            
+            if(super.isWeighted()) {
+                super.getWeights().remove(index);
+            }
+            
+            for(int i=0;i<adjMatrix.size();i++){
+                adjMatrix.get(i).remove(index);
+                if(super.isWeighted()) {
+                    super.getWeights().get(i).remove(index);
+                }
+            }
+            super.removeVertex(u);
 	}
 
 	@Override
 	public void removeEdge(Vertex<V> u, Vertex<V> v) {
-		super.removeEdge(u,v);
-		int i=super.getVertices().indexOf(u);
-		int j=super.getVertices().indexOf(v);
-
-		adjMatrix.get(i).remove(v);
-
-		super.getWeights().get(i).remove(j);
-
-		if(!super.isDirected() && super.isWeighted()) {
-			adjMatrix.get(j).remove(v);
-			super.getWeights().get(j).remove(i);
-		}
+            super.removeEdge(u,v);
+            int i=super.getVertices().indexOf(u);
+            int j=super.getVertices().indexOf(v);
+            
+            if(adjMatrix.get(i).get(j).getValue()!=null){
+                adjMatrix.get(i).get(j).setValue(null);
+                super.getWeights().get(i).set(j,Integer.MAX_VALUE);
+            }
+            if(!super.isDirected()){
+                if(adjMatrix.get(j).get(i).getValue()!=null){
+                    adjMatrix.get(j).get(i).setValue(null);
+                    super.getWeights().get(j).set(i,Integer.MAX_VALUE);
+                }
+            }
 	}
 
 	@Override
