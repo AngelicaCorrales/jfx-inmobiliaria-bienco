@@ -22,7 +22,7 @@ public  class Graph<V> implements IGraph<V> {
 	private Queue<Vertex<V>> Q;
 	private BinaryTree<Vertex<V>> BF;
 	private BinaryTree<Vertex<V>> DF;
-	
+
 	public Graph(boolean isWeighted, boolean isDirected) {
 		this.isWeighted=isWeighted;
 		this.isDirected=isDirected;
@@ -62,7 +62,7 @@ public  class Graph<V> implements IGraph<V> {
 	public void setDirected(boolean isDirected) {
 		this.isDirected = isDirected;
 	}
-	
+
 	public ArrayList<Edge<V>> getListEdges() {
 		return listEdges;
 	}
@@ -102,7 +102,7 @@ public  class Graph<V> implements IGraph<V> {
 	public void setWeights(ArrayList<ArrayList<Integer>> weights) {
 		this.weights = weights;
 	}
-	
+
 	public BinaryTree<Vertex<V>> getBF() {
 		return BF;
 	}
@@ -118,7 +118,7 @@ public  class Graph<V> implements IGraph<V> {
 	public void setDF(BinaryTree<Vertex<V>> dF) {
 		DF = dF;
 	}
-	
+
 	@Override
 	public void addVertex(V value) {
 
@@ -142,33 +142,33 @@ public  class Graph<V> implements IGraph<V> {
 
 	@Override
 	public void removeVertex(Vertex<V> u) {
-            boolean exit=false;
-            for (int i=0;i<vertices.size() && !exit; i++){
-                if (vertices.get(i).compareTo(u)==0){
-                    vertices.remove(i);
-                    exit=true;
-                }
-            }
+		boolean exit=false;
+		for (int i=0;i<vertices.size() && !exit; i++){
+			if (vertices.get(i).compareTo(u)==0){
+				vertices.remove(i);
+				exit=true;
+			}
+		}
 	}
 
 	@Override
 	public void removeEdge(Vertex<V> u, Vertex<V> v) {
-            boolean exit=false;
-            for (int i=0;i<edges.size() && !exit; i++){
-                if (edges.get(i).getScr()==u && edges.get(i).getDest()==v){
-                    if(isWeighted){
-                        for(int j=0;j<weights.size() && !exit; j++){
-                            edges.remove(i);
-                            weights.remove(j);
-                            exit=true;
-                        }
-                    }
-                    else{
-                        edges.remove(i);
-                        exit=true;
-                    }
-                }
-            }
+		boolean exit=false;
+		for (int i=0;i<edges.size() && !exit; i++){
+			if (edges.get(i).getScr()==u && edges.get(i).getDest()==v){
+				if(isWeighted){
+					for(int j=0;j<weights.size() && !exit; j++){
+						edges.remove(i);
+						weights.remove(j);
+						exit=true;
+					}
+				}
+				else{
+					edges.remove(i);
+					exit=true;
+				}
+			}
+		}
 
 	}
 
@@ -176,50 +176,47 @@ public  class Graph<V> implements IGraph<V> {
 	public void dijkstra(Vertex<V> source) {
 
 		if(isWeighted && !isDirected) {
-			PQ = new PriorityQueue<Vertex<V>>(vertices.size());
+			PQ = new PriorityQueue<>();
 			for(int k=0; k<vertices.size();k++) {
-				if(vertices.get(k)==source) {
-					vertices.get(k).setDistance(0);
-				}else {
-					vertices.get(k).setDistance(Integer.MAX_VALUE);
-				}
+				vertices.get(k).setDistance(Integer.MAX_VALUE);
 				vertices.get(k).setPredecesor(null);
 				PQ.add(vertices.get(k));
 			}
+			source.setDistance(0);
 		}
-		
+
 	}
 
 	@Override
 	public void floydWarshall() {
-            int size=vertices.size();
-            int visitados[][] = new int[size][size];
-            int dist[][] = new int[size][size];
-            int proximo[][] = new int[size][size];
+		int size=vertices.size();
+		int visitados[][] = new int[size][size];
+		int dist[][] = new int[size][size];
+		int proximo[][] = new int[size][size];
 
-            for (int i=0;i<size;i++) {
-                for (int j=0;j<size;j++) {
-                    dist[i][j] = Integer.MAX_VALUE;
-                    proximo[i][j] = j;
-                    visitados[i][j] = 0;
-                }
-            }
+		for (int i=0;i<size;i++) {
+			for (int j=0;j<size;j++) {
+				dist[i][j] = Integer.MAX_VALUE;
+				proximo[i][j] = j;
+				visitados[i][j] = 0;
+			}
+		}
 
-            for (int i = 0; i < size; i++) {
-                dist[i][i] = 0;
-            }
+		for (int i = 0; i < size; i++) {
+			dist[i][i] = 0;
+		}
 
-            for (int u = 0; u < size; u++) {
-                for (int s = 0; s < size; s++) {
-                    for (int v = 0; v < size; v++) {
-                        if(dist[s][u] + dist[u][v] < dist[s][v] && visitados[s][v] == 0){
-                           dist[s][v] = dist[s][u] + dist[u][v];
-                           proximo[s][v] = u;
-                           visitados[s][v] = 1;
-                        }
-                    }
-                }
-            }
+		for (int u = 0; u < size; u++) {
+			for (int s = 0; s < size; s++) {
+				for (int v = 0; v < size; v++) {
+					if(dist[s][u] + dist[u][v] < dist[s][v] && visitados[s][v] == 0){
+						dist[s][v] = dist[s][u] + dist[u][v];
+						proximo[s][v] = u;
+						visitados[s][v] = 1;
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -306,13 +303,14 @@ public  class Graph<V> implements IGraph<V> {
 			vertices.get(i).setDistance(Integer.MAX_VALUE);
 		}
 		int index=vertices.indexOf(r);
-		
+
 		vertices.get(index).setDistance(0);
 		vertices.get(index).setPredecesor(null);
-		
+
 		PQ = new PriorityQueue<Vertex<V>>(vertices.size());
 		PQ.addAll(vertices);
 		
+
 	}
 
 

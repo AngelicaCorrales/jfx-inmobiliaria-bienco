@@ -161,9 +161,9 @@ public class GraphAL<V> extends Graph<V> {
 			int index=super.getVertices().indexOf(u);
 			for(int k=0;k<adjList.get(index).size();k++) {
 				Vertex<V> v = adjList.get(index).get(k);
-				int length = (u.getDistance())+(v.getDistance());
+				int length = (super.getWeights().get(index).get(k));
 				int alt = u.getDistance()+length;
-				if(alt<u.getDistance()) {
+				if(alt<v.getDistance()) {
 					v.setDistance(alt);
 					v.setPredecesor(u);
 					super.getPQ().remove(v);

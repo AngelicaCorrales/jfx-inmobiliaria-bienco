@@ -92,56 +92,215 @@ public class GraphTest {
 		addEdgesDirected();
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@Test
 	public void testAddVertex1() {
 		setupScenary1();
 		Building objBuilding = new Building("Calle 11B # 2-16", "Vipasa", Zone.NORTE, TypeOfBuilding.APARTAMENTO, 2750000.0, false, "Apartamento de 300 metros cuadrados que tiene 2 habitaciones, baño,  comedor, sitio para lavado y un pequeño balcón.");
 		graph.addVertex(objBuilding);
 		assertTrue(graph.getVertices().size()==1);
-		assertFalse(((GraphAL) graph).getAdjList().isEmpty());
+		assertFalse(((GraphAL<Building>) graph).getAdjList().isEmpty());
 		assertFalse(graph.getWeights().isEmpty());
 		assertEquals(graph.getVertices().get(0).getValue().getAddress(), "Calle 11B # 2-16");
 	}
 	
 	
-	@SuppressWarnings("rawtypes")
 	@Test
 	public void testAddVertex2() throws SimpleGraphException {
 		setupScenary2();
 		Building objBuilding = new Building("Calle 8B # 2-18", "Vipasa", Zone.NORTE, TypeOfBuilding.OFICINA, 500000.0, false, "Oficina de 200 metros con baño incluido, buena ubicación en zona comercial, se encuentra en un primer piso");
 		graph.addVertex(objBuilding);
 		assertTrue(graph.getVertices().size()==7);
-		assertEquals(((GraphAL) graph).getAdjList().size(), 7);
+		assertEquals(((GraphAL<Building>) graph).getAdjList().size(), 7);
 		assertEquals(graph.getWeights().size(), 7);
 		assertEquals(graph.getVertices().get(6).getValue().getAddress(), "Calle 8B # 2-18");
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@Test
 	public void testAddVertex3() {
 		setupScenary5();
 		Building objBuilding = new Building("Calle 11B # 2-16", "Vipasa", Zone.NORTE, TypeOfBuilding.APARTAMENTO, 2750000.0, false, "Apartamento de 300 metros cuadrados que tiene 2 habitaciones, baño,  comedor, sitio para lavado y un pequeño balcón.");
 		graph.addVertex(objBuilding);
 		assertTrue(graph.getVertices().size()==1);
-		assertFalse(((GraphAM) graph).getadjMatrix().isEmpty());
+		assertFalse(((GraphAM <Building>) graph).getAdjMatrix().isEmpty());
 		assertFalse(graph.getWeights().isEmpty());
 		assertEquals(graph.getVertices().get(0).getValue().getAddress(), "Calle 11B # 2-16");
 	}
 	
-	@SuppressWarnings("rawtypes")
+	
 	@Test
 	public void testAddVertex4() throws SimpleGraphException {
 		setupScenary6();
 		Building objBuilding = new Building("Calle 8B # 2-18", "Vipasa", Zone.NORTE, TypeOfBuilding.OFICINA, 500000.0, false, "Oficina de 200 metros con baño incluido, buena ubicación en zona comercial, se encuentra en un primer piso");
 		graph.addVertex(objBuilding);
 		assertTrue(graph.getVertices().size()==7);
-		assertEquals(((GraphAM) graph).getadjMatrix().size(), 7);
+		assertEquals(((GraphAM<Building>) graph).getAdjMatrix().size(), 7);
 		assertEquals(graph.getWeights().size(), 7);
 		assertEquals(graph.getVertices().get(6).getValue().getAddress(), "Calle 8B # 2-18");
 	}
 	
+	@Test
+	public void testDijkstra1() {
+		setupScenary1();
+		Building objBuilding = new Building("Calle 7A # 4-15", "Porvenir", Zone.SUR, TypeOfBuilding.CASA, 205000000.0, true, "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baños, garaje y patio trasero.");
+		Vertex<Building> vertex = new Vertex<>(objBuilding);
+		graph.dijkstra(vertex);
+		assertTrue(graph.getVertices().isEmpty());
+		assertTrue(((GraphAL<Building>)graph).getAdjList().isEmpty());
+	}
 	
+	@Test
+	public void testDijkstra2() throws SimpleGraphException {
+		setupScenary2();
+		graph.dijkstra(graph.getVertices().get(0));
+		assertEquals(graph.getVertices().get(0).getValue().getAddress(), "Calle 4C # 5-29" );
+		assertEquals(graph.getVertices().get(0).getDistance(),0);
+		assertEquals(graph.getVertices().get(0).getPredecesor(), null);
+		assertEquals(graph.getVertices().get(1).getValue().getAddress(),"Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(1).getDistance(), 3);
+		assertEquals(graph.getVertices().get(1).getPredecesor().getValue().getAddress(), "Calle 3A # 5-29");
+		assertEquals(graph.getVertices().get(2).getValue().getAddress(), "Calle 7A # 4-15");
+		assertEquals(graph.getVertices().get(2).getDistance(),8);
+		assertEquals(graph.getVertices().get(2).getPredecesor().getValue().getAddress(), "Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(3).getValue().getAddress(), "Calle 3A # 5-29");
+		assertEquals(graph.getVertices().get(3).getDistance(),2);
+		assertEquals(graph.getVertices().get(3).getPredecesor().getValue().getAddress(), "Calle 4C # 5-29");
+		assertEquals(graph.getVertices().get(4).getValue().getAddress(),"Calle 9B # 8-19");
+		assertEquals(graph.getVertices().get(4).getDistance(),10);
+		assertEquals(graph.getVertices().get(4).getPredecesor().getValue().getAddress(),"Calle 7A # 4-15");
+		assertEquals(graph.getVertices().get(5).getValue().getAddress(),"Calle 11B # 2-16");
+		assertEquals(graph.getVertices().get(5).getDistance(),13);
+		assertEquals(graph.getVertices().get(5).getPredecesor().getValue().getAddress(),"Calle 9B # 8-19");
+	}
+	
+	@Test
+	public void testDijkstra3() {
+		setupScenary5();
+		Building objBuilding = new Building("Calle 7A # 4-15", "Porvenir", Zone.SUR, TypeOfBuilding.CASA, 205000000.0, true, "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baños, garaje y patio trasero.");
+		Vertex<Building> vertex = new Vertex<>(objBuilding);
+		graph.dijkstra(vertex);
+		assertTrue(graph.getVertices().isEmpty());
+		assertTrue(((GraphAM<Building>)graph).getAdjMatrix().isEmpty());
+	}
+	
+	@Test
+	public void testDijkstra4() throws SimpleGraphException {
+		setupScenary6();
+		graph.dijkstra(graph.getVertices().get(0));
+		assertEquals(graph.getVertices().get(0).getValue().getAddress(), "Calle 4C # 5-29" );
+		assertEquals(graph.getVertices().get(0).getDistance(),0);
+		assertEquals(graph.getVertices().get(0).getPredecesor(), null);
+		assertEquals(graph.getVertices().get(1).getValue().getAddress(),"Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(1).getDistance(), 3);
+		assertEquals(graph.getVertices().get(1).getPredecesor().getValue().getAddress(), "Calle 3A # 5-29");
+		assertEquals(graph.getVertices().get(2).getValue().getAddress(), "Calle 7A # 4-15");
+		assertEquals(graph.getVertices().get(2).getDistance(),8);
+		assertEquals(graph.getVertices().get(2).getPredecesor().getValue().getAddress(), "Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(3).getValue().getAddress(), "Calle 3A # 5-29");
+		assertEquals(graph.getVertices().get(3).getDistance(),2);
+		assertEquals(graph.getVertices().get(3).getPredecesor().getValue().getAddress(), "Calle 4C # 5-29");
+		assertEquals(graph.getVertices().get(4).getValue().getAddress(),"Calle 9B # 8-19");
+		assertEquals(graph.getVertices().get(4).getDistance(),10);
+		assertEquals(graph.getVertices().get(4).getPredecesor().getValue().getAddress(),"Calle 7A # 4-15");
+		assertEquals(graph.getVertices().get(5).getValue().getAddress(),"Calle 11B # 2-16");
+		assertEquals(graph.getVertices().get(5).getDistance(),13);
+		assertEquals(graph.getVertices().get(5).getPredecesor().getValue().getAddress(),"Calle 9B # 8-19");
+	}
+	
+	@Test
+	public void testBfs1() throws SimpleGraphException {
+		setupScenary2();
+		graph.bfs(graph.getVertices().get(0));
+		assertEquals(graph.getVertices().get(0).getValue().getAddress(), "Calle 4C # 5-29" );
+		assertEquals(graph.getVertices().get(0).getDistance(),0);
+		assertEquals(graph.getVertices().get(0).getPredecesor(), null);
+		assertEquals(graph.getVertices().get(1).getValue().getAddress(),"Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(1).getDistance(), 1);
+		assertEquals(graph.getVertices().get(1).getPredecesor().getValue().getAddress(), "Calle 4C # 5-29");
+		assertEquals(graph.getVertices().get(2).getValue().getAddress(), "Calle 7A # 4-15");
+		assertEquals(graph.getVertices().get(2).getDistance(),2);
+		assertEquals(graph.getVertices().get(2).getPredecesor().getValue().getAddress(), "Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(3).getValue().getAddress(), "Calle 3A # 5-29");
+		assertEquals(graph.getVertices().get(3).getDistance(),1);
+		assertEquals(graph.getVertices().get(3).getPredecesor().getValue().getAddress(), "Calle 4C # 5-29");
+		assertEquals(graph.getVertices().get(4).getValue().getAddress(),"Calle 9B # 8-19");
+		assertEquals(graph.getVertices().get(4).getDistance(),2);
+		assertEquals(graph.getVertices().get(4).getPredecesor().getValue().getAddress(),"Calle 3A # 5-29");
+		assertEquals(graph.getVertices().get(5).getValue().getAddress(),"Calle 11B # 2-16");
+		assertEquals(graph.getVertices().get(5).getDistance(),3);
+		assertEquals(graph.getVertices().get(5).getPredecesor().getValue().getAddress(),"Calle 7A # 4-15");
+	}
+	
+	@Test
+	public void testBfs2() throws SimpleGraphException {
+		setupScenary6();
+		graph.bfs(graph.getVertices().get(0));
+		assertEquals(graph.getVertices().get(0).getValue().getAddress(), "Calle 4C # 5-29" );
+		assertEquals(graph.getVertices().get(0).getDistance(),0);
+		assertEquals(graph.getVertices().get(0).getPredecesor(), null);
+		assertEquals(graph.getVertices().get(1).getValue().getAddress(),"Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(1).getDistance(), 1);
+		assertEquals(graph.getVertices().get(1).getPredecesor().getValue().getAddress(), "Calle 4C # 5-29");
+		assertEquals(graph.getVertices().get(2).getValue().getAddress(), "Calle 7A # 4-15");
+		assertEquals(graph.getVertices().get(2).getDistance(),2);
+		assertEquals(graph.getVertices().get(2).getPredecesor().getValue().getAddress(), "Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(3).getValue().getAddress(), "Calle 3A # 5-29");
+		assertEquals(graph.getVertices().get(3).getDistance(),1);
+		assertEquals(graph.getVertices().get(3).getPredecesor().getValue().getAddress(), "Calle 4C # 5-29");
+		assertEquals(graph.getVertices().get(4).getValue().getAddress(),"Calle 9B # 8-19");
+		assertEquals(graph.getVertices().get(4).getiDistance(),2);
+		assertEquals(graph.getVertices().get(4).getPredecesor().getValue().getAddress(),"Calle 3A # 5-29");
+		assertEquals(graph.getVertices().get(5).getValue().getAddress(),"Calle 11B # 2-16");
+		assertEquals(graph.getVertices().get(5).getDistance(),3);
+		assertEquals(graph.getVertices().get(5).getPredecesor().getValue().getAddress(),"Calle 7A # 4-15");
+	}
+	
+	@Test
+	public void testBfs3() throws SimpleGraphException {
+		setupScenary4();
+		graph.bfs(graph.getVertices().get(5));
+		assertEquals(graph.getVertices().get(0).getValue().getAddress(), "Calle 4C # 5-29" );
+		assertEquals(graph.getVertices().get(0).getDistance(),3);
+		assertEquals(graph.getVertices().get(0).getPredecesor(), "Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(1).getValue().getAddress(),"Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(1).getDistance(), 2);
+		assertEquals(graph.getVertices().get(1).getPredecesor().getValue().getAddress(), "Calle 7A # 4-15");
+		assertEquals(graph.getVertices().get(2).getValue().getAddress(), "Calle 7A # 4-15");
+		assertEquals(graph.getVertices().get(2).getDistance(),1);
+		assertEquals(graph.getVertices().get(2).getPredecesor().getValue().getAddress(),"Calle 11B # 2-16" );
+		assertEquals(graph.getVertices().get(3).getValue().getAddress(), "Calle 3A # 5-29");
+		assertEquals(graph.getVertices().get(3).getDistance(),4);
+		assertEquals(graph.getVertices().get(3).getPredecesor().getValue().getAddress(), "Calle 4C # 5-29");
+		assertEquals(graph.getVertices().get(4).getValue().getAddress(),"Calle 9B # 8-19");
+		assertEquals(graph.getVertices().get(4).getiDistance(),1);
+		assertEquals(graph.getVertices().get(4).getPredecesor().getValue().getAddress(),"Calle 11B # 2-16");
+		assertEquals(graph.getVertices().get(5).getValue().getAddress(),"Calle 11B # 2-16");
+		assertEquals(graph.getVertices().get(5).getDistance(),0);
+		assertEquals(graph.getVertices().get(5).getPredecesor().getValue().getAddress(),null);
+	}
+	
+	@Test
+	public void testBfs4() throws SimpleGraphException {
+		setupScenary8();
+		graph.bfs(graph.getVertices().get(5));
+		assertEquals(graph.getVertices().get(0).getValue().getAddress(), "Calle 4C # 5-29" );
+		assertEquals(graph.getVertices().get(0).getDistance(),3);
+		assertEquals(graph.getVertices().get(0).getPredecesor(), "Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(1).getValue().getAddress(),"Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(1).getDistance(), 2);
+		assertEquals(graph.getVertices().get(1).getPredecesor().getValue().getAddress(), "Calle 7A # 4-15");
+		assertEquals(graph.getVertices().get(2).getValue().getAddress(), "Calle 7A # 4-15");
+		assertEquals(graph.getVertices().get(2).getDistance(),1);
+		assertEquals(graph.getVertices().get(2).getPredecesor().getValue().getAddress(),"Calle 11B # 2-16" );
+		assertEquals(graph.getVertices().get(3).getValue().getAddress(), "Calle 3A # 5-29");
+		assertEquals(graph.getVertices().get(3).getDistance(),4);
+		assertEquals(graph.getVertices().get(3).getPredecesor().getValue().getAddress(), "Calle 4C # 5-29");
+		assertEquals(graph.getVertices().get(4).getValue().getAddress(),"Calle 9B # 8-19");
+		assertEquals(graph.getVertices().get(4).getiDistance(),1);
+		assertEquals(graph.getVertices().get(4).getPredecesor().getValue().getAddress(),"Calle 11B # 2-16");
+		assertEquals(graph.getVertices().get(5).getValue().getAddress(),"Calle 11B # 2-16");
+		assertEquals(graph.getVertices().get(5).getDistance(),0);
+		assertEquals(graph.getVertices().get(5).getPredecesor().getValue().getAddress(),null);
+	}
 	
 	
 	
@@ -433,6 +592,7 @@ public class GraphTest {
 		
 		
 	}
+	
 	@Test
 	public void testDFS3() throws SimpleGraphException {
 		setupScenary4();
@@ -471,10 +631,7 @@ public class GraphTest {
 		assertTrue(graph.getVertices().get(5).getfDistance()==12);
 		assertTrue(graph.getVertices().get(5).getPredecesor()==null);
 		assertTrue(graph.getVertices().get(5).getColor()=='B');
-		
-		
 	}
-	
 	
 	@Test
 	public void testDFS4() throws SimpleGraphException {
@@ -514,8 +671,6 @@ public class GraphTest {
 		assertTrue(graph.getVertices().get(5).getfDistance()==12);
 		assertTrue(graph.getVertices().get(5).getPredecesor()==null);
 		assertTrue(graph.getVertices().get(5).getColor()=='B');
-		
-		
 	}
 	
 	@Test

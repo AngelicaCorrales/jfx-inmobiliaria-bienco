@@ -184,13 +184,12 @@ public class GraphAM <V> extends Graph<V> {
 		while(!super.getPQ().isEmpty()) {
 			Vertex<V> u = super.getPQ().poll();
 			int i=super.getVertices().indexOf(u);
-
 			for(int j=0;j<adjMatrix.size();j++) {
 				if(adjMatrix.get(i).get(j).getValue()!=null) {
 					Vertex<V> v = adjMatrix.get(i).get(j);
-					int length = (u.getDistance())+(v.getDistance());
+					int length = (super.getWeights().get(i).get(j));
 					int alt = u.getDistance()+length;
-					if(alt<u.getDistance()) {
+					if(alt<v.getDistance()) {
 						v.setDistance(alt);
 						v.setPredecesor(u);
 						super.getPQ().remove(v);
