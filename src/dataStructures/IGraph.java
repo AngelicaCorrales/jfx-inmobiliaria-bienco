@@ -9,6 +9,7 @@ public interface IGraph<V> {
 	public void addEdge(Vertex<V> u, Vertex<V> v) throws SimpleGraphException;
 	public void removeVertex(Vertex<V> u);
 	public void removeEdge(Vertex<V> u, Vertex<V> v);
+	public Vertex<V> searchVertex(V value);
 	public void dijkstra(Vertex<V> source);
 	public void floydWarshall();
 	public void bfs(Vertex<V> source);

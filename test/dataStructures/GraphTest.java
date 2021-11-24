@@ -247,7 +247,7 @@ public class GraphTest {
 		assertEquals(graph.getVertices().get(3).getDistance(),1);
 		assertEquals(graph.getVertices().get(3).getPredecesor().getValue().getAddress(), "Calle 4C # 5-29");
 		assertEquals(graph.getVertices().get(4).getValue().getAddress(),"Calle 9B # 8-19");
-		assertEquals(graph.getVertices().get(4).getiDistance(),2);
+		assertEquals(graph.getVertices().get(4).getDistance(),2);
 		assertEquals(graph.getVertices().get(4).getPredecesor().getValue().getAddress(),"Calle 3A # 5-29");
 		assertEquals(graph.getVertices().get(5).getValue().getAddress(),"Calle 11B # 2-16");
 		assertEquals(graph.getVertices().get(5).getDistance(),3);
@@ -260,7 +260,7 @@ public class GraphTest {
 		graph.bfs(graph.getVertices().get(5));
 		assertEquals(graph.getVertices().get(0).getValue().getAddress(), "Calle 4C # 5-29" );
 		assertEquals(graph.getVertices().get(0).getDistance(),3);
-		assertEquals(graph.getVertices().get(0).getPredecesor(), "Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(0).getPredecesor().getValue().getAddress(), "Calle 5B # 3-10");
 		assertEquals(graph.getVertices().get(1).getValue().getAddress(),"Calle 5B # 3-10");
 		assertEquals(graph.getVertices().get(1).getDistance(), 2);
 		assertEquals(graph.getVertices().get(1).getPredecesor().getValue().getAddress(), "Calle 7A # 4-15");
@@ -271,11 +271,11 @@ public class GraphTest {
 		assertEquals(graph.getVertices().get(3).getDistance(),4);
 		assertEquals(graph.getVertices().get(3).getPredecesor().getValue().getAddress(), "Calle 4C # 5-29");
 		assertEquals(graph.getVertices().get(4).getValue().getAddress(),"Calle 9B # 8-19");
-		assertEquals(graph.getVertices().get(4).getiDistance(),1);
+		assertEquals(graph.getVertices().get(4).getDistance(),1);
 		assertEquals(graph.getVertices().get(4).getPredecesor().getValue().getAddress(),"Calle 11B # 2-16");
 		assertEquals(graph.getVertices().get(5).getValue().getAddress(),"Calle 11B # 2-16");
 		assertEquals(graph.getVertices().get(5).getDistance(),0);
-		assertEquals(graph.getVertices().get(5).getPredecesor().getValue().getAddress(),null);
+		assertEquals(graph.getVertices().get(5).getPredecesor(),null);
 	}
 	
 	@Test
@@ -284,7 +284,7 @@ public class GraphTest {
 		graph.bfs(graph.getVertices().get(5));
 		assertEquals(graph.getVertices().get(0).getValue().getAddress(), "Calle 4C # 5-29" );
 		assertEquals(graph.getVertices().get(0).getDistance(),3);
-		assertEquals(graph.getVertices().get(0).getPredecesor(), "Calle 5B # 3-10");
+		assertEquals(graph.getVertices().get(0).getPredecesor().getValue().getAddress(), "Calle 5B # 3-10");
 		assertEquals(graph.getVertices().get(1).getValue().getAddress(),"Calle 5B # 3-10");
 		assertEquals(graph.getVertices().get(1).getDistance(), 2);
 		assertEquals(graph.getVertices().get(1).getPredecesor().getValue().getAddress(), "Calle 7A # 4-15");
@@ -295,11 +295,11 @@ public class GraphTest {
 		assertEquals(graph.getVertices().get(3).getDistance(),4);
 		assertEquals(graph.getVertices().get(3).getPredecesor().getValue().getAddress(), "Calle 4C # 5-29");
 		assertEquals(graph.getVertices().get(4).getValue().getAddress(),"Calle 9B # 8-19");
-		assertEquals(graph.getVertices().get(4).getiDistance(),1);
+		assertEquals(graph.getVertices().get(4).getDistance(),1);
 		assertEquals(graph.getVertices().get(4).getPredecesor().getValue().getAddress(),"Calle 11B # 2-16");
 		assertEquals(graph.getVertices().get(5).getValue().getAddress(),"Calle 11B # 2-16");
 		assertEquals(graph.getVertices().get(5).getDistance(),0);
-		assertEquals(graph.getVertices().get(5).getPredecesor().getValue().getAddress(),null);
+		assertEquals(graph.getVertices().get(5).getPredecesor(),null);
 	}
 	
 	
