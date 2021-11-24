@@ -171,6 +171,18 @@ public  class Graph<V> implements IGraph<V> {
 		}
 
 	}
+	
+	@Override
+	public Vertex<V> searchVertex(V value){
+		Vertex<V> v = null;
+		for(int k=0; k<vertices.size();k++) {
+			if(vertices.get(k).getValue()==value) {
+				v = vertices.get(k);
+			}
+		}
+		return v;
+	}
+	
 
 	@Override
 	public void dijkstra(Vertex<V> source) {

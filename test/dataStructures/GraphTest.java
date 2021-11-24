@@ -302,8 +302,25 @@ public class GraphTest {
 		assertEquals(graph.getVertices().get(5).getPredecesor(),null);
 	}
 	
+	@Test
+	public void testsearchVertex1() {
+		setupScenary1();
+		Building b = new Building("Calle 7A # 4-15", "Vipasa", Zone.NORTE, TypeOfBuilding.CASA, 205000000, true, "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baños, garaje y patio trasero.");
+		assertEquals(graph.searchVertex(b), null);
+	}
 	
-	
+	@Test
+	public void testsearchVertex2() throws SimpleGraphException {
+		setupScenary2();
+		Vertex<Building> v = graph.searchVertex(graph.getVertices().get(2).getValue());
+		assertEquals(v.getValue().getAddress(), "Calle 7A # 4-15");
+		assertEquals(v.getValue().getNeighborhood(), "Vipasa");
+		assertEquals(v.getValue().getZone(), Zone.NORTE);
+		assertEquals(v.getValue().getType(), TypeOfBuilding.CASA);
+		assertEquals(v.getValue().getPrice(), 205000000.0);
+		assertTrue(v.getValue().isForSale());
+		assertEquals(v.getValue().getObservations(), "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baños, garaje y patio trasero.");
+	}
 	
 	
 	
