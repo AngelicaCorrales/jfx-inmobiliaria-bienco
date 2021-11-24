@@ -308,7 +308,8 @@ public  class Graph<V> implements IGraph<V> {
 		vertices.get(index).setPredecesor(null);
 
 		PQ = new PriorityQueue<Vertex<V>>(vertices.size());
-
+		PQ.addAll(vertices);
+		
 
 	}
 
