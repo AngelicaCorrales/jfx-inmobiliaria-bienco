@@ -40,14 +40,14 @@ public class GraphTest {
 
 	}
 	public void addEdgesDirected() throws SimpleGraphException {
-		graph.addEdge(graph.getVertices().get(0), graph.getVertices().get(2), 2);
+		graph.addEdge(graph.getVertices().get(0), graph.getVertices().get(3), 2);
 		graph.addEdge(graph.getVertices().get(1), graph.getVertices().get(0), 2);
 		graph.addEdge(graph.getVertices().get(1), graph.getVertices().get(4), 6);
 		graph.addEdge(graph.getVertices().get(2), graph.getVertices().get(1), 2);
 		graph.addEdge(graph.getVertices().get(2), graph.getVertices().get(4), 3);
 		graph.addEdge(graph.getVertices().get(3), graph.getVertices().get(1), 4);
 		graph.addEdge(graph.getVertices().get(3), graph.getVertices().get(4), 8);
-		graph.addEdge(graph.getVertices().get(5), graph.getVertices().get(5), 10);
+		graph.addEdge(graph.getVertices().get(5), graph.getVertices().get(2), 10);
 		graph.addEdge(graph.getVertices().get(5), graph.getVertices().get(4), 5);
 	}
 	
@@ -350,6 +350,172 @@ public class GraphTest {
 		}
 	}
 	
+	@Test
+	public void testDFS1() throws SimpleGraphException {
+		setupScenary2();
+		graph.dfs();
 		
+		assertTrue(graph.getVertices().get(0).getiDistance()==1);
+		assertTrue(graph.getVertices().get(0).getfDistance()==12);
+		assertTrue(graph.getVertices().get(0).getPredecesor()==null);
+		assertTrue(graph.getVertices().get(0).getColor()=='B');
+		
+		assertTrue(graph.getVertices().get(1).getiDistance()==2);
+		assertTrue(graph.getVertices().get(1).getfDistance()==11);
+		assertTrue(graph.getVertices().get(1).getPredecesor()==graph.getVertices().get(0));
+		assertTrue(graph.getVertices().get(1).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(2).getiDistance()==3);
+		assertTrue(graph.getVertices().get(2).getfDistance()==10);
+		assertTrue(graph.getVertices().get(2).getPredecesor()==graph.getVertices().get(1));
+		assertTrue(graph.getVertices().get(2).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(3).getiDistance()==4);
+		assertTrue(graph.getVertices().get(3).getfDistance()==9);
+		assertTrue(graph.getVertices().get(3).getPredecesor()==graph.getVertices().get(2));
+		assertTrue(graph.getVertices().get(3).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(4).getiDistance()==5);
+		assertTrue(graph.getVertices().get(4).getfDistance()==8);
+		assertTrue(graph.getVertices().get(4).getPredecesor()==graph.getVertices().get(3));
+		assertTrue(graph.getVertices().get(4).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(5).getiDistance()==6);
+		assertTrue(graph.getVertices().get(5).getfDistance()==7);
+		assertTrue(graph.getVertices().get(5).getPredecesor()==graph.getVertices().get(4));
+		assertTrue(graph.getVertices().get(5).getColor()=='B');
+		
+		
+	}
+	
+	@Test
+	public void testDFS2() throws SimpleGraphException {
+		setupScenary6();
+		graph.dfs();
+		
+		assertTrue(graph.getVertices().get(0).getiDistance()==1);
+		assertTrue(graph.getVertices().get(0).getfDistance()==12);
+		assertTrue(graph.getVertices().get(0).getPredecesor()==null);
+		assertTrue(graph.getVertices().get(0).getColor()=='B');
+		
+		assertTrue(graph.getVertices().get(1).getiDistance()==2);
+		assertTrue(graph.getVertices().get(1).getfDistance()==11);
+		assertTrue(graph.getVertices().get(1).getPredecesor()==graph.getVertices().get(0));
+		assertTrue(graph.getVertices().get(1).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(2).getiDistance()==3);
+		assertTrue(graph.getVertices().get(2).getfDistance()==10);
+		assertTrue(graph.getVertices().get(2).getPredecesor()==graph.getVertices().get(1));
+		assertTrue(graph.getVertices().get(2).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(3).getiDistance()==4);
+		assertTrue(graph.getVertices().get(3).getfDistance()==9);
+		assertTrue(graph.getVertices().get(3).getPredecesor()==graph.getVertices().get(2));
+		assertTrue(graph.getVertices().get(3).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(4).getiDistance()==5);
+		assertTrue(graph.getVertices().get(4).getfDistance()==8);
+		assertTrue(graph.getVertices().get(4).getPredecesor()==graph.getVertices().get(3));
+		assertTrue(graph.getVertices().get(4).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(5).getiDistance()==6);
+		assertTrue(graph.getVertices().get(5).getfDistance()==7);
+		assertTrue(graph.getVertices().get(5).getPredecesor()==graph.getVertices().get(4));
+		assertTrue(graph.getVertices().get(5).getColor()=='B');
+		
+		
+	}
+	@Test
+	public void testDFS3() throws SimpleGraphException {
+		setupScenary4();
+		graph.dfs();
+		
+		assertTrue(graph.getVertices().get(0).getiDistance()==1);
+		assertTrue(graph.getVertices().get(0).getfDistance()==8);
+		assertTrue(graph.getVertices().get(0).getPredecesor()==null);
+		assertTrue(graph.getVertices().get(0).getColor()=='B');
+		
+		assertTrue(graph.getVertices().get(1).getiDistance()==3);
+		assertTrue(graph.getVertices().get(1).getfDistance()==6);
+		assertTrue(graph.getVertices().get(1).getPredecesor()==graph.getVertices().get(3));
+		assertTrue(graph.getVertices().get(1).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(2).getiDistance()==9);
+		assertTrue(graph.getVertices().get(2).getfDistance()==10);
+		assertTrue(graph.getVertices().get(2).getPredecesor()==null);
+		assertTrue(graph.getVertices().get(2).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(3).getiDistance()==2);
+		assertTrue(graph.getVertices().get(3).getfDistance()==7);
+		assertTrue(graph.getVertices().get(3).getPredecesor()==graph.getVertices().get(0));
+		assertTrue(graph.getVertices().get(3).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(4).getiDistance()==4);
+		assertTrue(graph.getVertices().get(4).getfDistance()==5);
+		assertTrue(graph.getVertices().get(4).getPredecesor()==graph.getVertices().get(1));
+		assertTrue(graph.getVertices().get(4).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(5).getiDistance()==11);
+		assertTrue(graph.getVertices().get(5).getfDistance()==12);
+		assertTrue(graph.getVertices().get(5).getPredecesor()==null);
+		assertTrue(graph.getVertices().get(5).getColor()=='B');
+		
+		
+	}
+	
+	
+	@Test
+	public void testDFS4() throws SimpleGraphException {
+		setupScenary8();
+		graph.dfs();
+		
+		assertTrue(graph.getVertices().get(0).getiDistance()==1);
+		assertTrue(graph.getVertices().get(0).getfDistance()==8);
+		assertTrue(graph.getVertices().get(0).getPredecesor()==null);
+		assertTrue(graph.getVertices().get(0).getColor()=='B');
+		
+		assertTrue(graph.getVertices().get(1).getiDistance()==3);
+		assertTrue(graph.getVertices().get(1).getfDistance()==6);
+		assertTrue(graph.getVertices().get(1).getPredecesor()==graph.getVertices().get(3));
+		assertTrue(graph.getVertices().get(1).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(2).getiDistance()==9);
+		assertTrue(graph.getVertices().get(2).getfDistance()==10);
+		assertTrue(graph.getVertices().get(2).getPredecesor()==null);
+		assertTrue(graph.getVertices().get(2).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(3).getiDistance()==2);
+		assertTrue(graph.getVertices().get(3).getfDistance()==7);
+		assertTrue(graph.getVertices().get(3).getPredecesor()==graph.getVertices().get(0));
+		assertTrue(graph.getVertices().get(3).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(4).getiDistance()==4);
+		assertTrue(graph.getVertices().get(4).getfDistance()==5);
+		assertTrue(graph.getVertices().get(4).getPredecesor()==graph.getVertices().get(1));
+		assertTrue(graph.getVertices().get(4).getColor()=='B');
+		
+		
+		assertTrue(graph.getVertices().get(5).getiDistance()==11);
+		assertTrue(graph.getVertices().get(5).getfDistance()==12);
+		assertTrue(graph.getVertices().get(5).getPredecesor()==null);
+		assertTrue(graph.getVertices().get(5).getColor()=='B');
+		
+		
+	}
 	
 }
