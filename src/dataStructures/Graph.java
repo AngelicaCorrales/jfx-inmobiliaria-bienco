@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+import exceptions.SimpleGraphException;
+
 public  class Graph<V> implements IGraph<V> {
 
 	private ArrayList<Vertex<V>> vertices;
@@ -126,14 +128,14 @@ public  class Graph<V> implements IGraph<V> {
 	}
 
 	@Override
-	public void addEdge(Vertex<V> u, Vertex<V> v, int weight) {
+	public void addEdge(Vertex<V> u, Vertex<V> v, int weight) throws SimpleGraphException {
 		Edge<V> edge= new Edge<>(u,v,weight);
 		edges.add(edge);
 
 	}
 
 	@Override
-	public void addEdge(Vertex<V> u, Vertex<V> v) {
+	public void addEdge(Vertex<V> u, Vertex<V> v) throws SimpleGraphException {
 		Edge<V> edge= new Edge<>(u,v,0);
 		edges.add(edge);
 	}

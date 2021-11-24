@@ -2,6 +2,8 @@ package dataStructures;
 
 import java.util.ArrayList;
 
+import exceptions.SimpleGraphException;
+
 
 public class GraphAL<V> extends Graph<V> {
 
@@ -36,10 +38,13 @@ public class GraphAL<V> extends Graph<V> {
 	}
 	
 	@Override
-	public void addEdge(Vertex<V> u, Vertex<V> v, int weight) {
-		super.addEdge(u, v, weight);
+	public void addEdge(Vertex<V> u, Vertex<V> v, int weight) throws SimpleGraphException {
+		
 		int index=super.getVertices().indexOf(u);
-
+		if(adjList.get(index).indexOf(v)!=-1) {
+			throw new SimpleGraphException();
+		}
+		
 		adjList.get(index).add(v);
 		super.getWeights().get(index).add(weight);
 
@@ -48,14 +53,18 @@ public class GraphAL<V> extends Graph<V> {
 			adjList.get(index).add(u);
 			super.getWeights().get(index).add(weight);
 		}
+		super.addEdge(u, v, weight);
 	}
 
 	@Override
-	public void addEdge(Vertex<V> u, Vertex<V> v) {
-		super.addEdge(u, v);
+	public void addEdge(Vertex<V> u, Vertex<V> v) throws SimpleGraphException {
+		
 
 		int index=super.getVertices().indexOf(u);
-
+		
+		if(adjList.get(index).indexOf(v)!=-1) {
+			throw new SimpleGraphException();
+		}
 		adjList.get(index).add(v);
 
 		if(!super.isDirected()) {
@@ -63,6 +72,7 @@ public class GraphAL<V> extends Graph<V> {
 			adjList.get(index).add(u);
 		}
 
+		super.addEdge(u, v);
 	}
         
         @Override

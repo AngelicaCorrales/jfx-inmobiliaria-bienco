@@ -2,6 +2,8 @@ package dataStructures;
 
 import java.util.ArrayList;
 
+import exceptions.SimpleGraphException;
+
 public class GraphAM <V> extends Graph<V> {
 
 	private ArrayList<ArrayList<Vertex<V>>> adjMatrix;
@@ -16,11 +18,11 @@ public class GraphAM <V> extends Graph<V> {
 	}
 
 
-	public ArrayList<ArrayList<Vertex<V>>> getadjMatrix() {
+	public ArrayList<ArrayList<Vertex<V>>> getAdjMatrix() {
 		return adjMatrix;
 	}
 
-	public void setadjMatrix(ArrayList<ArrayList<Vertex<V>>> adjMatrix) {
+	public void setAdjMatrix(ArrayList<ArrayList<Vertex<V>>> adjMatrix) {
 		this.adjMatrix = adjMatrix;
 	}
 
@@ -33,79 +35,101 @@ public class GraphAM <V> extends Graph<V> {
 			super.getWeights().add(new ArrayList<>());
 		}
 
-		for(int i=0;i<adjMatrix.size();i++) {
+
+		for(int i=0;i<adjMatrix.size()-1;i++) {
+
 			adjMatrix.get(i).add(new Vertex<>(null));
 			if(super.isWeighted()) {
 				super.getWeights().get(i).add(Integer.MAX_VALUE);
 			}
 		}
 
+		for(int i=0;i<adjMatrix.size();i++) {
+
+			adjMatrix.get(adjMatrix.size()-1).add(new Vertex<>(null));
+			if(super.isWeighted()) {
+				super.getWeights().get(adjMatrix.size()-1).add(Integer.MAX_VALUE);
+			}
+		}
+
 	}
 
 	@Override
-	public void addEdge(Vertex<V> u, Vertex<V> v, int weight) {
-		super.addEdge(u, v, weight);
+	public void addEdge(Vertex<V> u, Vertex<V> v, int weight) throws SimpleGraphException {
+
+
+
 		int i=super.getVertices().indexOf(u);
 		int j=super.getVertices().indexOf(v);
+
+		if(adjMatrix.get(i).get(j).getValue()!=null) {
+			throw new SimpleGraphException();
+		}
 
 		adjMatrix.get(i).set(j, v);
 
 		super.getWeights().get(i).set(j, weight);
 
 		if(!super.isDirected()) {
-			adjMatrix.get(j).set(i, v);
+			adjMatrix.get(j).set(i, u);
 
 			super.getWeights().get(j).set(i, weight);
 		}
+		super.addEdge(u, v, weight);
 	}
 
 	@Override
-	public void addEdge(Vertex<V> u, Vertex<V> v) {
-		super.addEdge(u, v);
+	public void addEdge(Vertex<V> u, Vertex<V> v) throws SimpleGraphException {
+		
 
 		int i=super.getVertices().indexOf(u);
 		int j=super.getVertices().indexOf(v);
 
+		if(adjMatrix.get(i).get(j).getValue()!=null) {
+			throw new SimpleGraphException();
+		}
+
+
 		adjMatrix.get(i).set(j, v);
 
 		if(!super.isDirected()) {
-			adjMatrix.get(j).set(i, v);
+			adjMatrix.get(j).set(i, u);
 
 		}
-
+		super.addEdge(u, v);
 	}
-        
-        @Override
+
+	@Override
 	public void removeVertex(Vertex<V> u) {
-            super.removeVertex(u);
-            
-            if(super.isWeighted()){
-                int index=super.getWeights().indexOf(u);
-                adjMatrix.get(index).remove(u);
-            }
-            
-            for(int i=0;i<adjMatrix.size();i++){
-                adjMatrix.get(i).remove(i);
-                if(super.isWeighted()){
-                    super.getWeights().get(i).remove(i);
-                }
-            }
+		super.removeVertex(u);
+
+		if(super.isWeighted()){
+			int index=super.getWeights().indexOf(u);
+			adjMatrix.get(index).remove(u);
+		}
+
+		for(int i=0;i<adjMatrix.size();i++){
+			adjMatrix.get(i).remove(i);
+			if(super.isWeighted()){
+				super.getWeights().get(i).remove(i);
+			}
+		}
 	}
 
-        @Override
+	@Override
 	public void removeEdge(Vertex<V> u, Vertex<V> v) {
-            super.removeEdge(u,v);
-            int i=super.getVertices().indexOf(u);
-            int j=super.getVertices().indexOf(v);
-            
-            adjMatrix.get(i).remove(v);
-            
-            super.getWeights().get(i).remove(j);
-            
-            if(!super.isDirected() && super.isWeighted()) {
-                adjMatrix.get(j).remove(v);
-                super.getWeights().get(j).remove(i);
-            }
+		super.removeEdge(u,v);
+		int i=super.getVertices().indexOf(u);
+		int j=super.getVertices().indexOf(v);
+
+		adjMatrix.get(i).remove(v);
+
+		super.getWeights().get(i).remove(j);
+
+		if(!super.isDirected() && super.isWeighted()) {
+			adjMatrix.get(j).remove(v);
+			super.getWeights().get(j).remove(i);
+		}
 	}
 
 	@Override
@@ -148,9 +172,9 @@ public class GraphAM <V> extends Graph<V> {
 
 	}
 
-        @Override
+	@Override
 	public void floydWarshall() {
-            super.floydWarshall();
+		super.floydWarshall();
 	}
 
 	@Override
