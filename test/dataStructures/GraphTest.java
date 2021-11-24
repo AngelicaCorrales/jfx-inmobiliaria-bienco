@@ -749,4 +749,63 @@ public class GraphTest {
 		
 	}
 	
+	@Test
+	public void testKruskal1() throws SimpleGraphException {
+		setupScenary2();
+		
+		graph.kruskal();
+		
+		assertTrue(graph.getListEdges().get(0).getScr()==graph.getVertices().get(1));
+		assertTrue(graph.getListEdges().get(0).getDest()==graph.getVertices().get(3));
+		assertTrue(graph.getListEdges().get(0).getWeight()==1);
+		
+		assertTrue(graph.getListEdges().get(1).getScr()==graph.getVertices().get(0));
+		assertTrue(graph.getListEdges().get(1).getDest()==graph.getVertices().get(3));
+		assertTrue(graph.getListEdges().get(1).getWeight()==2);
+	
+		assertTrue(graph.getListEdges().get(2).getScr()==graph.getVertices().get(2));
+		assertTrue(graph.getListEdges().get(2).getDest()==graph.getVertices().get(4));
+		assertTrue(graph.getListEdges().get(2).getWeight()==2);
+
+		assertTrue(graph.getListEdges().get(3).getScr()==graph.getVertices().get(4));
+		assertTrue(graph.getListEdges().get(3).getDest()==graph.getVertices().get(5));
+		assertTrue(graph.getListEdges().get(3).getWeight()==3);
+		
+		assertTrue(graph.getListEdges().get(4).getScr()==graph.getVertices().get(1));
+		assertTrue(graph.getListEdges().get(4).getDest()==graph.getVertices().get(2));
+		assertTrue(graph.getListEdges().get(4).getWeight()==5);
+		
+		
+	}
+	
+	@Test
+	public void testKruskal2() throws SimpleGraphException {
+		setupScenary6();
+		
+		graph.kruskal();
+		
+		assertTrue(graph.getListEdges().get(0).getScr()==graph.getVertices().get(1));
+		assertTrue(graph.getListEdges().get(0).getDest()==graph.getVertices().get(3));
+		assertTrue(graph.getListEdges().get(0).getWeight()==1);
+		
+		assertTrue(graph.getListEdges().get(1).getScr()==graph.getVertices().get(0));
+		assertTrue(graph.getListEdges().get(1).getDest()==graph.getVertices().get(3));
+		assertTrue(graph.getListEdges().get(1).getWeight()==2);
+	
+		assertTrue(graph.getListEdges().get(2).getScr()==graph.getVertices().get(2));
+		assertTrue(graph.getListEdges().get(2).getDest()==graph.getVertices().get(4));
+		assertTrue(graph.getListEdges().get(2).getWeight()==2);
+
+		assertTrue(graph.getListEdges().get(3).getScr()==graph.getVertices().get(4));
+		assertTrue(graph.getListEdges().get(3).getDest()==graph.getVertices().get(5));
+		assertTrue(graph.getListEdges().get(3).getWeight()==3);
+		
+		assertTrue(graph.getListEdges().get(4).getScr()==graph.getVertices().get(1));
+		assertTrue(graph.getListEdges().get(4).getDest()==graph.getVertices().get(2));
+		assertTrue(graph.getListEdges().get(4).getWeight()==5);
+		
+		
+	}
+	
+	
 }
