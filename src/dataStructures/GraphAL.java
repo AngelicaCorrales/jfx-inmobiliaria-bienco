@@ -194,5 +194,19 @@ public class GraphAL<V> extends Graph<V> {
 		}
 	}
 
+	
+	@Override
+	public Edge<V> searchEdge(Vertex<V> u, Vertex<V> v) {
+		int iu=super.getVertices().indexOf(u);
+		
+		if(adjList.get(iu).indexOf(v)!=-1) {
+
+			return super.searchEdge(u, v);
+		}else {
+			return null;
+		}
+		
+		
+	}
 
 }

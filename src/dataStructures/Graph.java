@@ -313,6 +313,45 @@ public  class Graph<V> implements IGraph<V> {
 
 	}
 
+	@Override
+	public Vertex<V> searchVertex(V value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public Edge<V> searchEdge(Vertex<V> u, Vertex<V> v) {
+		boolean exit= false;
+		Edge<V> edge=null;
+		for(int i=0; i<edges.size() && !exit;i++) {
+			
+			if(edges.get(i).getScr()==u && edges.get(i).getDest()==v) {
+				edge=edges.get(i);
+				exit=true;
+			}
+			
+			if(!isDirected && edges.get(i).getScr()==v && edges.get(i).getDest()==u) {
+				edge=edges.get(i);
+				exit=true;
+			}
+			
+		}
+		return edge;
+	}
+
 
 
 

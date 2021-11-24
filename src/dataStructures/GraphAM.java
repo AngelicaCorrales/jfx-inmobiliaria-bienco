@@ -223,6 +223,19 @@ public class GraphAM <V> extends Graph<V> {
 		}
 	}
 
+	
+	@Override
+	public Edge<V> searchEdge(Vertex<V> u, Vertex<V> v) {
+		int iu=super.getVertices().indexOf(u);
+		int iv=super.getVertices().indexOf(v);
+		
+		if(adjMatrix.get(iu).get(iv).getValue()!=null) {
+
+			return super.searchEdge(u, v);
+		}else {
+			return null;
+		}
+	}
 
 
 

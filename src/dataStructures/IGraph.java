@@ -10,6 +10,7 @@ public interface IGraph<V> {
 	public void removeVertex(Vertex<V> u);
 	public void removeEdge(Vertex<V> u, Vertex<V> v);
 	public Vertex<V> searchVertex(V value);
+	public Edge<V> searchEdge(Vertex<V> u, Vertex<V> v);
 	public void dijkstra(Vertex<V> source);
 	public void floydWarshall();
 	public void bfs(Vertex<V> source);
