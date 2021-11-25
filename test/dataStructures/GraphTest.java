@@ -1,14 +1,13 @@
 package dataStructures;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
 import exceptions.SimpleGraphException;
 import model.Building;
 import model.TypeOfBuilding;
 import model.Zone;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
-import static junit.framework.TestCase.fail;
-import org.junit.Test;
 
 public class GraphTest {
 
