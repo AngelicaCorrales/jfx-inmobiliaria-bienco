@@ -40,7 +40,7 @@ public class GraphAM <V> extends Graph<V> {
 
 			adjMatrix.get(i).add(new Vertex<>(null));
 			if(super.isWeighted()) {
-				super.getWeights().get(i).add(Integer.MAX_VALUE);
+				super.getWeights().get(i).add(Integer.MAX_VALUE/2);
 			}
 		}
 
@@ -48,7 +48,7 @@ public class GraphAM <V> extends Graph<V> {
 
 			adjMatrix.get(adjMatrix.size()-1).add(new Vertex<>(null));
 			if(super.isWeighted()) {
-				super.getWeights().get(adjMatrix.size()-1).add(Integer.MAX_VALUE);
+				super.getWeights().get(adjMatrix.size()-1).add(Integer.MAX_VALUE/2);
 			}
 		}
 
@@ -125,12 +125,12 @@ public class GraphAM <V> extends Graph<V> {
             
             if(adjMatrix.get(i).get(j).getValue()!=null){
                 adjMatrix.get(i).get(j).setValue(null);
-                super.getWeights().get(i).set(j,Integer.MAX_VALUE);
+                super.getWeights().get(i).set(j,Integer.MAX_VALUE/2);
             }
             if(!super.isDirected()){
                 if(adjMatrix.get(j).get(i).getValue()!=null){
                     adjMatrix.get(j).get(i).setValue(null);
-                    super.getWeights().get(j).set(i,Integer.MAX_VALUE);
+                    super.getWeights().get(j).set(i,Integer.MAX_VALUE/2);
                 }
             }
 	}
@@ -241,7 +241,9 @@ public class GraphAM <V> extends Graph<V> {
 	public void distWeights(int[][] dist) {
 		for(int i=0; i<adjMatrix.size();i++) {
 			for(int j=0; j<adjMatrix.size();j++) {
-				dist[i][j]=super.getWeights().get(i).get(j);
+				if(i!=j) {
+					dist[i][j]=super.getWeights().get(i).get(j);
+				}
 				
 			}
 		}

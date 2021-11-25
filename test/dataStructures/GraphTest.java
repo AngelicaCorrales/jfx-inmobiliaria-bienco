@@ -962,4 +962,107 @@ public class GraphTest {
 		assertEquals(((GraphAM<Building>) graph).getAdjMatrix().size(), 5);
 	}
 
+	@Test
+	public void testFloydWarshall1() throws SimpleGraphException{
+		setupScenary2();
+		int[][] dist= graph.floydWarshall();
+		
+		String fw= "";
+		
+		for(int i=0;i<graph.getVertices().size();i++) {
+			for(int j=0;j<graph.getVertices().size();j++) {
+				fw+=dist[i][j]+" ";
+			}
+			fw+="\n";
+		}
+		
+		String expected=
+				  "0 3 8 2 10 13 \n"
+				+ "3 0 5 1 7 10 \n"
+				+ "8 5 0 6 2 5 \n"
+				+ "2 1 6 0 8 11 \n"
+				+ "10 7 2 8 0 3 \n"
+				+ "13 10 5 11 3 0 \n";
+		
+		assertEquals(fw,expected);
+		
+	}
+	
+	@Test
+	public void testFloydWarshall2() throws SimpleGraphException{
+		setupScenary4();
+		int[][] dist= graph.floydWarshall();
+		
+		String fw= "";
+		
+		for(int i=0;i<graph.getVertices().size();i++) {
+			for(int j=0;j<graph.getVertices().size();j++) {
+				fw+=dist[i][j]+" ";
+			}
+			fw+="\n";
+		}
+		int infinity=Integer.MAX_VALUE/2;
+		String expected=
+				  "0 6 "+infinity+" 2 10 "+infinity+" \n"
+				+ "2 0 "+infinity+" 4 6 "+infinity+" \n"
+				+ "4 2 0 6 3 "+infinity+" \n"
+				+ "6 4 "+infinity+" 0 8 "+infinity+" \n"
+				+ ""+infinity+" "+infinity+" "+infinity+" "+infinity+" 0 "+infinity+" \n"
+				+ "14 12 10 16 5 0 \n";
+		
+		assertEquals(fw,expected);
+		
+	}
+	
+	@Test
+	public void testFloydWarshall3() throws SimpleGraphException{
+		setupScenary6();
+		int[][] dist= graph.floydWarshall();
+		
+		String fw= "";
+		
+		for(int i=0;i<graph.getVertices().size();i++) {
+			for(int j=0;j<graph.getVertices().size();j++) {
+				fw+=dist[i][j]+" ";
+			}
+			fw+="\n";
+		}
+		
+		String expected=
+				  "0 3 8 2 10 13 \n"
+				+ "3 0 5 1 7 10 \n"
+				+ "8 5 0 6 2 5 \n"
+				+ "2 1 6 0 8 11 \n"
+				+ "10 7 2 8 0 3 \n"
+				+ "13 10 5 11 3 0 \n";
+		
+		assertEquals(fw,expected);
+		
+	}
+	
+	@Test
+	public void testFloydWarshall4() throws SimpleGraphException{
+		setupScenary8();
+		int[][] dist= graph.floydWarshall();
+		
+		String fw= "";
+		
+		for(int i=0;i<graph.getVertices().size();i++) {
+			for(int j=0;j<graph.getVertices().size();j++) {
+				fw+=dist[i][j]+" ";
+			}
+			fw+="\n";
+		}
+		int infinity=Integer.MAX_VALUE/2;
+		String expected=
+				  "0 6 "+infinity+" 2 10 "+infinity+" \n"
+				+ "2 0 "+infinity+" 4 6 "+infinity+" \n"
+				+ "4 2 0 6 3 "+infinity+" \n"
+				+ "6 4 "+infinity+" 0 8 "+infinity+" \n"
+				+ ""+infinity+" "+infinity+" "+infinity+" "+infinity+" 0 "+infinity+" \n"
+				+ "14 12 10 16 5 0 \n";
+		
+		assertEquals(fw,expected);
+		
+	}
 }

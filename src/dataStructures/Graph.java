@@ -196,7 +196,7 @@ public  class Graph<V> implements IGraph<V> {
 		if(isWeighted && !isDirected) {
 			PQ = new PriorityQueue<>();
 			for(int k=0; k<vertices.size();k++) {
-				vertices.get(k).setDistance(Integer.MAX_VALUE);
+				vertices.get(k).setDistance(Integer.MAX_VALUE/2);
 				vertices.get(k).setPredecesor(null);
 				PQ.add(vertices.get(k));
 			}
@@ -245,7 +245,7 @@ public  class Graph<V> implements IGraph<V> {
 
 		for (int i=0;i<size;i++) {
 			for (int j=0;j<size;j++) {
-				dist[i][j] = Integer.MAX_VALUE;
+				dist[i][j] = Integer.MAX_VALUE/2;
 			
 			}
 		}
@@ -286,7 +286,7 @@ public  class Graph<V> implements IGraph<V> {
 					vertices.get(k).setPredecesor(null);
 				}else {
 					vertices.get(k).setColor('W');
-					vertices.get(k).setDistance(Integer.MAX_VALUE);
+					vertices.get(k).setDistance(Integer.MAX_VALUE/2);
 					vertices.get(k).setPredecesor(null);
 				}
 			}
@@ -355,7 +355,7 @@ public  class Graph<V> implements IGraph<V> {
 	public void prim(Vertex<V> r) {
 		for(int i=0;i<vertices.size();i++) {
 			vertices.get(i).setColor('W');
-			vertices.get(i).setDistance(Integer.MAX_VALUE);
+			vertices.get(i).setDistance(Integer.MAX_VALUE/2);
 		}
 		int index=vertices.indexOf(r);
 
