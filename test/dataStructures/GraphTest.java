@@ -18,12 +18,12 @@ public class GraphTest {
 	}
 	public void addVertices() {
 		//String address, String neighborhood,Zone zone,TypeOfBuilding type, double price, boolean forSale,String observations
-		graph.addVertex(new Building("Calle 4C # 5-29", "Porvenir", Zone.SUR, TypeOfBuilding.CASA, 580000, false, "Casa de 1 planta que contiene 2 habitaciones, sala, comedor, 1 baño y un pequeño patio trasero."));
-		graph.addVertex(new Building("Calle 5B # 3-10", "Porvenir", Zone.SUR, TypeOfBuilding.LOCAL, 620000, false, "Local de 500 metros cuadrados con segundo piso que contiene un baño"));
-		graph.addVertex(new Building("Calle 7A # 4-15", "Vipasa", Zone.NORTE, TypeOfBuilding.CASA, 205000000, true, "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baños, garaje y patio trasero."));
-		graph.addVertex(new Building("Calle 3A # 5-29", "Porvenir", Zone.SUR, TypeOfBuilding.APARTAESTUDIO, 1000000, false, "Apartaestudio amoblado ubicado en segundo piso. Contiene 2 habitaciones, sala, cocina, 1 baño."));
-		graph.addVertex(new Building("Calle 9B # 8-19", "Vipasa", Zone.NORTE, TypeOfBuilding.CASA, 350000000, true, "Casa de 2 plantas que contiene 3 habitaciones, sala, comedor, 2 baños, garaje pequeño y un patio trasero."));
-		graph.addVertex(new Building("Calle 11B # 2-16", "Vipasa", Zone.NORTE, TypeOfBuilding.APARTAMENTO, 275000000, false, "Apartamento de 300 metros cuadrados que tiene 2 habitaciones, baño,  comedor, sitio para lavado y un pequeño balcón."));
+		graph.addVertex(new Building("Calle 4C # 5-29", "Porvenir", Zone.SUR, TypeOfBuilding.CASA, 580000, false, "Casa de 1 planta que contiene 2 habitaciones, sala, comedor, 1 baÃ±o y un pequeÃ±o patio trasero."));
+		graph.addVertex(new Building("Calle 5B # 3-10", "Porvenir", Zone.SUR, TypeOfBuilding.LOCAL, 620000, false, "Local de 500 metros cuadrados con segundo piso que contiene un baÃ±o"));
+		graph.addVertex(new Building("Calle 7A # 4-15", "Vipasa", Zone.NORTE, TypeOfBuilding.CASA, 205000000, true, "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baÃ±os, garaje y patio trasero."));
+		graph.addVertex(new Building("Calle 3A # 5-29", "Porvenir", Zone.SUR, TypeOfBuilding.APARTAESTUDIO, 1000000, false, "Apartaestudio amoblado ubicado en segundo piso. Contiene 2 habitaciones, sala, cocina, 1 baÃ±o."));
+		graph.addVertex(new Building("Calle 9B # 8-19", "Vipasa", Zone.NORTE, TypeOfBuilding.CASA, 350000000, true, "Casa de 2 plantas que contiene 3 habitaciones, sala, comedor, 2 baÃ±os, garaje pequeÃ±o y un patio trasero."));
+		graph.addVertex(new Building("Calle 11B # 2-16", "Vipasa", Zone.NORTE, TypeOfBuilding.APARTAMENTO, 275000000, false, "Apartamento de 300 metros cuadrados que tiene 2 habitaciones, baï¿½o,  comedor, sitio para lavado y un pequeÃ±o balcon."));
 
 	}
 
@@ -95,7 +95,7 @@ public class GraphTest {
 	@Test
 	public void testAddVertex1() {
 		setupScenary1();
-		Building objBuilding = new Building("Calle 11B # 2-16", "Vipasa", Zone.NORTE, TypeOfBuilding.APARTAMENTO, 2750000.0, false, "Apartamento de 300 metros cuadrados que tiene 2 habitaciones, baño,  comedor, sitio para lavado y un pequeño balcón.");
+		Building objBuilding = new Building("Calle 11B # 2-16", "Vipasa", Zone.NORTE, TypeOfBuilding.APARTAMENTO, 2750000.0, false, "Apartamento de 300 metros cuadrados que tiene 2 habitaciones, baï¿½o,  comedor, sitio para lavado y un pequeï¿½o balcï¿½n.");
 		graph.addVertex(objBuilding);
 		assertTrue(graph.getVertices().size()==1);
 		assertFalse(((GraphAL<Building>) graph).getAdjList().isEmpty());
@@ -107,7 +107,7 @@ public class GraphTest {
 	@Test
 	public void testAddVertex2() throws SimpleGraphException {
 		setupScenary2();
-		Building objBuilding = new Building("Calle 8B # 2-18", "Vipasa", Zone.NORTE, TypeOfBuilding.OFICINA, 500000.0, false, "Oficina de 200 metros con baño incluido, buena ubicación en zona comercial, se encuentra en un primer piso");
+		Building objBuilding = new Building("Calle 8B # 2-18", "Vipasa", Zone.NORTE, TypeOfBuilding.OFICINA, 500000.0, false, "Oficina de 200 metros con baï¿½o incluido, buena ubicaciï¿½n en zona comercial, se encuentra en un primer piso");
 		graph.addVertex(objBuilding);
 		assertTrue(graph.getVertices().size()==7);
 		assertEquals(((GraphAL<Building>) graph).getAdjList().size(), 7);
@@ -118,7 +118,7 @@ public class GraphTest {
 	@Test
 	public void testAddVertex3() {
 		setupScenary5();
-		Building objBuilding = new Building("Calle 11B # 2-16", "Vipasa", Zone.NORTE, TypeOfBuilding.APARTAMENTO, 2750000.0, false, "Apartamento de 300 metros cuadrados que tiene 2 habitaciones, baño,  comedor, sitio para lavado y un pequeño balcón.");
+		Building objBuilding = new Building("Calle 11B # 2-16", "Vipasa", Zone.NORTE, TypeOfBuilding.APARTAMENTO, 2750000.0, false, "Apartamento de 300 metros cuadrados que tiene 2 habitaciones, baï¿½o,  comedor, sitio para lavado y un pequeï¿½o balcï¿½n.");
 		graph.addVertex(objBuilding);
 		assertTrue(graph.getVertices().size()==1);
 		assertFalse(((GraphAM <Building>) graph).getAdjMatrix().isEmpty());
@@ -130,18 +130,50 @@ public class GraphTest {
 	@Test
 	public void testAddVertex4() throws SimpleGraphException {
 		setupScenary6();
-		Building objBuilding = new Building("Calle 8B # 2-18", "Vipasa", Zone.NORTE, TypeOfBuilding.OFICINA, 500000.0, false, "Oficina de 200 metros con baño incluido, buena ubicación en zona comercial, se encuentra en un primer piso");
+		Building objBuilding = new Building("Calle 8B # 2-18", "Vipasa", Zone.NORTE, TypeOfBuilding.OFICINA, 500000.0, false, "Oficina de 200 metros con baï¿½o incluido, buena ubicaciï¿½n en zona comercial, se encuentra en un primer piso");
 		graph.addVertex(objBuilding);
 		assertTrue(graph.getVertices().size()==7);
 		assertEquals(((GraphAM<Building>) graph).getAdjMatrix().size(), 7);
 		assertEquals(graph.getWeights().size(), 7);
 		assertEquals(graph.getVertices().get(6).getValue().getAddress(), "Calle 8B # 2-18");
 	}
+        
+        @Test
+	public void testRemoveVertex1() throws SimpleGraphException {
+		setupScenary2();
+		((GraphAL<Building>) graph).removeVertex(graph.getVertices().get(4));
+		assertEquals(graph.getWeights().size(), 5);
+		assertEquals(((GraphAL<Building>) graph).getAdjList().size(), 5);
+	}
+
+	@Test
+	public void testRemoveVertex2() throws SimpleGraphException {
+		setupScenary4();
+		((GraphAL<Building>) graph).removeVertex(graph.getVertices().get(2));
+		assertEquals(graph.getWeights().size(), 5);
+		assertEquals(((GraphAL<Building>) graph).getAdjList().size(), 5);
+	}
+
+	@Test
+	public void testRemoveVertex3() throws SimpleGraphException{
+		setupScenary6();
+		((GraphAM<Building>) graph).removeVertex(graph.getVertices().get(0));
+		assertEquals(graph.getWeights().size(), 5);
+		assertEquals(((GraphAM<Building>) graph).getAdjMatrix().size(), 5);
+	}
+
+	@Test
+	public void testRemoveVertex4() throws SimpleGraphException{
+		setupScenary8();
+		((GraphAM<Building>) graph).removeVertex(graph.getVertices().get(3));
+		assertEquals(graph.getWeights().size(), 5);
+		assertEquals(((GraphAM<Building>) graph).getAdjMatrix().size(), 5);
+	}
 
 	@Test
 	public void testDijkstra1() {
 		setupScenary1();
-		Building objBuilding = new Building("Calle 7A # 4-15", "Porvenir", Zone.SUR, TypeOfBuilding.CASA, 205000000.0, true, "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baños, garaje y patio trasero.");
+		Building objBuilding = new Building("Calle 7A # 4-15", "Porvenir", Zone.SUR, TypeOfBuilding.CASA, 205000000.0, true, "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baï¿½os, garaje y patio trasero.");
 		Vertex<Building> vertex = new Vertex<>(objBuilding);
 		graph.dijkstra(vertex);
 		assertTrue(graph.getVertices().isEmpty());
@@ -175,7 +207,7 @@ public class GraphTest {
 	@Test
 	public void testDijkstra3() {
 		setupScenary5();
-		Building objBuilding = new Building("Calle 7A # 4-15", "Porvenir", Zone.SUR, TypeOfBuilding.CASA, 205000000.0, true, "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baños, garaje y patio trasero.");
+		Building objBuilding = new Building("Calle 7A # 4-15", "Porvenir", Zone.SUR, TypeOfBuilding.CASA, 205000000.0, true, "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baï¿½os, garaje y patio trasero.");
 		Vertex<Building> vertex = new Vertex<>(objBuilding);
 		graph.dijkstra(vertex);
 		assertTrue(graph.getVertices().isEmpty());
@@ -305,7 +337,7 @@ public class GraphTest {
 	@Test
 	public void testsearchVertex1() {
 		setupScenary1();
-		Building b = new Building("Calle 7A # 4-15", "Vipasa", Zone.NORTE, TypeOfBuilding.CASA, 205000000, true, "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baños, garaje y patio trasero.");
+		Building b = new Building("Calle 7A # 4-15", "Vipasa", Zone.NORTE, TypeOfBuilding.CASA, 205000000, true, "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baï¿½os, garaje y patio trasero.");
 		assertEquals(graph.searchVertex(b), null);
 	}
 
@@ -319,7 +351,7 @@ public class GraphTest {
 		assertEquals(v.getValue().getType(), TypeOfBuilding.CASA);
 		assertEquals(v.getValue().getPrice(), 205000000.0);
 		assertTrue(v.getValue().isForSale());
-		assertEquals(v.getValue().getObservations(), "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baños, garaje y patio trasero.");
+		assertEquals(v.getValue().getObservations(), "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 baï¿½os, garaje y patio trasero.");
 	}
 
 
@@ -525,6 +557,63 @@ public class GraphTest {
 
 		}
 	}
+        
+        //REVISAR CON LAS CHICAS
+        @Test
+        public void testRemoveEdge1() throws SimpleGraphException{
+            setupScenary2();
+            Vertex<Building> u= graph.getVertices().get(5);
+            Vertex<Building> v= graph.getVertices().get(2);
+            
+            graph.removeEdge(u,v);
+            
+            assertEquals(((GraphAL<Building>) graph).getAdjList().get(5).size(), 1);
+            assertEquals(((GraphAL<Building>) graph).getAdjList().get(2).size(), 3);
+            
+            assertEquals(graph.getEdges().size(), 8);
+        }
+        
+        @Test
+        public void testRemoveEdge2() throws SimpleGraphException{
+            setupScenary4();
+            Vertex<Building> u= graph.getVertices().get(2);
+            Vertex<Building> v= graph.getVertices().get(4);
+            
+            graph.removeEdge(u,v);
+            
+            assertEquals(((GraphAL<Building>) graph).getAdjList().get(2).size(), 1);
+            assertEquals(((GraphAL<Building>) graph).getAdjList().get(4).size(), 0);
+            
+            assertEquals(graph.getEdges().size(), 8);
+        }
+        
+        @Test
+        public void testRemoveEdge3() throws SimpleGraphException{
+            setupScenary6();
+            Vertex<Building> u= graph.getVertices().get(0);
+            Vertex<Building> v= graph.getVertices().get(3);
+            
+            graph.removeEdge(u,v);
+            
+            assertEquals(((GraphAM<Building>) graph).getAdjMatrix().get(0).size(), 6);
+            assertEquals(((GraphAM<Building>) graph).getAdjMatrix().get(3).size(), 6);
+            
+            assertEquals(graph.getEdges().size(), 8);
+        }
+        
+        @Test
+        public void testRemoveEdge4() throws SimpleGraphException{
+            setupScenary8();
+            Vertex<Building> u= graph.getVertices().get(3);
+            Vertex<Building> v= graph.getVertices().get(1);
+            
+            graph.removeEdge(u,v);
+            
+            assertEquals(((GraphAM<Building>) graph).getAdjMatrix().get(3).size(), 6);
+            assertEquals(((GraphAM<Building>) graph).getAdjMatrix().get(1).size(), 6);
+            
+            assertEquals(graph.getEdges().size(), 8);
+        }
 
 	@Test
 	public void testDFS1() throws SimpleGraphException {
@@ -929,39 +1018,7 @@ public class GraphTest {
 		assertTrue(edge==null);
 
 	}
-
-	@Test
-	public void testRemoveVertex1() throws SimpleGraphException {
-		setupScenary2();
-		((GraphAL<Building>) graph).removeVertex(graph.getVertices().get(4));
-		assertEquals(graph.getWeights().size(), 5);
-		assertEquals(((GraphAL<Building>) graph).getAdjList().size(), 5);
-	}
-
-	@Test
-	public void testRemoveVertex2() throws SimpleGraphException {
-		setupScenary4();
-		((GraphAL<Building>) graph).removeVertex(graph.getVertices().get(2));
-		assertEquals(graph.getWeights().size(), 5);
-		assertEquals(((GraphAL<Building>) graph).getAdjList().size(), 5);
-	}
-
-	@Test
-	public void testRemoveVertex3() throws SimpleGraphException{
-		setupScenary6();
-		((GraphAM<Building>) graph).removeVertex(graph.getVertices().get(0));
-		assertEquals(graph.getWeights().size(), 5);
-		assertEquals(((GraphAM<Building>) graph).getAdjMatrix().size(), 5);
-	}
-
-	@Test
-	public void testRemoveVertex4() throws SimpleGraphException{
-		setupScenary8();
-		((GraphAM<Building>) graph).removeVertex(graph.getVertices().get(3));
-		assertEquals(graph.getWeights().size(), 5);
-		assertEquals(((GraphAM<Building>) graph).getAdjMatrix().size(), 5);
-	}
-
+        
 	@Test
 	public void testFloydWarshall1() throws SimpleGraphException{
 		setupScenary2();
