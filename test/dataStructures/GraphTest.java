@@ -466,7 +466,7 @@ public class GraphTest {
 		setupScenary2();
 		Vertex<Building> u= graph.getVertices().get(1);
 		Vertex<Building> v= graph.getVertices().get(4);
-		int weight=3;
+		int weight=5;
 
 		try {
 			graph.addEdge(u, v, weight);
@@ -511,7 +511,7 @@ public class GraphTest {
 		setupScenary8();
 		Vertex<Building> u= graph.getVertices().get(1);
 		Vertex<Building> v= graph.getVertices().get(4);
-		int weight=3;
+		int weight=5;
 
 		try {
 			graph.addEdge(u, v, weight);
