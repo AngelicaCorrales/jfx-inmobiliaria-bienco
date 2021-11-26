@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane prefHeight="670.0" prefWidth="1019.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="670.0" prefWidth="1019.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;">
          <children>
@@ -40,18 +39,18 @@
                   <Font name="Book Antiqua" size="15.0" />
                </font>
             </TextField>
-            <Button layoutX="383.0" layoutY="258.0" mnemonicParsing="false" onAction="#btAddDistances" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Agregar">
+            <Button layoutX="383.0" layoutY="258.0" mnemonicParsing="false" onAction="#addDistances" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Agregar">
                <font>
                   <Font name="Britannic Bold" size="25.0" />
                </font>
             </Button>
-            <Button layoutX="558.0" layoutY="258.0" mnemonicParsing="false" onAction="#btNextPageRoutes" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Continuar">
+            <Button layoutX="558.0" layoutY="258.0" mnemonicParsing="false" onAction="#nextPageRoutes" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Continuar">
                <font>
                   <Font name="Britannic Bold" size="25.0" />
                </font>
             </Button>
             <ComboBox fx:id="cBoxChoiceDistance2" layoutX="607.0" layoutY="105.0" prefWidth="150.0" promptText="Elija Una" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" />
-            <TextArea fx:id="taFFinalDistance" layoutX="240.0" layoutY="335.0" prefHeight="292.0" prefWidth="588.0" promptText="Distancias Agregadas" />
+            <TextArea fx:id="taFFinalDistance" editable="false" layoutX="240.0" layoutY="335.0" prefHeight="292.0" prefWidth="588.0" promptText="Distancias Agregadas" />
          </children>
       </Pane>
    </center>
