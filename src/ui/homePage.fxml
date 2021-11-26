@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="313.0" layoutY="79.0" text="Bievenido al sistema de Bienco S.A.">
+         <font>
+            <Font name="Britannic Bold" size="25.0" />
+         </font>
+      </Label>
+      <Button layoutX="360.0" layoutY="346.0" mnemonicParsing="false" onAction="#btManageProperty" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="1. Gestionar Inmuebles">
+         <font>
+            <Font name="Britannic Bold" size="25.0" />
+         </font>
+      </Button>
+      <Button layoutX="365.0" layoutY="429.0" mnemonicParsing="false" onAction="#btImportProperty" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="2. Importar Inmuebles">
+         <font>
+            <Font name="Britannic Bold" size="25.0" />
+         </font>
+      </Button>
+      <Button layoutX="303.0" layoutY="501.0" mnemonicParsing="false" onAction="#btFilterPropertyDefineRoute" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="3. Filtrar inmuebles y definir ruta">
+         <font>
+            <Font name="Britannic Bold" size="25.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="130.0" fitWidth="280.0" layoutX="370.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@ICON.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>
