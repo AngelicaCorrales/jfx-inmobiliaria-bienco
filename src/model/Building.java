@@ -1,7 +1,10 @@
 package model;
 
-public class Building {
+import java.io.Serializable;
 
+public class Building implements Serializable {
+
+	private static final long serialVersionUID = 1;
 	private String address;
 	private String neighborhood;
 	private Zone zone;
@@ -10,57 +13,11 @@ public class Building {
 	private boolean forSale;
 	private String observations;
 	
-	public Building(String address, String neighborhood,String zone,String type, double price, String purpose,String observations) {
+	public Building(String address, String neighborhood,Zone zone,TypeOfBuilding type, double price, boolean forSale,String observations) {
 		  this.address=address;
 		  this.neighborhood=neighborhood;
-		  if(purpose.equals("Venta")) {
-			  forSale = true;
-		  }else {
-			  forSale = false; 
-		  }
-		  switch(zone) {
-		  case "Sur":
-			  this.zone=Zone.SUR;
-			  break;
-		  case "Norte":
-			  this.zone=Zone.NORTE;
-			  break;
-		  case "Centro":
-			  this.zone=Zone.CENTRO;
-			  break;
-		  case "Este":
-			  this.zone=Zone.ESTE;
-			  break;
-		  case "Oeste":
-			  this.zone=Zone.OESTE;
-			  break;
-		  }
-		  switch(type) {
-		  case "Apartaestudio":
-			  this.type=TypeOfBuilding.APARTAESTUDIO;
-			  break;
-		  case "Apartamento":
-			  this.type=TypeOfBuilding.APARTAMENTO;
-			  break;
-		  case "Casa":
-			  this.type=TypeOfBuilding.CASA;
-			  break;  
-		  case "Local":
-			  this.type=TypeOfBuilding.LOCAL;
-			  break;
-		  case "Edificio":
-			  this.type=TypeOfBuilding.EDIFICIO;
-			  break;
-		  case "Finca":
-			  this.type=TypeOfBuilding.FINCA;
-			  break;
-		  case "Lote":
-			  this.type=TypeOfBuilding.LOTE;
-			  break;
-		  case "Oficina":
-			  this.type=TypeOfBuilding.OFICINA;
-			  break;
-		  }			  
+		  this.zone=zone;
+		  this.type=type;
 		  this.price=price;
 		  this.forSale=forSale;
 		  this.observations=observations;

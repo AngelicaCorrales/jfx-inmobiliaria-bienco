@@ -1,5 +1,14 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -13,8 +22,13 @@ import exceptions.SimpleGraphException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Bienco {
+public class Bienco implements Serializable {
 
+	private static final long serialVersionUID = 1;
+	public  static String BIENCO_SAVE_PATH_FILE;
+	public final static int PROGRAM=0;
+	public final static int TEST=1;
+	
 	private Graph<Building> graph;
 	private GraphAL<Building> graphAL;
 	private GraphAM<Building> graphAM;
@@ -22,7 +36,13 @@ public class Bienco {
 	private ArrayList<Building> buildings;
 
 
-	public Bienco() {
+	public Bienco(int num) {
+		if(num==PROGRAM) {
+			BIENCO_SAVE_PATH_FILE = "data/bienco.ackldo";
+		}
+		if(num==TEST) {
+			BIENCO_SAVE_PATH_FILE ="data/biencoTest.ackldo";
+		}
 		buildings=new ArrayList<>();
 	}
 
@@ -68,7 +88,7 @@ public class Bienco {
 
 
 
-	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, String purpose, String observations) throws NoValueException, NegativeValueException {
+	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, boolean forSale, String observations) throws NoValueException, NegativeValueException {
 		double price = Double.parseDouble(p);
 		if(price<0) {
 			throw new NegativeValueException(price);
@@ -77,9 +97,11 @@ public class Bienco {
 		}
 		boolean founded = searchBuilding(address);
 		if(founded==false) {
-			Building newBuilding = new Building(address, neighborhood, zone, typeOfBuilding, price, purpose, observations);
+			Building newBuilding = new Building(address, neighborhood, Zone.valueOf(zone.toUpperCase()), TypeOfBuilding.valueOf(typeOfBuilding.toUpperCase()), price, forSale, observations);
 			buildings.add(newBuilding);	
+			
 		}
+		//saveDataBienco();
 	}
 
 	private boolean searchBuilding(String address) {
@@ -174,6 +196,64 @@ public class Bienco {
 
 
 		return routes;
+	}
+	
+	public void saveDataBienco() throws IOException{
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(BIENCO_SAVE_PATH_FILE));
+		oos.writeObject(this);
+		oos.close();
+	}
+
+	public Bienco loadDataBienco(Bienco bienco) throws IOException, ClassNotFoundException{
+		File f = new File(BIENCO_SAVE_PATH_FILE);
+		if(f.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			bienco = (Bienco)ois.readObject();
+			ois.close();
+		}
+		return bienco;
+	}
+	
+	
+	public void importData(String fileName) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+
+		String line = "";
+		try {
+			line = br.readLine();
+
+			while(line != null) {
+
+				try {
+					String[] parts = line.split(";");
+
+					//String address, String neighborhood,Zone zone,TypeOfBuilding type, double price, boolean forSale,String observations
+					
+					if(!parts[0].equals("Tm")) {
+						double price = Double.parseDouble(parts[4]);
+						boolean forSale=false;
+						if(parts[5].equalsIgnoreCase("Venta")) {
+							forSale=true;
+						}
+						Building building = new Building(parts[0], parts[1], Zone.valueOf(parts[2].toUpperCase()), TypeOfBuilding.valueOf(parts[3].toUpperCase()),price,forSale,parts[6]);
+						buildings.add(building);
+						
+					}
+
+					line = br.readLine();
+
+				} catch (NumberFormatException e) {
+					line = br.readLine();
+				}
+			}
+
+		}catch (IOException e) {
+		}
+		try {
+			br.close();
+		} catch (IOException e) {
+		}
+
 	}
 
 

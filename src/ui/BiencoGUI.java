@@ -1,5 +1,6 @@
 package ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.scene.control.Alert.AlertType;
 import model.Bienco;
 import model.Building;
@@ -352,7 +354,26 @@ public class BiencoGUI {
 
 	@FXML
 	public  void importProperty(ActionEvent event) throws IOException {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText(null);
 
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Abrir el archivo");
+		File f=fileChooser.showOpenDialog(mainPane.getScene().getWindow());
+		if(f!=null) {
+			alert.setTitle("Importar inmuebles");
+			try {
+				bienco.importData(f.getAbsolutePath());
+
+				alert.setContentText("Los inmuebles fueron importados exitosamente");
+				alert.showAndWait();
+				
+				bienco.saveDataBienco();
+			}catch(IOException e){
+				alert.setContentText("Los inmuebles no se importaron.");
+				alert.showAndWait();
+			}
+		}
 	}
 
 	@FXML
@@ -393,19 +414,17 @@ public class BiencoGUI {
 		cbxType.setPromptText("Elija un Tipo");
 	}
 
-	public String getRadioButtonSaleOrRent() {
-		String option = "";
+	public boolean getRadioButtonSaleOrRent() {
+		boolean option =false;
 		if(rbSale.isSelected()) {
-			option = "Venta";
-		} else {
-			option = "Alquiler";
-		}
+			option = true;
+		} 
 		return option;
 	}
 
 	@FXML
 	public void addBuilding(ActionEvent event) {
-		if(!txtAddress.getText().equals("") && !txtNbd.getText().equals("") && cbxZone.getValue()!=null && cbxType.getValue()!=null && !txtPrice.getText().equals("") && !getRadioButtonSaleOrRent().equals("") && !txaObs.getText().equals("")) {
+		if(!txtAddress.getText().equals("") && !txtNbd.getText().equals("") && cbxZone.getValue()!=null && cbxType.getValue()!=null && !txtPrice.getText().equals("") && VorA.getSelectedToggle()!=null && !txaObs.getText().equals("")) {
 			Alert alert1 = new Alert(AlertType.INFORMATION);
 			alert1.setTitle("Error de validacion");
 			alert1.setHeaderText(null);
