@@ -10,6 +10,8 @@ import dataStructures.Vertex;
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
 import exceptions.SimpleGraphException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Bienco {
 
@@ -98,14 +100,18 @@ public class Bienco {
 		return filter;
 	}
         
-        public String addDistancesBetweenProperties (Building u,Building v,Integer weight) throws SimpleGraphException{
-            String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+weight;
+        public String addDistancesBetweenProperties (Building u,Building v,String weight) throws SimpleGraphException{
+            int distanceToInt = Integer.valueOf(weight);
+            String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+distanceToInt;
             
             Vertex<Building> uVertex = graph.searchVertex(u);
             Vertex<Building> vVertex = graph.searchVertex(v);
             
-            graphAL.addEdge(uVertex,vVertex,weight);
-            graphAM.addEdge(uVertex,vVertex,weight);
+            //throw new SimpleGraphException(); PREGUNTAR A LAS CHICAS COMO ATRAPAR LA EXCEPCION
+            
+            graphAL.addEdge(uVertex,vVertex,distanceToInt);
+            graphAM.addEdge(uVertex,vVertex,distanceToInt);
+            
             
             return message;
         }

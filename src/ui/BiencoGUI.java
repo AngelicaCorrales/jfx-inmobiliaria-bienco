@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
+import exceptions.SimpleGraphException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,13 +37,13 @@ public class BiencoGUI {
 
 	//------addDistanceBetweeNearbyProperties.fxml
 	@FXML
-	private ComboBox<?> cBoxChoiceDistance1;
+	private ComboBox<Building> cBoxChoiceDistance1;
 
 	@FXML
 	private TextField txtFDistanceInM;
 
 	@FXML
-	private ComboBox<?> cBoxChoiceDistance2;
+	private ComboBox<Building> cBoxChoiceDistance2;
 
 	@FXML
 	private TextArea taFFinalDistance;
@@ -205,11 +206,43 @@ public class BiencoGUI {
 
 
 
+        private void initializeComboBoxDistances() {
+		ObservableList<Building> options =FXCollections.observableArrayList(bienco.getFilterBuildings());
+		cBoxChoiceDistance1.setItems(options);
+                cBoxChoiceDistance2.setItems(options);
+	}
 
 
 	@FXML
-	public void addDistances(ActionEvent event) {
-
+	public void addDistances(ActionEvent event) throws SimpleGraphException {
+            if(cBoxChoiceDistance1.getValue()!=null && cBoxChoiceDistance2.getValue()!=null && !txtFDistanceInM.getText().equals("")) {
+                Optional<ButtonType> result = askToContinue();
+                Alert alert1 = new Alert(AlertType.INFORMATION);
+                alert1.setTitle("Error de validacion");
+                alert1.setHeaderText(null);
+                
+                try {
+                    if (result.get() == ButtonType.OK){
+                        if(cBoxChoiceDistance1.getValue()==cBoxChoiceDistance2.getValue()){
+                            alert1.setContentText("No puede elegir la misma distancia, por favor seleccione una distancia diferente");
+                            alert1.showAndWait();
+                        }
+                        else{
+                            taFFinalDistance.setText(bienco.addDistancesBetweenProperties(cBoxChoiceDistance1.getValue(), cBoxChoiceDistance2.getValue(), txtFDistanceInM.getText()));
+                            alert1.setContentText("Distancia agregada exitosamente entre los dos inmuebles");
+                            alert1.showAndWait();
+                            txtFDistanceInM.setText("");
+                        }
+                    }
+                } catch (SimpleGraphException ge) {
+                    alert1.setContentText(ge.getMessage());
+                    alert1.showAndWait();
+                }
+            }
+            
+            else {
+                showValidationErrorAlert();
+            }
 	}
 
 	@FXML
@@ -460,7 +493,7 @@ public class BiencoGUI {
 
 	public Optional<ButtonType> askToContinue() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("¿Esta seguro que desea continuar? Recuerde que no podra realizar ningun cambio despues.");
+		alert.setContentText("Â¿Esta seguro que desea continuar? Recuerde que no podra realizar ningun cambio despues.");
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;
 	}
