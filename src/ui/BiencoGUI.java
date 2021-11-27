@@ -163,6 +163,43 @@ public class BiencoGUI {
 
 	@FXML
 	private TextArea taRoutes;
+        
+        //--------Program versions (AL or AM)
+        
+        //Filter page
+        
+        @FXML
+        private RadioButton rbVersion2Filter;
+
+        @FXML
+        private ToggleGroup versionsfilter;
+
+        @FXML
+        private RadioButton rbVersion1Filter;
+        
+        //Distance page
+        
+        @FXML
+        private RadioButton rbVersion1Distance;
+
+        @FXML
+        private ToggleGroup versionsDistance;
+
+        @FXML
+        private RadioButton rbVersion2Distance;
+        
+        //Routes page
+        
+        @FXML
+        private RadioButton rbVersion2Routes;
+
+        @FXML
+        private ToggleGroup versionsRoutes;
+
+        @FXML
+        private RadioButton rbVersion1Routes;
+        
+        
 	//--------------------------------------
 
 
@@ -273,7 +310,7 @@ public class BiencoGUI {
 
 	@FXML
 	public void nextPageRoutes(ActionEvent event) throws IOException {
-		String message="Ya no podrá regresar para asignar distancias. ";
+		String message="Ya no podrï¿½ regresar para asignar distancias. ";
 		if(!bienco.connectionFilterBuildings()) {
 			message+="Hay inmuebles que no se han conectado con algun otro.";
 		}
@@ -557,7 +594,7 @@ public class BiencoGUI {
 		Alert alert1 = new Alert(AlertType.CONFIRMATION);
 		alert1.setTitle("Confirmacion de proceso");
 		alert1.setHeaderText(null);
-		alert1.setContentText("¿Esta seguro de que quiere eliminar este inmueble?");
+		alert1.setContentText("ï¿½Esta seguro de que quiere eliminar este inmueble?");
 		Optional<ButtonType> result = alert1.showAndWait();
 		if (result.get() == ButtonType.OK){
 			bienco.deleteBuilding(tvOfAddedBuildings.getSelectionModel().getSelectedItem());
@@ -691,7 +728,7 @@ public class BiencoGUI {
 
 	public Optional<ButtonType> askToContinue(String message) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("¿Esta seguro que desea continuar?"+message);
+		alert.setContentText("ï¿½Esta seguro que desea continuar?"+message);
 	
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;
