@@ -246,7 +246,7 @@ public class BiencoGUI {
                 alert1.setHeaderText(null);
                 
                 try {
-                    if (result.get() == ButtonType.OK){
+                    do{
                         if(cBoxChoiceDistance1.getValue()==cBoxChoiceDistance2.getValue()){
                             alert1.setContentText("No puede elegir la misma distancia, por favor seleccione una distancia diferente");
                             alert1.showAndWait();
@@ -257,9 +257,9 @@ public class BiencoGUI {
                             alert1.showAndWait();
                             txtFDistanceInM.setText("");
                         }
-                    }
+                    }while (result.get() != ButtonType.OK);
                 } catch (SimpleGraphException ge) {
-                    alert1.setContentText("No debe agregar mas de una arista, el grafo de ser de tipo: Grafo Simple. Intente de nuevo por favor");
+                    alert1.setContentText("No debe agregar mas de una arista, el grafo debe ser de tipo: Grafo Simple. Intente de nuevo por favor");
                     alert1.showAndWait();
                 }
             }
