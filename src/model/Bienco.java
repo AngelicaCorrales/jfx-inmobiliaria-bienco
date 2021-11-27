@@ -428,5 +428,19 @@ public class Bienco implements Serializable {
 
 		}
 	}
+	
+	public boolean connectionFilterBuildings() {
+		boolean conected=true;
+		if(!graph.getVertices().isEmpty()) {
+			graph.bfs(graph.getVertices().get(0));
+		}
+		for(int i=0;i<graph.getVertices().size() && conected;i++) {
+			if(graph.getVertices().get(i).getColor()!='B') {
+				conected=false;
+			}
+		}
+		
+		return conected;
+	}
 
 }

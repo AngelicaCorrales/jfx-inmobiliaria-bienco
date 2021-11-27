@@ -240,7 +240,7 @@ public class BiencoGUI {
 	@FXML
 	public void addDistances(ActionEvent event) throws SimpleGraphException {
             if(cBoxChoiceDistance1.getValue()!=null && cBoxChoiceDistance2.getValue()!=null && !txtFDistanceInM.getText().equals("")) {
-                Optional<ButtonType> result = askToContinue();
+                Optional<ButtonType> result = askToContinue("");
                 Alert alert1 = new Alert(AlertType.INFORMATION);
                 alert1.setTitle("Error de validacion");
                 alert1.setHeaderText(null);
@@ -259,7 +259,7 @@ public class BiencoGUI {
                         }
                     }while (result.get() != ButtonType.OK);
                 } catch (SimpleGraphException ge) {
-                    alert1.setContentText("No debe agregar mas de una arista, el grafo debe ser de tipo: Grafo Simple. Intente de nuevo por favor");
+                    alert1.setContentText("Ya existe una distancia entre los inmuebles seleccionados.");
                     alert1.showAndWait();
                 }
             }
@@ -270,11 +270,18 @@ public class BiencoGUI {
 
 	@FXML
 	public void nextPageRoutes(ActionEvent event) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/routes.fxml"));
-		fxmlLoader.setController(this);
-		Parent menuPane = fxmlLoader.load();
-		mainPane.setCenter(menuPane);
-		initializeComboBoxBuildingsFindRoutes();
+		String message="Ya no podrá regresar para asignar distancias. ";
+		if(!bienco.connectionFilterBuildings()) {
+			message+="Hay inmuebles que no se han conectado con algun otro.";
+		}
+		Optional<ButtonType> result = askToContinue(message);
+		if (result.get() == ButtonType.OK){
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/routes.fxml"));
+			fxmlLoader.setController(this);
+			Parent menuPane = fxmlLoader.load();
+			mainPane.setCenter(menuPane);
+			initializeComboBoxBuildingsFindRoutes();
+		}
 	}
 
 
@@ -591,9 +598,9 @@ public class BiencoGUI {
 		alert.showAndWait();
 	}
 
-	public Optional<ButtonType> askToContinue() {
+	public Optional<ButtonType> askToContinue(String message) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("¿Esta seguro que desea continuar?");
+		alert.setContentText("¿Esta seguro que desea continuar?"+message);
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;
 	}
