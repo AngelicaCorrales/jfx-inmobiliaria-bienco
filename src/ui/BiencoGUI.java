@@ -1,10 +1,16 @@
 package ui;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import javax.swing.JFileChooser;
+
+import com.itextpdf.text.DocumentException;
 
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
@@ -110,7 +116,7 @@ public class BiencoGUI {
 
 	@FXML
 	private TableView<Building> tvOfAddedBuildings;
-	
+
 	@FXML
 	private Button btUpdate;
 
@@ -119,7 +125,7 @@ public class BiencoGUI {
 
 	@FXML
 	private Button btAdd;
-	
+
 	@FXML
 	private TextField txtAddress;
 
@@ -187,10 +193,7 @@ public class BiencoGUI {
 
 
 
-	@FXML
-	public void downloadReport(ActionEvent event) {
 
-	}
 
 
 
@@ -225,47 +228,47 @@ public class BiencoGUI {
 	private void initializeComboBoxDistances() {
 		ObservableList<Building> options =FXCollections.observableArrayList(bienco.getFilterBuildings());
 		cBoxChoiceDistance1.setItems(options);
-                cBoxChoiceDistance2.setItems(options);
+		cBoxChoiceDistance2.setItems(options);
 	}
-        
-        @FXML
+
+	@FXML
 	public void nextScreenAddDistances(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/addDistanceBetweeNearbyProperties.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
-                initializeComboBoxDistances();
+		initializeComboBoxDistances();
 	}
 
 	@FXML
 	public void addDistances(ActionEvent event) throws SimpleGraphException {
-            if(cBoxChoiceDistance1.getValue()!=null && cBoxChoiceDistance2.getValue()!=null && !txtFDistanceInM.getText().equals("")) {
-                Optional<ButtonType> result = askToContinue();
-                Alert alert1 = new Alert(AlertType.INFORMATION);
-                alert1.setTitle("Error de validacion");
-                alert1.setHeaderText(null);
-                
-                try {
-                    if (result.get() == ButtonType.OK){
-                        if(cBoxChoiceDistance1.getValue()==cBoxChoiceDistance2.getValue()){
-                            alert1.setContentText("No puede elegir la misma distancia, por favor seleccione una distancia diferente");
-                            alert1.showAndWait();
-                        }
-                        else{
-                            taFFinalDistance.setText(bienco.addDistancesBetweenProperties(cBoxChoiceDistance1.getValue(), cBoxChoiceDistance2.getValue(), txtFDistanceInM.getText()));
-                            alert1.setContentText("Distancia agregada exitosamente entre los dos inmuebles");
-                            alert1.showAndWait();
-                            txtFDistanceInM.setText("");
-                        }
-                    }
-                } catch (SimpleGraphException ge) {
-                    alert1.setContentText("No debe agregar mas de una arista, el grafo de ser de tipo: Grafo Simple. Intente de nuevo por favor");
-                    alert1.showAndWait();
-                }
-            }
-            else {
-                showValidationErrorAlert();
-            }
+		if(cBoxChoiceDistance1.getValue()!=null && cBoxChoiceDistance2.getValue()!=null && !txtFDistanceInM.getText().equals("")) {
+			Optional<ButtonType> result = askToContinue();
+			Alert alert1 = new Alert(AlertType.INFORMATION);
+			alert1.setTitle("Error de validacion");
+			alert1.setHeaderText(null);
+
+			try {
+				if (result.get() == ButtonType.OK){
+					if(cBoxChoiceDistance1.getValue()==cBoxChoiceDistance2.getValue()){
+						alert1.setContentText("No puede elegir la misma distancia, por favor seleccione una distancia diferente");
+						alert1.showAndWait();
+					}
+					else{
+						taFFinalDistance.setText(bienco.addDistancesBetweenProperties(cBoxChoiceDistance1.getValue(), cBoxChoiceDistance2.getValue(), txtFDistanceInM.getText()));
+						alert1.setContentText("Distancia agregada exitosamente entre los dos inmuebles");
+						alert1.showAndWait();
+						txtFDistanceInM.setText("");
+					}
+				}
+			} catch (SimpleGraphException ge) {
+				alert1.setContentText("No debe agregar mas de una arista, el grafo de ser de tipo: Grafo Simple. Intente de nuevo por favor");
+				alert1.showAndWait();
+			}
+		}
+		else {
+			showValidationErrorAlert();
+		}
 	}
 
 	@FXML
@@ -400,9 +403,11 @@ public class BiencoGUI {
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
-		initializeTableViewOfAddedPlayers();
+		initializeTableViewOfAddedBuildings();
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
+		btUpdate.setDisable(true);
+		btDelete.setDisable(true);
 	}
 
 
@@ -413,7 +418,7 @@ public class BiencoGUI {
 
 
 
-	private void initializeTableViewOfAddedPlayers() {
+	private void initializeTableViewOfAddedBuildings() {
 		ObservableList<Building> observableList;
 		observableList = FXCollections.observableArrayList(bienco.getBuildings());
 		tvOfAddedBuildings.setItems(observableList);
@@ -477,7 +482,7 @@ public class BiencoGUI {
 		}else {
 			showValidationErrorAlert();
 		}
-		initializeTableViewOfAddedPlayers();
+		initializeTableViewOfAddedBuildings();
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
 		txtAddress.clear();
@@ -492,6 +497,8 @@ public class BiencoGUI {
 		Building selectedBuilding = tvOfAddedBuildings.getSelectionModel().getSelectedItem();
 		if (selectedBuilding!= null) {
 			btAdd.setDisable(true);
+			btUpdate.setDisable(false);
+			btDelete.setDisable(false);
 			txtAddress.setText(selectedBuilding.getAddress());
 			txtNbd.setText(selectedBuilding.getNeighborhood());
 			txtPrice.setText(""+selectedBuilding.getPrice());
@@ -508,16 +515,100 @@ public class BiencoGUI {
 
 	@FXML
 	public void deleteBuilding(ActionEvent event) {
-
+		Alert alert1 = new Alert(AlertType.CONFIRMATION);
+		alert1.setTitle("Confirmacion de proceso");
+		alert1.setHeaderText(null);
+		alert1.setContentText("¿Esta seguro de que quiere eliminar este inmueble?");
+		Optional<ButtonType> result = alert1.showAndWait();
+		if (result.get() == ButtonType.OK){
+			bienco.deleteBuilding(tvOfAddedBuildings.getSelectionModel().getSelectedItem());
+			Alert alert2 = new Alert(AlertType.INFORMATION);
+			alert2.setTitle("Informacion");
+			alert2.setHeaderText(null);
+			alert2.setContentText("El inmueble elegido ha sido eliminado exitosamente");
+			alert2.showAndWait();
+			initializeCmbxOfZone();
+			initializeCmbxOfTB();
+			txtAddress.clear();
+			txtNbd.clear();
+			txtPrice.clear();
+			txaObs.clear();
+			VorA.getSelectedToggle().setSelected(false);
+			tvOfAddedBuildings.getItems().clear();
+			initializeTableViewOfAddedBuildings();
+			btAdd.setDisable(false);
+			btUpdate.setDisable(true);
+			btDelete.setDisable(true);
+		}
 	}
 
 
 
 	@FXML
 	public void updateBuilding(ActionEvent event) {
-
+		if(!txtAddress.getText().equals("") && !txtNbd.getText().equals("") && cbxZone.getValue()!=null && cbxType.getValue()!=null && !txtPrice.getText().equals("") && VorA.getSelectedToggle()!=null && !txaObs.getText().equals("")) {
+			Alert alert1 = new Alert(AlertType.INFORMATION);
+			alert1.setTitle("Error de validacion");
+			alert1.setHeaderText(null);
+			try {
+				boolean updated = bienco.updateBuilding(tvOfAddedBuildings.getSelectionModel().getSelectedItem(),txtAddress.getText(),txtNbd.getText(),cbxZone.getValue(),cbxType.getValue(),txtPrice.getText(),getRadioButtonSaleOrRent(),txaObs.getText());
+				if(updated==false) {
+					alert1.setContentText("El inmueble ha sido actualizado exitosamente");
+					alert1.showAndWait();
+				}else {
+					alert1.setContentText("Ya existe un inmueble con la direccion ingresada, intentelo nuevamente");
+					alert1.showAndWait();
+				}
+			} catch (NoValueException nv) {
+				alert1.setContentText(nv.getMessage());
+				alert1.showAndWait();
+			} catch (NegativeValueException e) {
+				alert1.setContentText(e.getMessage());
+				alert1.showAndWait();
+			}catch(NumberFormatException num) {
+				alert1.setContentText("Debe ingresar numeros dentro de los campos presentados que asi lo requieran");
+				alert1.showAndWait();
+			}
+		}else {
+			showValidationErrorAlert();
+		}
+		initializeCmbxOfZone();
+		initializeCmbxOfTB();
+		txtAddress.clear();
+		txtNbd.clear();
+		txtPrice.clear();
+		txaObs.clear();
+		VorA.getSelectedToggle().setSelected(false);
+		tvOfAddedBuildings.getItems().clear();
+		initializeTableViewOfAddedBuildings();
+		btAdd.setDisable(false);
+		btUpdate.setDisable(true);
+		btDelete.setDisable(true);
 	}
 
+	@FXML
+	public void downloadReport(ActionEvent event) {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Elija la carpeta en la cual desea guardar el reporte");
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		fileChooser.setAcceptAllFileFilterUsed(false);
+		if(fileChooser.showOpenDialog(null)==JFileChooser.APPROVE_OPTION) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Descargar reporte");
+			try {
+				OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\Reporte.pdf");
+				//bienco.generateReport(text_exit);
+
+				alert.setHeaderText(null);
+				alert.setContentText("La factura ha sido exportada exitosamente");
+				alert.showAndWait();
+			} catch (DocumentException | FileNotFoundException e) {
+				alert.setHeaderText(null);
+				alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso, intentelo nuevamente.");
+				alert.showAndWait();
+			}
+		}	
+	}
 
 
 

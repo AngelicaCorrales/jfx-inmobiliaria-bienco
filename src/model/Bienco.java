@@ -8,7 +8,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -19,8 +21,22 @@ import dataStructures.Vertex;
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
 import exceptions.SimpleGraphException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class Bienco implements Serializable {
 
@@ -96,8 +112,8 @@ public class Bienco implements Serializable {
 		}else if (price==0) {
 			throw new NoValueException(price);
 		}
-		boolean founded = searchBuilding(address);
-		if(founded==false) {
+		Building founded = searchBuilding(address);
+		if(founded==null) {
 			Building newBuilding = new Building(address, neighborhood, Zone.valueOf(zone.toUpperCase()), TypeOfBuilding.valueOf(typeOfBuilding.toUpperCase()), price, forSale, observations);
 			buildings.add(newBuilding);	
 			added = true;
@@ -106,11 +122,11 @@ public class Bienco implements Serializable {
 		return added;
 	}
 
-	private boolean searchBuilding(String address) {
-		boolean founded = false;
+	private Building searchBuilding(String address) {
+		Building founded = null;
 		for(int k=0; k<buildings.size();k++) {
 			if(buildings.get(k).getAddress().equals(address)) {
-				founded = true;
+				founded = buildings.get(k);
 			}
 		}
 		return founded;
@@ -256,4 +272,107 @@ public class Bienco implements Serializable {
 	}
 
 
+	public void deleteBuilding(Building selectedItem) {
+		buildings.remove(selectedItem);
+		//saveDataBienco();
+	}
+
+
+	public boolean updateBuilding(Building b, String newAddress, String nbhd, String newZone, String newType, String p, boolean forSale, String observations) throws NoValueException, NegativeValueException {
+		Building building = searchBuilding(newAddress);
+		boolean updated=false;
+		boolean findBuilding = false;
+		double price = Double.parseDouble(p);
+		if(price<0) {
+			throw new NegativeValueException(price);
+		}else if (price==0) {
+			throw new NoValueException(price);
+		}
+		if(b!=building) {
+			if(building!=null) {
+				findBuilding =true;
+			}
+		}
+		if(!findBuilding) {
+			b.setAddress(newAddress);
+			b.setNeighborhood(nbhd);
+			b.setZone(Zone.valueOf(newZone.toUpperCase()));
+			b.setType(TypeOfBuilding.valueOf(newType.toUpperCase()));
+			b.setPrice(price);
+			b.setForSale(forSale);
+			b.setObservations(observations);
+			//saveDataBienco();
+			updated=true;
+		}
+		return updated;
+	}
+
+	public void generatePDFReport(OutputStream txt, ArrayList<Building> buildings) throws DocumentException {
+		Document doc = new Document(PageSize.LETTER);
+		PdfWriter.getInstance(doc, txt);
+		doc.open();
+		//Font negrilla = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+		Font normal = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK);
+		PdfPTable tbl_routes = new PdfPTable(2);
+		Paragraph texto = null;
+		
+		try {
+			Image imagen = Image.getInstance("src/ui/Plantilla.png");
+			 imagen.setAlignment(Element.ALIGN_CENTER);
+			 doc.add(imagen);
+		} catch (BadElementException | IOException e) {
+			e.printStackTrace();
+		} 
+		
+		texto = new Paragraph();
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
+
+		tbl_routes.setWidths(new int[]{1, 4});
+		String[][] data = new String[buildings.size()][2];
+		for (int x=0; x < data.length; x++) {
+			Building b = buildings.get(x);
+			for (int y=0; y < data[x].length; y++) {
+				if(y==1) {
+					data[x][y] = b.getAddress();
+				}
+			}
+		}
+		for (String[] row : data) {
+			tbl_routes.addCell(createImageCell(1, Element.ALIGN_LEFT));
+			tbl_routes.addCell(createTextCell(row[1], normal, 4, Element.ALIGN_LEFT));
+		}
+		doc.add(tbl_routes);
+		texto = new Paragraph();
+		texto.add(new Phrase(Chunk.NEWLINE));
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
+		doc.close();
+	}
+	
+	public PdfPCell createTextCell(String content, Font f, int colspan, int alignment) {
+		PdfPCell cell = new PdfPCell(new Phrase(content, f));
+		cell.setBorder(Rectangle.NO_BORDER);
+		cell.setColspan(colspan);
+		cell.setHorizontalAlignment(alignment);
+		return cell;
+	}
+	
+	public PdfPCell createImageCell(int colspan, int alignment) {
+		PdfPCell cell = null;
+		try {
+			Image imagen = Image.getInstance("src/ui/checkbox.png");
+			cell = new PdfPCell(imagen);
+			cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(colspan);
+			cell.setHorizontalAlignment(alignment);
+		} catch (BadElementException e) {
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return cell;
+	}
 }
