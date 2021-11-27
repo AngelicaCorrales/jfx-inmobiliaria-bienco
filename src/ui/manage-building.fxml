@@ -148,7 +148,7 @@
                   </TextArea>
                   <HBox prefHeight="70.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#updateBuilding" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Actualizar">
+                        <Button fx:id="btUpdate" mnemonicParsing="false" onAction="#updateBuilding" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Actualizar">
                            <font>
                               <Font name="Britannic Bold" size="17.0" />
                            </font>
@@ -156,7 +156,7 @@
                               <Insets left="70.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#deleteBuilding" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Eliminar">
+                        <Button fx:id="btDelete" mnemonicParsing="false" onAction="#deleteBuilding" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Eliminar">
                            <font>
                               <Font name="Britannic Bold" size="17.0" />
                            </font>
@@ -166,7 +166,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" onAction="#addBuilding" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Agregar">
+                  <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addBuilding" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Agregar">
                      <font>
                         <Font name="Britannic Bold" size="17.0" />
                      </font>

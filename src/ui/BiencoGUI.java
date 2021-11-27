@@ -2,6 +2,7 @@ package ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -18,6 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -27,6 +29,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.Bienco;
 import model.Building;
 
@@ -54,28 +58,28 @@ public class BiencoGUI {
 	//------filter-buildings.fxml
 
 	@FXML
-	private TableView<?> tvOfFoundedBuildings;
+	private TableView<Building> tvOfFoundedBuildings;
 
 	@FXML
-	private TableColumn<?, ?> tcAddressFilter;
+	private TableColumn<Building, String> tcAddressFilter;
 
 	@FXML
-	private TableColumn<?, ?> tcNbdFilter;
+	private TableColumn<Building, String> tcNbdFilter;
 
 	@FXML
-	private TableColumn<?, ?> tcZoneFilter;
+	private TableColumn<Building, String> tcZoneFilter;
 
 	@FXML
-	private TableColumn<?, ?> tcTypeFilter;
+	private TableColumn<Building, String> tcTypeFilter;
 
 	@FXML
-	private TableColumn<?, ?> tcPriceFilter;
+	private TableColumn<Building, Double> tcPriceFilter;
 
 	@FXML
-	private TableColumn<?, ?> tcVorAFilter;
+	private TableColumn<Building, String> tcVorAFilter;
 
 	@FXML
-	private TableColumn<?, ?> tcObsFilter;
+	private TableColumn<Building, String> tcObsFilter;
 
 	@FXML
 	private TextField txtNbd;
@@ -105,8 +109,17 @@ public class BiencoGUI {
 	//------manage-building.fxml
 
 	@FXML
-	private TableView<?> tvOfAddedBuildings;
+	private TableView<Building> tvOfAddedBuildings;
+	
+	@FXML
+	private Button btUpdate;
 
+	@FXML
+	private Button btDelete;
+
+	@FXML
+	private Button btAdd;
+	
 	@FXML
 	private TextField txtAddress;
 
@@ -117,25 +130,25 @@ public class BiencoGUI {
 	private TextArea txaObs;
 
 	@FXML
-	private TableColumn<?, ?> tcAddress;
+	private TableColumn<Building, String> tcAddress;
 
 	@FXML
-	private TableColumn<?, ?> tcNbd;
+	private TableColumn<Building, String> tcNbd;
 
 	@FXML
-	private TableColumn<?, ?> tcZone;
+	private TableColumn<Building, String> tcZone;
 
 	@FXML
-	private TableColumn<?, ?> tcType;
+	private TableColumn<Building, String> tcType;
 
 	@FXML
-	private TableColumn<?, ?> tcPrice;
+	private TableColumn<Building, Double> tcPrice;
 
 	@FXML
-	private TableColumn<?, ?> tcVorA;
+	private TableColumn<Building, String> tcVorA;
 
 	@FXML
-	private TableColumn<?, ?> tcObs;
+	private TableColumn<Building, String> tcObs;
 
 
 	//------routes.fxml
@@ -157,7 +170,7 @@ public class BiencoGUI {
 	public void calculateRoute(ActionEvent event) {
 		if(cmbBuildings.getValue()!=null) {
 			taRoutes.setText(bienco.calculateRoute(cmbBuildings.getValue()));
-			
+
 		}else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
@@ -166,7 +179,7 @@ public class BiencoGUI {
 			alert.showAndWait();
 		}
 	}
-	
+
 	private void initializeComboBoxBuildingsFindRoutes() {
 		ObservableList<Building> options =FXCollections.observableArrayList(bienco.getFilterBuildings());
 		cmbBuildings.setItems(options);
@@ -208,12 +221,21 @@ public class BiencoGUI {
 
 
 
-        private void initializeComboBoxDistances() {
+
+	private void initializeComboBoxDistances() {
 		ObservableList<Building> options =FXCollections.observableArrayList(bienco.getFilterBuildings());
 		cBoxChoiceDistance1.setItems(options);
                 cBoxChoiceDistance2.setItems(options);
 	}
-
+        
+        @FXML
+	public void nextScreenAddDistances(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/addDistanceBetweeNearbyProperties.fxml"));
+		fxmlLoader.setController(this);
+		Parent menuPane = fxmlLoader.load();
+		mainPane.setCenter(menuPane);
+                initializeComboBoxDistances();
+	}
 
 	@FXML
 	public void addDistances(ActionEvent event) throws SimpleGraphException {
@@ -224,7 +246,7 @@ public class BiencoGUI {
                 alert1.setHeaderText(null);
                 
                 try {
-                    if (result.get() == ButtonType.OK){
+                    do{
                         if(cBoxChoiceDistance1.getValue()==cBoxChoiceDistance2.getValue()){
                             alert1.setContentText("No puede elegir la misma distancia, por favor seleccione una distancia diferente");
                             alert1.showAndWait();
@@ -235,13 +257,12 @@ public class BiencoGUI {
                             alert1.showAndWait();
                             txtFDistanceInM.setText("");
                         }
-                    }
+                    }while (result.get() != ButtonType.OK);
                 } catch (SimpleGraphException ge) {
-                    alert1.setContentText(ge.getMessage());
+                    alert1.setContentText("No debe agregar mas de una arista, el grafo debe ser de tipo: Grafo Simple. Intente de nuevo por favor");
                     alert1.showAndWait();
                 }
             }
-            
             else {
                 showValidationErrorAlert();
             }
@@ -297,14 +318,6 @@ public class BiencoGUI {
 	}
 
 	@FXML
-	public void nextScreen(ActionEvent event) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/addDistanceBetweeNearbyProperties.fxml"));
-		fxmlLoader.setController(this);
-		Parent menuPane = fxmlLoader.load();
-		mainPane.setCenter(menuPane);
-	}
-
-	@FXML
 	public void returnToMenu(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/homePage.fxml"));
 		fxmlLoader.setController(this);
@@ -336,15 +349,18 @@ public class BiencoGUI {
 
 
 
-
-
-
-
-
-
-
-
-
+	private void initializeTableViewOfFoundedBuildings(ArrayList<Building> buildings) {
+		ObservableList<Building> observableList;
+		observableList = FXCollections.observableArrayList(buildings);
+		tvOfAddedBuildings.setItems(observableList);
+		tcAddress.setCellValueFactory(new PropertyValueFactory<Building, String>("Address"));
+		tcNbd.setCellValueFactory(new PropertyValueFactory<Building, String>("Neighborhood"));
+		tcZone.setCellValueFactory(new PropertyValueFactory<Building, String>("Zone"));
+		tcType.setCellValueFactory(new PropertyValueFactory<Building, String>("Type"));
+		tcPrice.setCellValueFactory(new PropertyValueFactory<Building, Double>("Price"));
+		tcVorA.setCellValueFactory(new PropertyValueFactory<Building, String>("Purpose"));
+		tcObs.setCellValueFactory(new PropertyValueFactory<Building, String>("Observations"));
+	}
 
 
 	@FXML
@@ -353,6 +369,8 @@ public class BiencoGUI {
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
+		initializeCmbxOfZone();
+		initializeCmbxOfTB();
 	}
 
 	@FXML
@@ -370,7 +388,7 @@ public class BiencoGUI {
 
 				alert.setContentText("Los inmuebles fueron importados exitosamente");
 				alert.showAndWait();
-				
+
 				bienco.saveDataBienco();
 			}catch(IOException e){
 				alert.setContentText("Los inmuebles no se importaron.");
@@ -385,6 +403,9 @@ public class BiencoGUI {
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
+		initializeTableViewOfAddedPlayers();
+		initializeCmbxOfZone();
+		initializeCmbxOfTB();
 	}
 
 
@@ -395,13 +416,19 @@ public class BiencoGUI {
 
 
 
-
-
-
-
-
-
-
+	private void initializeTableViewOfAddedPlayers() {
+		ObservableList<Building> observableList;
+		observableList = FXCollections.observableArrayList(bienco.getBuildings());
+		tvOfAddedBuildings.setItems(observableList);
+		tcAddress.setCellValueFactory(new PropertyValueFactory<Building, String>("Address"));
+		tcNbd.setCellValueFactory(new PropertyValueFactory<Building, String>("Neighborhood"));
+		tcZone.setCellValueFactory(new PropertyValueFactory<Building, String>("Zone"));
+		tcType.setCellValueFactory(new PropertyValueFactory<Building, String>("Type"));
+		tcPrice.setCellValueFactory(new PropertyValueFactory<Building, Double>("Price"));
+		tcVorA.setCellValueFactory(new PropertyValueFactory<Building, String>("Purpose"));
+		tcObs.setCellValueFactory(new PropertyValueFactory<Building, String>("Observations"));
+		tvOfAddedBuildings.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+	}
 
 	private void initializeCmbxOfZone() {
 		ObservableList<String> zoneList = FXCollections.observableArrayList("Sur","Norte","Centro","Este","Oeste");
@@ -453,11 +480,33 @@ public class BiencoGUI {
 		}else {
 			showValidationErrorAlert();
 		}
+		initializeTableViewOfAddedPlayers();
+		initializeCmbxOfZone();
+		initializeCmbxOfTB();
+		txtAddress.clear();
+		txtNbd.clear();
+		txtPrice.clear();
+		txaObs.clear();
+		VorA.getSelectedToggle().setSelected(false);
 	}
 
 	@FXML
 	public void clickOnTVofAddedBuildings(MouseEvent event) {
-
+		Building selectedBuilding = tvOfAddedBuildings.getSelectionModel().getSelectedItem();
+		if (selectedBuilding!= null) {
+			btAdd.setDisable(true);
+			txtAddress.setText(selectedBuilding.getAddress());
+			txtNbd.setText(selectedBuilding.getNeighborhood());
+			txtPrice.setText(""+selectedBuilding.getPrice());
+			cbxZone.setValue(selectedBuilding.getZone());
+			cbxType.setValue(selectedBuilding.getType());
+			txaObs.setText(selectedBuilding.getObservations());
+			if(selectedBuilding.isForSale()) {
+				rbSale.setSelected(true);
+			}else {
+				rbRent.setSelected(true);	
+			}
+		}
 	}
 
 	@FXML

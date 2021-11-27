@@ -19,8 +19,6 @@ import dataStructures.Vertex;
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
 import exceptions.SimpleGraphException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Bienco implements Serializable {
 
@@ -89,6 +87,7 @@ public class Bienco implements Serializable {
 
 
 	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, boolean forSale, String observations) throws NoValueException, NegativeValueException {
+		boolean added= false;
 		double price = Double.parseDouble(p);
 		if(price<0) {
 			throw new NegativeValueException(price);
@@ -100,8 +99,10 @@ public class Bienco implements Serializable {
 			Building newBuilding = new Building(address, neighborhood, Zone.valueOf(zone.toUpperCase()), TypeOfBuilding.valueOf(typeOfBuilding.toUpperCase()), price, forSale, observations);
 			buildings.add(newBuilding);	
 
+			added = true;
 		}
 		//saveDataBienco();
+		return added;
 	}
 
 	private boolean searchBuilding(String address) {
@@ -122,21 +123,19 @@ public class Bienco implements Serializable {
 		return filter;
 	}
 
-	public String addDistancesBetweenProperties (Building u,Building v,String weight) throws SimpleGraphException{
-		int distanceToInt = Integer.valueOf(weight);
-		String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+distanceToInt;
-
-		Vertex<Building> uVertex = graph.searchVertex(u);
-		Vertex<Building> vVertex = graph.searchVertex(v);
-
-		//throw new SimpleGraphException(); PREGUNTAR A LAS CHICAS COMO ATRAPAR LA EXCEPCION
-
-		graphAL.addEdge(uVertex,vVertex,distanceToInt);
-		graphAM.addEdge(uVertex,vVertex,distanceToInt);
-
-
-		return message;
-	}
+        
+        public String addDistancesBetweenProperties (Building u,Building v,String weight) throws SimpleGraphException{
+            int distanceToInt = Integer.valueOf(weight);
+            String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+distanceToInt;
+            
+            Vertex<Building> uVertex = graph.searchVertex(u);
+            Vertex<Building> vVertex = graph.searchVertex(v);
+            
+            graphAL.addEdge(uVertex,vVertex,distanceToInt);
+            graphAM.addEdge(uVertex,vVertex,distanceToInt);
+            
+            return message;
+        }
 
 	public String calculateRoute(Building building) {
 		String routes="*** Rutas calculadas: ***\n";
