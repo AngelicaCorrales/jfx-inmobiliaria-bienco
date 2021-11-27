@@ -304,10 +304,7 @@ public class BiencoGUI {
 
 
 
-	@FXML
-	public void clickOnTVofFoundedBuildings(MouseEvent event) {
-
-	}
+	
 
 	@FXML
 	public void filterBuildings(ActionEvent event) {
