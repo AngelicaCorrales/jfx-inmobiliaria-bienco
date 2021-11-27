@@ -42,7 +42,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView fx:id="tvOfFoundedBuildings" onMouseClicked="#clickOnTVofFoundedBuildings" prefHeight="570.0" prefWidth="636.0" GridPane.columnIndex="1">
+            <TableView fx:id="tvOfFoundedBuildings" prefHeight="570.0" prefWidth="636.0" GridPane.columnIndex="1">
               <columns>
                 <TableColumn fx:id="tcAddressFilter" prefWidth="93.0" text="Dirección" />
                 <TableColumn fx:id="tcNbdFilter" prefWidth="93.0" text="Barrio" />
@@ -170,7 +170,7 @@
                   <Font name="Britannic Bold" size="17.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#nextScreen" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Continuar" GridPane.columnIndex="1">
+            <Button mnemonicParsing="false" onAction="#nextScreenAddDistances" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Continuar" GridPane.columnIndex="1">
                <font>
                   <Font name="Britannic Bold" size="17.0" />
                </font>

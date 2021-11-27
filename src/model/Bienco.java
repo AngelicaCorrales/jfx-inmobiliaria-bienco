@@ -21,7 +21,6 @@ import dataStructures.Vertex;
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
 import exceptions.SimpleGraphException;
-
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -44,7 +43,7 @@ public class Bienco implements Serializable {
 	public  static String BIENCO_SAVE_PATH_FILE;
 	public final static int PROGRAM=0;
 	public final static int TEST=1;
-	
+
 	private Graph<Building> graph;
 	private GraphAL<Building> graphAL;
 	private GraphAM<Building> graphAM;
@@ -60,6 +59,7 @@ public class Bienco implements Serializable {
 			BIENCO_SAVE_PATH_FILE ="data/biencoTest.ackldo";
 		}
 		buildings=new ArrayList<>();
+		graph=graphAL;
 	}
 
 
@@ -116,6 +116,7 @@ public class Bienco implements Serializable {
 		if(founded==null) {
 			Building newBuilding = new Building(address, neighborhood, Zone.valueOf(zone.toUpperCase()), TypeOfBuilding.valueOf(typeOfBuilding.toUpperCase()), price, forSale, observations);
 			buildings.add(newBuilding);	
+
 			added = true;
 		}
 		//saveDataBienco();
@@ -139,10 +140,11 @@ public class Bienco implements Serializable {
 		}
 		return filter;
 	}
+
         
         public String addDistancesBetweenProperties (Building u,Building v,String weight) throws SimpleGraphException{
             int distanceToInt = Integer.valueOf(weight);
-            String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+distanceToInt;
+            String inicialMessage="***DISTANCIAS AGREGADAS: ***\n";
             
             Vertex<Building> uVertex = graph.searchVertex(u);
             Vertex<Building> vVertex = graph.searchVertex(v);
@@ -150,7 +152,9 @@ public class Bienco implements Serializable {
             graphAL.addEdge(uVertex,vVertex,distanceToInt);
             graphAM.addEdge(uVertex,vVertex,distanceToInt);
             
-            return message;
+            String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+distanceToInt;
+            
+            return inicialMessage+="\n"+message+"\n";
         }
 
 	public String calculateRoute(Building building) {
@@ -212,7 +216,7 @@ public class Bienco implements Serializable {
 
 		return routes;
 	}
-	
+
 	public void saveDataBienco() throws IOException{
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(BIENCO_SAVE_PATH_FILE));
 		oos.writeObject(this);
@@ -228,8 +232,8 @@ public class Bienco implements Serializable {
 		}
 		return bienco;
 	}
-	
-	
+
+
 	public void importData(String fileName) throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 
@@ -243,7 +247,7 @@ public class Bienco implements Serializable {
 					String[] parts = line.split(";");
 
 					//String address, String neighborhood,Zone zone,TypeOfBuilding type, double price, boolean forSale,String observations
-					
+
 					if(!parts[0].equals("Tm")) {
 						double price = Double.parseDouble(parts[4]);
 						boolean forSale=false;
@@ -252,7 +256,7 @@ public class Bienco implements Serializable {
 						}
 						Building building = new Building(parts[0], parts[1], Zone.valueOf(parts[2].toUpperCase()), TypeOfBuilding.valueOf(parts[3].toUpperCase()),price,forSale,parts[6]);
 						buildings.add(building);
-						
+
 					}
 
 					line = br.readLine();
@@ -270,7 +274,6 @@ public class Bienco implements Serializable {
 		}
 
 	}
-
 
 	public void deleteBuilding(Building selectedItem) {
 		buildings.remove(selectedItem);
@@ -375,4 +378,191 @@ public class Bienco implements Serializable {
 		}
 		return cell;
 	}
+
+	public void filterBuildings(String neighborhood, String zone, String typeOfBuilding, String pFrom, String pTo, String purpose) throws NegativeValueException, NoValueException {
+		graphAL=new GraphAL<Building>(true,false);
+		graphAM=new GraphAM<Building>(true,false);
+		double priceFrom = 0;
+		double priceTo = Double.MAX_VALUE;
+		if(!pFrom.isEmpty()) {
+
+			priceFrom = Double.parseDouble(pFrom);
+
+			if(priceFrom<0) {
+				throw new NegativeValueException(priceFrom);
+			}else if (priceFrom==0) {
+				throw new NoValueException(priceFrom);
+			}
+
+		}
+
+		if(!pTo.isEmpty()) {
+
+			priceTo = Double.parseDouble(pTo);
+
+			if(priceTo<0) {
+				throw new NegativeValueException(priceTo);
+			}else if (priceTo==0) {
+				throw new NoValueException(priceTo);
+			}
+		}
+		boolean forSale=false;
+		if(!purpose.isEmpty()) {
+			if(purpose.equals("V")) {
+				forSale=true;
+			}
+		}
+
+
+		for(int i=0;i<buildings.size();i++) {
+			if(!neighborhood.isEmpty() &&buildings.get(i).getAddress().equalsIgnoreCase(neighborhood)) {
+				if(!zone.isEmpty() &&buildings.get(i).getZone().equalsIgnoreCase(zone)) {
+					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType().equalsIgnoreCase(typeOfBuilding)) {
+
+						if(!purpose.isEmpty() && buildings.get(i).isForSale()==forSale) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+
+						}else if(purpose.isEmpty()) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+						}
+
+					}else if(typeOfBuilding.isEmpty()) {
+
+						if(!purpose.isEmpty() && buildings.get(i).isForSale()==forSale) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+
+						}else if(purpose.isEmpty()) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+						}
+					}
+				}else if(zone.isEmpty()) {
+					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType().equalsIgnoreCase(typeOfBuilding)) {
+
+						if(!purpose.isEmpty() && buildings.get(i).isForSale()==forSale) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+
+						}else if(purpose.isEmpty()) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+						}
+
+					}else if(typeOfBuilding.isEmpty()) {
+
+						if(!purpose.isEmpty() && buildings.get(i).isForSale()==forSale) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+
+						}else if(purpose.isEmpty()) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+						}
+					}
+				}
+				
+				
+				
+			}else if(neighborhood.isEmpty()) {
+				if(!zone.isEmpty() &&buildings.get(i).getZone().equalsIgnoreCase(zone)) {
+					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType().equalsIgnoreCase(typeOfBuilding)) {
+
+						if(!purpose.isEmpty() && buildings.get(i).isForSale()==forSale) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+
+						}else if(purpose.isEmpty()) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+						}
+
+					}else if(typeOfBuilding.isEmpty()) {
+
+						if(!purpose.isEmpty() && buildings.get(i).isForSale()==forSale) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+
+						}else if(purpose.isEmpty()) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+						}
+					}
+				}else if(zone.isEmpty()) {
+					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType().equalsIgnoreCase(typeOfBuilding)) {
+
+						if(!purpose.isEmpty() && buildings.get(i).isForSale()==forSale) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+
+						}else if(purpose.isEmpty()) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+						}
+
+					}else if(typeOfBuilding.isEmpty()) {
+
+						if(!purpose.isEmpty() && buildings.get(i).isForSale()==forSale) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+
+						}else if(purpose.isEmpty()) {
+							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
+								graphAL.addVertex(buildings.get(i));
+								graphAM.addVertex(buildings.get(i));
+							}
+						}
+					}
+				}
+			}
+
+		}
+	}
+	
+	public boolean connectionFilterBuildings() {
+		boolean conected=true;
+		if(!graph.getVertices().isEmpty()) {
+			graph.bfs(graph.getVertices().get(0));
+		}
+		for(int i=0;i<graph.getVertices().size() && conected;i++) {
+			if(graph.getVertices().get(i).getColor()!='B') {
+				conected=false;
+			}
+		}
+		
+		return conected;
+	}
+
 }

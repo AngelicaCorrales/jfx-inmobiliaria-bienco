@@ -242,27 +242,27 @@ public class BiencoGUI {
 
 	@FXML
 	public void addDistances(ActionEvent event) throws SimpleGraphException {
+
 		if(cBoxChoiceDistance1.getValue()!=null && cBoxChoiceDistance2.getValue()!=null && !txtFDistanceInM.getText().equals("")) {
-			Optional<ButtonType> result = askToContinue();
 			Alert alert1 = new Alert(AlertType.INFORMATION);
 			alert1.setTitle("Error de validacion");
 			alert1.setHeaderText(null);
 
 			try {
-				if (result.get() == ButtonType.OK){
-					if(cBoxChoiceDistance1.getValue()==cBoxChoiceDistance2.getValue()){
-						alert1.setContentText("No puede elegir la misma distancia, por favor seleccione una distancia diferente");
-						alert1.showAndWait();
-					}
-					else{
-						taFFinalDistance.setText(bienco.addDistancesBetweenProperties(cBoxChoiceDistance1.getValue(), cBoxChoiceDistance2.getValue(), txtFDistanceInM.getText()));
-						alert1.setContentText("Distancia agregada exitosamente entre los dos inmuebles");
-						alert1.showAndWait();
-						txtFDistanceInM.setText("");
-					}
+				if(cBoxChoiceDistance1.getValue()==cBoxChoiceDistance2.getValue()){
+					alert1.setContentText("No puede elegir la misma distancia, por favor seleccione una distancia diferente");
+					alert1.showAndWait();
+				}
+				else{
+					taFFinalDistance.setText(bienco.addDistancesBetweenProperties(cBoxChoiceDistance1.getValue(), cBoxChoiceDistance2.getValue(), txtFDistanceInM.getText()));
+					alert1.setContentText("Distancia agregada exitosamente entre los dos inmuebles");
+					alert1.showAndWait();
+					txtFDistanceInM.setText("");
+					cBoxChoiceDistance1.setValue(null);
+					cBoxChoiceDistance2.setValue(null);
 				}
 			} catch (SimpleGraphException ge) {
-				alert1.setContentText("No debe agregar mas de una arista, el grafo de ser de tipo: Grafo Simple. Intente de nuevo por favor");
+				alert1.setContentText("Ya existe una distancia entre los inmuebles seleccionados.");
 				alert1.showAndWait();
 			}
 		}
@@ -273,11 +273,18 @@ public class BiencoGUI {
 
 	@FXML
 	public void nextPageRoutes(ActionEvent event) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/routes.fxml"));
-		fxmlLoader.setController(this);
-		Parent menuPane = fxmlLoader.load();
-		mainPane.setCenter(menuPane);
-		initializeComboBoxBuildingsFindRoutes();
+		String message="Ya no podrá regresar para asignar distancias. ";
+		if(!bienco.connectionFilterBuildings()) {
+			message+="Hay inmuebles que no se han conectado con algun otro.";
+		}
+		Optional<ButtonType> result = askToContinue(message);
+		if (result.get() == ButtonType.OK){
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/routes.fxml"));
+			fxmlLoader.setController(this);
+			Parent menuPane = fxmlLoader.load();
+			mainPane.setCenter(menuPane);
+			initializeComboBoxBuildingsFindRoutes();
+		}
 	}
 
 
@@ -307,14 +314,46 @@ public class BiencoGUI {
 
 
 
-	@FXML
-	public void clickOnTVofFoundedBuildings(MouseEvent event) {
 
-	}
 
 	@FXML
 	public void filterBuildings(ActionEvent event) {
+		Alert alert1 = new Alert(AlertType.INFORMATION);
+		alert1.setTitle("Error");
+		alert1.setHeaderText(null);
+		String purpose="";
+		if(rbSale.isSelected()) {
+			purpose="V";
+		}else if(rbRent.isSelected()) {
+			purpose="A";
+		}
+		if( !txtNbd.getText().isEmpty() || cbxZone.getValue()!=null || cbxType.getValue()!=null && !txtFromPrice.getText().isEmpty() || !txtToPrice.getText().isEmpty() || VorA.getSelectedToggle()!=null) {
+			try {
+				bienco.filterBuildings(txtNbd.getText(),cbxZone.getValue(),cbxType.getValue(),txtFromPrice.getText(),txtToPrice.getText(),purpose);
 
+
+			} catch (NoValueException nv) {
+				alert1.setContentText(nv.getMessage());
+				alert1.showAndWait();
+			} catch (NegativeValueException e) {
+				alert1.setContentText(e.getMessage());
+				alert1.showAndWait();
+			}catch(NumberFormatException num) {
+				alert1.setContentText("Debe ingresar numeros dentro de los campos presentados que asi lo requieran");
+				alert1.showAndWait();
+			}
+
+		}else {
+			alert1.setContentText("Debe hacer el filtro de inmuebles por al menos uno de los criterios.");
+			alert1.showAndWait();
+		}
+
+		initializeTableViewOfFoundedBuildings(bienco.getFilterBuildings());
+		initializeCmbxOfZone();
+		initializeCmbxOfTB();
+		txtNbd.clear();
+		txtPrice.clear();
+		VorA.getSelectedToggle().setSelected(false);
 	}
 
 	@FXML
@@ -650,9 +689,10 @@ public class BiencoGUI {
 		alert.showAndWait();
 	}
 
-	public Optional<ButtonType> askToContinue() {
+	public Optional<ButtonType> askToContinue(String message) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("Â¿Esta seguro que desea continuar? Recuerde que no podra realizar ningun cambio despues.");
+		alert.setContentText("¿Esta seguro que desea continuar?"+message);
+	
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;
 	}
