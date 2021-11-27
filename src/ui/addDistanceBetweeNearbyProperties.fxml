@@ -7,8 +7,6 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -89,11 +87,7 @@
                         <Font name="Book Antiqua" size="17.0" />
                      </font>
                   </RadioButton>
-                  <ImageView fitHeight="44.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
-                     <image>
-                        <Image url="@SIGNO.png" />
-                     </image>
-                  </ImageView>
+                  <Button fx:id="imgD" mnemonicParsing="false" onAction="#informationVersionsD" prefHeight="27.0" prefWidth="86.0" style="-fx-background-color: #FFFFFF;" GridPane.columnIndex="2" />
                </children>
             </GridPane>
             <Label prefHeight="25.0" prefWidth="508.0" text="Agregar distancia entre inmuebles cercanos">

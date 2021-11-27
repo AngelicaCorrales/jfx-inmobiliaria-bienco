@@ -9,8 +9,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -55,11 +53,7 @@
                         <Font name="Book Antiqua" size="17.0" />
                      </font>
                   </RadioButton>
-                  <ImageView fitHeight="50.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
-                     <image>
-                        <Image url="@SIGNO.png" />
-                     </image>
-                  </ImageView>
+                  <Button fx:id="imgF" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#informationVersionsF" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #FFFFFF;" GridPane.columnIndex="3" />
                </children>
             </GridPane>
             <Label text="Lista de inmuebles encontrados">

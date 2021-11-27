@@ -37,6 +37,8 @@ import javafx.stage.FileChooser;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import model.Bienco;
 import model.Building;
 
@@ -177,6 +179,9 @@ public class BiencoGUI {
         @FXML
         private RadioButton rbVersion1Filter;
         
+        @FXML
+        private Button imgF;
+        
         //Distance page
         
         @FXML
@@ -187,6 +192,9 @@ public class BiencoGUI {
 
         @FXML
         private RadioButton rbVersion2Distance;
+        
+        @FXML
+        private Button imgD;
         
         //Routes page
         
@@ -199,6 +207,8 @@ public class BiencoGUI {
         @FXML
         private RadioButton rbVersion1Routes;
         
+        @FXML
+        private Button imgR;
         
 	//--------------------------------------
 
@@ -275,6 +285,7 @@ public class BiencoGUI {
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
 		initializeComboBoxDistances();
+                initializeImageInButtons();
 	}
 
 	@FXML
@@ -321,6 +332,7 @@ public class BiencoGUI {
 			Parent menuPane = fxmlLoader.load();
 			mainPane.setCenter(menuPane);
 			initializeComboBoxBuildingsFindRoutes();
+                        initializeImageInButtons();
 		}
 	}
 
@@ -447,6 +459,7 @@ public class BiencoGUI {
 		mainPane.setCenter(menuPane);
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
+                initializeImageInButtons();
 	}
 
 	@FXML
@@ -716,6 +729,44 @@ public class BiencoGUI {
 
 
 
+        private void initializeImageInButtons() {
+            
+                Image imageF = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
+                imgF.setGraphic(new ImageView(imageF));
+                
+		Image imageD = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
+                imgD.setGraphic(new ImageView(imageD));
+                
+                Image imageR = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
+                imgR.setGraphic(new ImageView(imageR));
+	}
+        
+        @FXML
+        public void informationVersionsF(ActionEvent event) {
+            Alert alert1 = new Alert(AlertType.INFORMATION);
+            alert1.setTitle("Informacion de las versiones");
+            alert1.setHeaderText(null);
+            alert1.setContentText("VERSION 1: Lista de adyacencia. VERSION 2: Matriz de adyacencia");
+            alert1.showAndWait();
+        }
+        
+        @FXML
+        public void informationVersionsD(ActionEvent event) {
+            Alert alert1 = new Alert(AlertType.INFORMATION);
+            alert1.setTitle("Informacion de las versiones");
+            alert1.setHeaderText(null);
+            alert1.setContentText("VERSION 1: Lista de adyacencia. VERSION 2: Matriz de adyacencia");
+            alert1.showAndWait();
+        }
+        
+        @FXML
+        public void informationVersionsR(ActionEvent event) {
+            Alert alert1 = new Alert(AlertType.INFORMATION);
+            alert1.setTitle("Informacion de las versiones");
+            alert1.setHeaderText(null);
+            alert1.setContentText("VERSION 1: Lista de adyacencia. VERSION 2: Matriz de adyacencia");
+            alert1.showAndWait();
+        }
 
 
 	public void showValidationErrorAlert() {

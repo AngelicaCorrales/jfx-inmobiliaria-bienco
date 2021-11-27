@@ -7,8 +7,6 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -83,21 +81,14 @@
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="418.0" minWidth="10.0" prefWidth="136.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="583.0" minWidth="2.0" prefWidth="154.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="583.0" minWidth="10.0" prefWidth="154.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="821.0" minWidth="10.0" prefWidth="729.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <HBox prefHeight="48.0" prefWidth="729.0" GridPane.columnIndex="2">
-               <children>
-                  <ImageView fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@SIGNO.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </HBox>
+            <HBox prefHeight="48.0" prefWidth="729.0" GridPane.columnIndex="3" />
             <RadioButton fx:id="rbVersion2Routes" mnemonicParsing="false" text="Version 2" GridPane.columnIndex="1">
                <font>
                   <Font name="Book Antiqua" size="17.0" />
@@ -111,6 +102,7 @@
                   <Font name="Book Antiqua" size="17.0" />
                </font>
             </RadioButton>
+            <Button fx:id="imgR" mnemonicParsing="false" onAction="#informationVersionsR" prefHeight="26.0" prefWidth="82.0" text="Button" GridPane.columnIndex="2" />
          </children>
       </GridPane>
    </top>
