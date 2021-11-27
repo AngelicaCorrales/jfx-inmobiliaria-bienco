@@ -89,6 +89,7 @@ public class Bienco implements Serializable {
 
 
 	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, boolean forSale, String observations) throws NoValueException, NegativeValueException {
+		boolean added= false;
 		double price = Double.parseDouble(p);
 		if(price<0) {
 			throw new NegativeValueException(price);
@@ -99,9 +100,10 @@ public class Bienco implements Serializable {
 		if(founded==false) {
 			Building newBuilding = new Building(address, neighborhood, Zone.valueOf(zone.toUpperCase()), TypeOfBuilding.valueOf(typeOfBuilding.toUpperCase()), price, forSale, observations);
 			buildings.add(newBuilding);	
-			
+			added = true;
 		}
 		//saveDataBienco();
+		return added;
 	}
 
 	private boolean searchBuilding(String address) {

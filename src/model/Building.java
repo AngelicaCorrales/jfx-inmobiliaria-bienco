@@ -39,16 +39,16 @@ public class Building implements Serializable {
 		this.neighborhood = neighborhood;
 	}
 
-	public Zone getZone() {
-		return zone;
+	public String getZone() {
+		return zone.name();
 	}
 
 	public void setZone(Zone zone) {
 		this.zone = zone;
 	}
 
-	public TypeOfBuilding getType() {
-		return type;
+	public String getType() {
+		return type.name();
 	}
 
 	public void setType(TypeOfBuilding type) {
@@ -83,4 +83,11 @@ public class Building implements Serializable {
 		return address;
 	}
 	
+	public String getPurpose() {
+		String purpose = "Alquiler";
+		if(forSale==true) {
+			purpose = "Venta";
+		}
+		return purpose;
+	}
 }
