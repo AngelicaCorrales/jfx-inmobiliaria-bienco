@@ -9,6 +9,7 @@ import dataStructures.GraphAM;
 import dataStructures.Vertex;
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
+import exceptions.SimpleGraphException;
 
 public class Bienco {
 
@@ -96,6 +97,18 @@ public class Bienco {
 		}
 		return filter;
 	}
+        
+        public String addDistancesBetweenProperties (Building u,Building v,Integer weight) throws SimpleGraphException{
+            String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+weight;
+            
+            Vertex<Building> uVertex = graph.searchVertex(u);
+            Vertex<Building> vVertex = graph.searchVertex(v);
+            
+            graphAL.addEdge(uVertex,vVertex,weight);
+            graphAM.addEdge(uVertex,vVertex,weight);
+            
+            return message;
+        }
 
 	public String calculateRoute(Building building) {
 		String routes="*** Rutas calculadas: ***\n";
