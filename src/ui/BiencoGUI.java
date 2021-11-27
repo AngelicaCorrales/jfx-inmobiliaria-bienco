@@ -348,7 +348,15 @@ public class BiencoGUI {
 			alert1.showAndWait();
 		}
 
+		if(bienco.getFilterBuildings().isEmpty()) {
+			alert1.setTitle("Informacion");
+			alert1.setHeaderText(null);
+			alert1.setContentText("No se encontraron inmuebles con los criterios definidos dentro del sistema.");
+			alert1.showAndWait();
+		}
 		initializeTableViewOfFoundedBuildings(bienco.getFilterBuildings());
+		
+		
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
 		txtNbd.clear();
