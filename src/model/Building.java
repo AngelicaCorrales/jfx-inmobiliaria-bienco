@@ -76,4 +76,8 @@ public class Building {
 		this.forSale = forSale;
 	}
 	
+	public String toString() {
+		return address;
+	}
+	
 }

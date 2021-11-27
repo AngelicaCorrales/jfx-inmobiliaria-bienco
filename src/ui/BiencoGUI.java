@@ -3,6 +3,8 @@ package ui;
 import java.io.IOException;
 import java.util.Optional;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Alert.AlertType;
 import model.Bienco;
+import model.Building;
 
 public class BiencoGUI {
 
@@ -126,7 +129,7 @@ public class BiencoGUI {
 
 	//------routes.fxml
 	@FXML
-	private ComboBox<?> cmbBuildings;
+	private ComboBox<Building> cmbBuildings;
 
 	@FXML
 	private TextArea taRoutes;
@@ -141,8 +144,23 @@ public class BiencoGUI {
 
 	@FXML
 	public void calculateRoute(ActionEvent event) {
-
+		if(cmbBuildings.getValue()!=null) {
+			taRoutes.setText(bienco.calculateRoute(cmbBuildings.getValue()));
+			
+		}else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText(null);
+			alert.setContentText("Debe elegir la direccion desde la cual planea iniciar su recorrido.");
+			alert.showAndWait();
+		}
 	}
+	
+	private void initializeComboBoxBuildingsFindRoutes() {
+		ObservableList<Building> options =FXCollections.observableArrayList(bienco.getFilterBuildings());
+		cmbBuildings.setItems(options);
+	}
+
 
 
 	@FXML
@@ -192,6 +210,7 @@ public class BiencoGUI {
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
+		initializeComboBoxBuildingsFindRoutes();
 	}
 
 
