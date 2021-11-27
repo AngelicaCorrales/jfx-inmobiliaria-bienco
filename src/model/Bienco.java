@@ -131,11 +131,8 @@ public class Bienco implements Serializable {
             Vertex<Building> uVertex = graph.searchVertex(u);
             Vertex<Building> vVertex = graph.searchVertex(v);
             
-            //throw new SimpleGraphException(); PREGUNTAR A LAS CHICAS COMO ATRAPAR LA EXCEPCION
-            
             graphAL.addEdge(uVertex,vVertex,distanceToInt);
             graphAM.addEdge(uVertex,vVertex,distanceToInt);
-            
             
             return message;
         }
