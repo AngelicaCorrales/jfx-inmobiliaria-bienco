@@ -240,24 +240,23 @@ public class BiencoGUI {
 	@FXML
 	public void addDistances(ActionEvent event) throws SimpleGraphException {
             if(cBoxChoiceDistance1.getValue()!=null && cBoxChoiceDistance2.getValue()!=null && !txtFDistanceInM.getText().equals("")) {
-                Optional<ButtonType> result = askToContinue();
                 Alert alert1 = new Alert(AlertType.INFORMATION);
                 alert1.setTitle("Error de validacion");
                 alert1.setHeaderText(null);
                 
                 try {
-                    do{
-                        if(cBoxChoiceDistance1.getValue()==cBoxChoiceDistance2.getValue()){
+                    if(cBoxChoiceDistance1.getValue()==cBoxChoiceDistance2.getValue()){
                             alert1.setContentText("No puede elegir la misma distancia, por favor seleccione una distancia diferente");
                             alert1.showAndWait();
                         }
-                        else{
-                            taFFinalDistance.setText(bienco.addDistancesBetweenProperties(cBoxChoiceDistance1.getValue(), cBoxChoiceDistance2.getValue(), txtFDistanceInM.getText()));
-                            alert1.setContentText("Distancia agregada exitosamente entre los dos inmuebles");
-                            alert1.showAndWait();
-                            txtFDistanceInM.setText("");
-                        }
-                    }while (result.get() != ButtonType.OK);
+                    else{
+                        taFFinalDistance.setText(bienco.addDistancesBetweenProperties(cBoxChoiceDistance1.getValue(), cBoxChoiceDistance2.getValue(), txtFDistanceInM.getText()));
+                        alert1.setContentText("Distancia agregada exitosamente entre los dos inmuebles");
+                        alert1.showAndWait();
+                        txtFDistanceInM.setText("");
+                        cBoxChoiceDistance1.setValue(null);
+                        cBoxChoiceDistance2.setValue(null);
+                    }
                 } catch (SimpleGraphException ge) {
                     alert1.setContentText("No debe agregar mas de una arista, el grafo debe ser de tipo: Grafo Simple. Intente de nuevo por favor");
                     alert1.showAndWait();
@@ -564,7 +563,7 @@ public class BiencoGUI {
 
 	public Optional<ButtonType> askToContinue() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("¿Esta seguro que desea continuar?");
+		alert.setContentText("ï¿½Esta seguro que desea continuar?");
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;
 	}

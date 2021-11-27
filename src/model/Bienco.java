@@ -126,7 +126,7 @@ public class Bienco implements Serializable {
         
         public String addDistancesBetweenProperties (Building u,Building v,String weight) throws SimpleGraphException{
             int distanceToInt = Integer.valueOf(weight);
-            String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+distanceToInt;
+            String inicialMessage="***DISTANCIAS AGREGADAS: ***\n";
             
             Vertex<Building> uVertex = graph.searchVertex(u);
             Vertex<Building> vVertex = graph.searchVertex(v);
@@ -134,7 +134,9 @@ public class Bienco implements Serializable {
             graphAL.addEdge(uVertex,vVertex,distanceToInt);
             graphAM.addEdge(uVertex,vVertex,distanceToInt);
             
-            return message;
+            String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+distanceToInt;
+            
+            return inicialMessage+="\n"+message+"\n";
         }
 
 	public String calculateRoute(Building building) {
