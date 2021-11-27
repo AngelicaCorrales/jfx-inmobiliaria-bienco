@@ -290,7 +290,10 @@ public class BiencoGUI {
 
 	@FXML
 	public void filterBuildings(ActionEvent event) {
-
+		if(!txtNbd.getText().isEmpty()) {
+			
+			
+		}
 	}
 
 	@FXML
@@ -512,7 +515,7 @@ public class BiencoGUI {
 
 	public Optional<ButtonType> askToContinue() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("Â¿Esta seguro que desea continuar? Recuerde que no podra realizar ningun cambio despues.");
+		alert.setContentText("¿Esta seguro que desea continuar?");
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;
 	}
