@@ -42,6 +42,7 @@ public class Bienco implements Serializable {
 			BIENCO_SAVE_PATH_FILE ="data/biencoTest.ackldo";
 		}
 		buildings=new ArrayList<>();
+		graph=graphAL;
 	}
 
 
@@ -259,6 +260,8 @@ public class Bienco implements Serializable {
 
 
 	public void filterBuildings(String neighborhood, String zone, String typeOfBuilding, String pFrom, String pTo, String purpose) throws NegativeValueException, NoValueException {
+		graphAL=new GraphAL<Building>(true,false);
+		graphAM=new GraphAM<Building>(true,false);
 		double priceFrom = 0;
 		double priceTo = Double.MAX_VALUE;
 		if(!pFrom.isEmpty()) {
@@ -293,8 +296,8 @@ public class Bienco implements Serializable {
 
 		for(int i=0;i<buildings.size();i++) {
 			if(!neighborhood.isEmpty() &&buildings.get(i).getAddress().equalsIgnoreCase(neighborhood)) {
-				if(!zone.isEmpty() &&buildings.get(i).getZone()==Zone.valueOf(zone.toUpperCase())) {
-					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType()==TypeOfBuilding.valueOf(typeOfBuilding.toUpperCase())) {
+				if(!zone.isEmpty() &&buildings.get(i).getZone().equalsIgnoreCase(zone)) {
+					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType().equalsIgnoreCase(typeOfBuilding)) {
 
 						if(!purpose.isEmpty() && buildings.get(i).isForSale()==forSale) {
 							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
@@ -325,7 +328,7 @@ public class Bienco implements Serializable {
 						}
 					}
 				}else if(zone.isEmpty()) {
-					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType()==TypeOfBuilding.valueOf(typeOfBuilding.toUpperCase())) {
+					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType().equalsIgnoreCase(typeOfBuilding)) {
 
 						if(!purpose.isEmpty() && buildings.get(i).isForSale()==forSale) {
 							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
@@ -360,8 +363,8 @@ public class Bienco implements Serializable {
 				
 				
 			}else if(neighborhood.isEmpty()) {
-				if(!zone.isEmpty() &&buildings.get(i).getZone()==Zone.valueOf(zone.toUpperCase())) {
-					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType()==TypeOfBuilding.valueOf(typeOfBuilding.toUpperCase())) {
+				if(!zone.isEmpty() &&buildings.get(i).getZone().equalsIgnoreCase(zone)) {
+					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType().equalsIgnoreCase(typeOfBuilding)) {
 
 						if(!purpose.isEmpty() && buildings.get(i).isForSale()==forSale) {
 							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {
@@ -392,7 +395,7 @@ public class Bienco implements Serializable {
 						}
 					}
 				}else if(zone.isEmpty()) {
-					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType()==TypeOfBuilding.valueOf(typeOfBuilding.toUpperCase())) {
+					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType().equalsIgnoreCase(typeOfBuilding)) {
 
 						if(!purpose.isEmpty() && buildings.get(i).isForSale()==forSale) {
 							if(priceFrom<=buildings.get(i).getPrice() && buildings.get(i).getPrice()<= priceTo) {

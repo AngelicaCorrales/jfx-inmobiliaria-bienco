@@ -303,17 +303,46 @@ public class BiencoGUI {
 
 
 
-	@FXML
-	public void clickOnTVofFoundedBuildings(MouseEvent event) {
-
-	}
+	
 
 	@FXML
 	public void filterBuildings(ActionEvent event) {
-		if(!txtNbd.getText().isEmpty()) {
-			
-			
+		Alert alert1 = new Alert(AlertType.INFORMATION);
+		alert1.setTitle("Error");
+		alert1.setHeaderText(null);
+		String purpose="";
+		if(rbSale.isSelected()) {
+			purpose="V";
+		}else if(rbRent.isSelected()) {
+			purpose="A";
 		}
+		if( !txtNbd.getText().isEmpty() || cbxZone.getValue()!=null || cbxType.getValue()!=null && !txtFromPrice.getText().isEmpty() || !txtToPrice.getText().isEmpty() || VorA.getSelectedToggle()!=null) {
+			try {
+				bienco.filterBuildings(txtNbd.getText(),cbxZone.getValue(),cbxType.getValue(),txtFromPrice.getText(),txtToPrice.getText(),purpose);
+				
+				
+			} catch (NoValueException nv) {
+				alert1.setContentText(nv.getMessage());
+				alert1.showAndWait();
+			} catch (NegativeValueException e) {
+				alert1.setContentText(e.getMessage());
+				alert1.showAndWait();
+			}catch(NumberFormatException num) {
+				alert1.setContentText("Debe ingresar numeros dentro de los campos presentados que asi lo requieran");
+				alert1.showAndWait();
+			}
+			
+		}else {
+			alert1.setContentText("Debe hacer el filtro de inmuebles por al menos uno de los criterios.");
+			alert1.showAndWait();
+		}
+		
+		initializeTableViewOfFoundedBuildings(bienco.getFilterBuildings());
+		initializeCmbxOfZone();
+		initializeCmbxOfTB();
+		txtNbd.clear();
+		txtPrice.clear();
+		VorA.getSelectedToggle().setSelected(false);
 	}
 
 	@FXML
@@ -402,7 +431,7 @@ public class BiencoGUI {
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
-		initializeTableViewOfAddedPlayers();
+		initializeTableViewOfAddedBuildings();
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
 	}
@@ -415,7 +444,7 @@ public class BiencoGUI {
 
 
 
-	private void initializeTableViewOfAddedPlayers() {
+	private void initializeTableViewOfAddedBuildings() {
 		ObservableList<Building> observableList;
 		observableList = FXCollections.observableArrayList(bienco.getBuildings());
 		tvOfAddedBuildings.setItems(observableList);
@@ -479,7 +508,7 @@ public class BiencoGUI {
 		}else {
 			showValidationErrorAlert();
 		}
-		initializeTableViewOfAddedPlayers();
+		initializeTableViewOfAddedBuildings();
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
 		txtAddress.clear();
