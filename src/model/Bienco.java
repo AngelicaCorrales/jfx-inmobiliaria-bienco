@@ -7,6 +7,8 @@ import dataStructures.Graph;
 import dataStructures.GraphAL;
 import dataStructures.GraphAM;
 import dataStructures.Vertex;
+import exceptions.NegativeValueException;
+import exceptions.NoValueException;
 
 public class Bienco {
 
@@ -61,6 +63,32 @@ public class Bienco {
 		this.graphAM = graphAM;
 	}
 
+
+
+	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, String purpose, String observations) throws NoValueException, NegativeValueException {
+		double price = Double.parseDouble(p);
+		if(price<0) {
+			throw new NegativeValueException(price);
+		}else if (price==0) {
+			throw new NoValueException(price);
+		}
+		boolean founded = searchBuilding(address);
+		if(founded==false) {
+			Building newBuilding = new Building(address, neighborhood, zone, typeOfBuilding, price, purpose, observations);
+			buildings.add(newBuilding);	
+		}
+	}
+
+	private boolean searchBuilding(String address) {
+		boolean founded = false;
+		for(int k=0; k<buildings.size();k++) {
+			if(buildings.get(k).getAddress().equals(address)) {
+				founded = true;
+			}
+		}
+		return founded;
+	}
+
 	public ArrayList<Building> getFilterBuildings(){
 		ArrayList<Building> filter= new ArrayList<Building>();
 		for(int i=0; i<graph.getVertices().size();i++) {
@@ -99,19 +127,19 @@ public class Bienco {
 				}
 			}
 		}
-		
+
 		String suggRoute="";
-		
+
 		for(int i=0; i<paths.size();i++) {
 			String route="";
 			while(!paths.get(i).isEmpty()) {
 				Vertex<Building> property=paths.get(i).pop();
 				int distance=property.getDistance();
 				route+= property.getValue();
-				
+
 				if(!paths.get(i).isEmpty()) {
 					route+=" --> ";
-					
+
 				}else {
 					route+="|Distancia: "+ distance +"metros\n\n";
 				}
@@ -120,15 +148,14 @@ public class Bienco {
 			if(i==suggested) {
 				suggRoute+=route;
 			}
-			
+
 		}
-		
+
 		routes+="*** Ruta sugerida: ***\n"+suggRoute+"\n";
-		
+
 
 		return routes;
 	}
-
 
 
 }
