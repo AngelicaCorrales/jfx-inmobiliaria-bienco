@@ -10,7 +10,8 @@ import java.util.Optional;
 
 import javax.swing.JFileChooser;
 
-//import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.DocumentException;
+
 
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
@@ -448,6 +449,7 @@ public class BiencoGUI {
 		tcPrice.setCellValueFactory(new PropertyValueFactory<Building, Double>("Price"));
 		tcVorA.setCellValueFactory(new PropertyValueFactory<Building, String>("Purpose"));
 		tcObs.setCellValueFactory(new PropertyValueFactory<Building, String>("Observations"));
+		tvOfAddedBuildings.setStyle("-fx-background-image:url('/ui/btv.jpg')");
 	}
 
 
@@ -519,6 +521,7 @@ public class BiencoGUI {
 		tcVorA.setCellValueFactory(new PropertyValueFactory<Building, String>("Purpose"));
 		tcObs.setCellValueFactory(new PropertyValueFactory<Building, String>("Observations"));
 		tvOfAddedBuildings.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		tvOfAddedBuildings.setStyle("-fx-background-image:url('/ui/btv.jpg')");
 	}
 
 	private void initializeCmbxOfZone() {
@@ -675,7 +678,7 @@ public class BiencoGUI {
 		btDelete.setDisable(true);
 	}
 
-	/*@FXML
+	@FXML
 	public void downloadReport(ActionEvent event) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Elija la carpeta en la cual desea guardar el reporte");
@@ -700,7 +703,7 @@ public class BiencoGUI {
 				alert.showAndWait();
 			}
 		}	
-	}*/
+	}
 
 
 
