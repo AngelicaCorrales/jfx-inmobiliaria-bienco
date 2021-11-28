@@ -5,12 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 import javax.swing.JFileChooser;
 
-//import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.DocumentException;
 
 
 import exceptions.NegativeValueException;
@@ -233,39 +235,6 @@ public class BiencoGUI {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private void initializeComboBoxDistances() {
 		ObservableList<Building> options =FXCollections.observableArrayList(bienco.getFilterBuildings());
 		cBoxChoiceDistance1.setItems(options);
@@ -328,31 +297,6 @@ public class BiencoGUI {
                         initializeImageInButtons();
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -437,25 +381,6 @@ public class BiencoGUI {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private void initializeTableViewOfFoundedBuildings(ArrayList<Building> buildings) {
 		ObservableList<Building> observableList;
 		observableList = FXCollections.observableArrayList(buildings);
@@ -518,13 +443,6 @@ public class BiencoGUI {
 		btUpdate.setDisable(true);
 		btDelete.setDisable(true);
 	}
-
-
-
-
-
-
-
 
 
 	private void initializeTableViewOfAddedBuildings() {
@@ -696,7 +614,7 @@ public class BiencoGUI {
 		btDelete.setDisable(true);
 	}
 
-	/*@FXML
+	@FXML
 	public void downloadReport(ActionEvent event) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Elija la carpeta en la cual desea guardar el reporte");
@@ -706,7 +624,12 @@ public class BiencoGUI {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Descargar reporte");
 			try {
-				OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\Reporte.pdf");
+				String TIME_FORMAT = "yyyy-MM-dd h:mm:ss a";
+				 SimpleDateFormat format=new SimpleDateFormat(TIME_FORMAT);
+				 Date date=new Date();
+				String dateClock=format.format(date);
+				 
+				OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\Reporte "+dateClock+".pdf");
 				bienco.generatePDFReport(text_exit, bienco.getFilterBuildings());
 				alert.setHeaderText(null);
 				alert.setContentText("El reporte ha sido exportado exitosamente");
@@ -721,35 +644,7 @@ public class BiencoGUI {
 				alert.showAndWait();
 			}
 		}	
-	}*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	}
 
 
 
