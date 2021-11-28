@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 public class Building implements Serializable {
 
@@ -57,6 +58,12 @@ public class Building implements Serializable {
 
 	public double getPrice() {
 		return price;
+	}
+	
+	public String getPriceToString() {
+		DecimalFormat df = new DecimalFormat("#");
+		df.setMaximumFractionDigits(0);
+		return df.format(price);
 	}
 
 	public void setPrice(double price) {

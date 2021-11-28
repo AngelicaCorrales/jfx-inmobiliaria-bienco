@@ -119,6 +119,7 @@ public class Bienco implements Serializable {
 	public void resetGraph() {
 		graphAL=new GraphAL<Building>(true,false);
 		graphAM=new GraphAM<Building>(true,false);
+		routes="";
 	}
 
 	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, boolean forSale, String observations) throws NoValueException, NegativeValueException, IOException {
@@ -383,7 +384,7 @@ public class Bienco implements Serializable {
 			Building b = buildings.get(x);
 			for (int y=0; y < data[x].length; y++) {
 				if(y==1) {
-					data[x][y] ="\nInmueble #"+x+"\n\nDireccion: "+b.getAddress()+"\nBarrio: "+b.getNeighborhood()+"\nZona: "+b.getZone()+"\nTipo: "+b.getType()+"\nPrecio: "+b.getPrice()+"\nProposito: "+b.getPurpose()+"\nObservaciones: "+b.getObservations();
+					data[x][y] ="\nInmueble #"+(x+1)+"\n\nDireccion: "+b.getAddress()+"\nBarrio: "+b.getNeighborhood()+"\nZona: "+b.getZone()+"\nTipo: "+b.getType()+"\nPrecio: "+b.getPriceToString()+"\nProposito: "+b.getPurpose()+"\nObservaciones: "+b.getObservations();
 				}
 			}
 		}
