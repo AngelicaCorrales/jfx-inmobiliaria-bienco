@@ -347,8 +347,8 @@ public class GraphTest {
 		Vertex<Building> v = graph.searchVertex(graph.getVertices().get(2).getValue());
 		assertEquals(v.getValue().getAddress(), "Calle 7A # 4-15");
 		assertEquals(v.getValue().getNeighborhood(), "Vipasa");
-		assertEquals(v.getValue().getZone(), Zone.NORTE);
-		assertEquals(v.getValue().getType(), TypeOfBuilding.CASA);
+		assertEquals(v.getValue().getZone().toString(), Zone.NORTE.toString());
+		assertEquals(v.getValue().getType().toString(), TypeOfBuilding.CASA.toString());
 		assertEquals(v.getValue().getPrice(), 205000000.0);
 		assertTrue(v.getValue().isForSale());
 		assertEquals(v.getValue().getObservations(), "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 banios, garaje y patio trasero.");
