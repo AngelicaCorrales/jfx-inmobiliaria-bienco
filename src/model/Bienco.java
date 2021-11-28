@@ -119,6 +119,7 @@ public class Bienco implements Serializable {
 	public void resetGraph() {
 		graphAL=new GraphAL<Building>(true,false);
 		graphAM=new GraphAM<Building>(true,false);
+		routes="";
 	}
 
 	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, boolean forSale, String observations) throws NoValueException, NegativeValueException, IOException {
