@@ -202,8 +202,9 @@ public class Bienco implements Serializable {
 				if(suggested==-1) {
 					suggested=i;
 				}else {
+					
 					if(paths.get(suggested).size()<paths.get(paths.size()-1).size()) {
-						suggested=i;
+						suggested=(paths.size()-1);
 					}
 				}
 			}
@@ -336,8 +337,7 @@ public class Bienco implements Serializable {
 		Document doc = new Document(PageSize.LETTER.rotate());
 		PdfWriter.getInstance(doc, txt);
 		doc.open();
-		Font negrilla = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
-		Font normal = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK);
+		Font normal = new Font(Font.FontFamily.HELVETICA, 30, Font.NORMAL, BaseColor.GREEN);
 		PdfPTable tbl_routes = new PdfPTable(2);
 		Paragraph texto = null;
 
@@ -354,21 +354,23 @@ public class Bienco implements Serializable {
 		} catch (BadElementException | IOException e) {
 			e.printStackTrace();
 		} 
-
-		texto = new Paragraph();
-		texto.add(new Phrase(routes));
-		doc.add(texto);
-
-		texto = new Paragraph();
-		texto.add(new Phrase(Chunk.NEWLINE));
-		doc.add(texto);
 		
-		texto = new Paragraph("Listado de Inmuebles filtrados por las caracteristicas dadas", negrilla);
+		texto = new Paragraph();
+		texto.setFont(normal);
+		texto.add(new Phrase(routes));
+		texto.setSpacingBefore(700f);
 		texto.setAlignment(Element.ALIGN_CENTER);
-		texto.add(new Phrase(Chunk.NEWLINE));
-		texto.add(new Phrase(Chunk.NEWLINE));
+		texto.setSpacingAfter(50f);
 		doc.add(texto);
 
+		texto = new Paragraph();
+		texto.setFont(normal);
+		texto.add(new Phrase("Listado de Inmuebles filtrados por las caracteristicas dadas"));
+		texto.setAlignment(Element.ALIGN_CENTER);
+		texto.setSpacingAfter(50f);
+		doc.add(texto);
+
+		tbl_routes.setHorizontalAlignment(Element.ALIGN_CENTER);
 		tbl_routes.setWidths(new int[]{1, 4});
 		String[][] data = new String[buildings.size()][2];
 		for (int x=0; x < data.length; x++) {
@@ -381,7 +383,7 @@ public class Bienco implements Serializable {
 		}
 		for (String[] row : data) {
 			tbl_routes.addCell(createImageCell(1, Element.ALIGN_LEFT));
-			tbl_routes.addCell(createTextCell(row[1], normal, 4, Element.ALIGN_LEFT));
+			tbl_routes.addCell(createTextCell(row[1], normal, 2, Element.ALIGN_LEFT));
 		}
 		doc.add(tbl_routes);
 		texto = new Paragraph();

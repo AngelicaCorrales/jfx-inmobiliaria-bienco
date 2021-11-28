@@ -56,11 +56,6 @@
                   <Button fx:id="imgF" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#informationVersions" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #FFFFFF;" GridPane.columnIndex="3" />
                </children>
             </GridPane>
-            <Label text="Lista de inmuebles encontrados">
-               <font>
-                  <Font name="Britannic Bold" size="25.0" />
-               </font>
-            </Label>
          </children>
       </GridPane>
    </top>
@@ -71,10 +66,11 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="731.0" minWidth="10.0" prefWidth="681.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView fx:id="tvOfFoundedBuildings" prefHeight="570.0" prefWidth="636.0" GridPane.columnIndex="1">
+            <TableView fx:id="tvOfFoundedBuildings" prefHeight="570.0" prefWidth="636.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
               <columns>
                 <TableColumn fx:id="tcAddressFilter" prefWidth="93.0" text="Dirección" />
                 <TableColumn fx:id="tcNbdFilter" prefWidth="93.0" text="Barrio" />
@@ -88,7 +84,7 @@
                   <Insets bottom="50.0" right="30.0" top="20.0" />
                </GridPane.margin>
             </TableView>
-            <VBox prefHeight="570.0" prefWidth="466.0">
+            <VBox prefHeight="570.0" prefWidth="466.0" GridPane.rowIndex="1">
                <children>
                   <Label text="Filtrar inmuebles">
                      <font>
@@ -194,22 +190,30 @@
                   </Button>
                </children>
             </VBox>
-            <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Atrás" GridPane.columnIndex="1">
+            <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="230.0" top="530.0" />
+                  <Insets left="230.0" top="510.0" />
                </GridPane.margin>
                <font>
                   <Font name="Britannic Bold" size="17.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#nextScreenAddDistances" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Continuar" GridPane.columnIndex="1">
+            <Button mnemonicParsing="false" onAction="#nextScreenAddDistances" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Continuar" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="Britannic Bold" size="17.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="350.0" top="530.0" />
+                  <Insets left="350.0" top="510.0" />
                </GridPane.margin>
             </Button>
+            <Label text="Lista de inmuebles encontrados" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Britannic Bold" size="25.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="170.0" />
+               </GridPane.margin>
+            </Label>
          </children>
          <BorderPane.margin>
             <Insets bottom="20.0" />

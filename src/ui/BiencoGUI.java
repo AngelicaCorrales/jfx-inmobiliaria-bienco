@@ -425,12 +425,6 @@ public class BiencoGUI {
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
 		bienco.resetGraph();
-		String option="VERSION 1";
-		if(rbVersion2.isSelected()) {
-			option="VERSION 2";
-		}
-		bienco.changeVersionProgram(option);
-
 	}
 
 
@@ -477,9 +471,15 @@ public class BiencoGUI {
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
+		bienco.resetGraph();
+		String option="VERSION 1";
+		if(rbVersion2.isSelected()) {
+			option="VERSION 2";
+		}
+		bienco.changeVersionProgram(option);
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
-                initializeImageInButtons();
+        initializeImageInButtons();
 	}
 
 	@FXML
