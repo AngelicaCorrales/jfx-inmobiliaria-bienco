@@ -248,7 +248,7 @@ public class BiencoGUI {
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
 		initializeComboBoxDistances();
-                initializeImageInButtons();
+        initializeImageInButtons();
 	}
 
 	@FXML
@@ -294,7 +294,7 @@ public class BiencoGUI {
 			Parent menuPane = fxmlLoader.load();
 			mainPane.setCenter(menuPane);
 			initializeComboBoxBuildingsFindRoutes();
-                        initializeImageInButtons();
+            initializeImageInButtons();
 		}
 	}
 
@@ -386,7 +386,6 @@ public class BiencoGUI {
 		tcPriceFilter.setCellValueFactory(new PropertyValueFactory<Building, Double>("Price"));
 		tcVorAFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Purpose"));
 		tcObsFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Observations"));
-		tvOfFoundedBuildings.setStyle("-fx-background-image:url('/ui/btv.jpg')");
 	}
 
 
@@ -402,6 +401,7 @@ public class BiencoGUI {
 			option="VERSION 2";
 		}
 		bienco.changeVersionProgram(option);
+		tvOfFoundedBuildings.setStyle("-fx-background-image:url('/ui/btv.jpg')");
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
         initializeImageInButtons();
@@ -507,17 +507,18 @@ public class BiencoGUI {
 				alert1.setContentText("Debe ingresar numeros dentro de los campos presentados que asi lo requieran");
 				alert1.showAndWait();
 			}
+			tvOfAddedBuildings.getItems().clear();
+			initializeTableViewOfAddedBuildings();
+			initializeCmbxOfZone();
+			initializeCmbxOfTB();
+			txtAddress.clear();
+			txtNbd.clear();
+			txtPrice.clear();
+			txaObs.clear();
+			VorA.getSelectedToggle().setSelected(false);
 		}else {
 			showValidationErrorAlert();
 		}
-		initializeTableViewOfAddedBuildings();
-		initializeCmbxOfZone();
-		initializeCmbxOfTB();
-		txtAddress.clear();
-		txtNbd.clear();
-		txtPrice.clear();
-		txaObs.clear();
-		VorA.getSelectedToggle().setSelected(false);
 	}
 
 	@FXML
@@ -580,7 +581,7 @@ public class BiencoGUI {
 			alert1.setHeaderText(null);
 			try {
 				boolean updated = bienco.updateBuilding(tvOfAddedBuildings.getSelectionModel().getSelectedItem(),txtAddress.getText(),txtNbd.getText(),cbxZone.getValue(),cbxType.getValue(),txtPrice.getText(),getRadioButtonSaleOrRent(),txaObs.getText());
-				if(updated==false) {
+				if(updated==true) {
 					alert1.setContentText("El inmueble ha sido actualizado exitosamente");
 					alert1.showAndWait();
 				}else {
@@ -597,21 +598,21 @@ public class BiencoGUI {
 				alert1.setContentText("Debe ingresar numeros dentro de los campos presentados que asi lo requieran");
 				alert1.showAndWait();
 			}
+			initializeCmbxOfZone();
+			initializeCmbxOfTB();
+			txtAddress.clear();
+			txtNbd.clear();
+			txtPrice.clear();
+			txaObs.clear();
+			VorA.getSelectedToggle().setSelected(false);
+			tvOfAddedBuildings.getItems().clear();
+			initializeTableViewOfAddedBuildings();
+			btAdd.setDisable(false);
+			btUpdate.setDisable(true);
+			btDelete.setDisable(true);
 		}else {
 			showValidationErrorAlert();
 		}
-		initializeCmbxOfZone();
-		initializeCmbxOfTB();
-		txtAddress.clear();
-		txtNbd.clear();
-		txtPrice.clear();
-		txaObs.clear();
-		VorA.getSelectedToggle().setSelected(false);
-		tvOfAddedBuildings.getItems().clear();
-		initializeTableViewOfAddedBuildings();
-		btAdd.setDisable(false);
-		btUpdate.setDisable(true);
-		btDelete.setDisable(true);
 	}
 
 	@FXML
