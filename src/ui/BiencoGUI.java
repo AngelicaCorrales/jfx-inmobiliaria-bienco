@@ -182,6 +182,9 @@ public class BiencoGUI {
 
         @FXML
         private RadioButton rbVersion1;
+
+	@FXML
+	private Button btFilterProperty;
         
 	//--------------------------------------
 
@@ -283,7 +286,7 @@ public class BiencoGUI {
 
 	@FXML
 	public void nextPageRoutes(ActionEvent event) throws IOException {
-		String message="Ya no podr� regresar para asignar distancias. ";
+		String message="Ya no podra regresar para asignar distancias. ";
 		if(!bienco.connectionFilterBuildings()) {
 			message+="Hay inmuebles que no se han conectado con algun otro.";
 		}
@@ -404,7 +407,8 @@ public class BiencoGUI {
 		tvOfFoundedBuildings.setStyle("-fx-background-image:url('/ui/btv.jpg')");
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
-        initializeImageInButtons();
+        	initializeImageInButtons();
+		btFilterProperty.setDisable(true);
 	}
 
 	@FXML
