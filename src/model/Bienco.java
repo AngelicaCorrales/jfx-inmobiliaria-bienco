@@ -383,7 +383,7 @@ public class Bienco implements Serializable {
 			Building b = buildings.get(x);
 			for (int y=0; y < data[x].length; y++) {
 				if(y==1) {
-					data[x][y] ="\nInmueble #"+x+"\n\nDireccion: "+b.getAddress()+"\nBarrio: "+b.getNeighborhood()+"\nZona: "+b.getZone()+"\nTipo: "+b.getType()+"\nPrecio: "+b.getPrice()+"\nProposito: "+b.getPurpose()+"\nObservaciones: "+b.getObservations();
+					data[x][y] ="\nInmueble #"+(x+1)+"\n\nDireccion: "+b.getAddress()+"\nBarrio: "+b.getNeighborhood()+"\nZona: "+b.getZone()+"\nTipo: "+b.getType()+"\nPrecio: "+b.getPriceToString()+"\nProposito: "+b.getPurpose()+"\nObservaciones: "+b.getObservations();
 				}
 			}
 		}

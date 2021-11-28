@@ -84,7 +84,7 @@ public class BiencoGUI {
 	private TableColumn<Building, String> tcTypeFilter;
 
 	@FXML
-	private TableColumn<Building, Double> tcPriceFilter;
+	private TableColumn<Building, String> tcPriceFilter;
 
 	@FXML
 	private TableColumn<Building, String> tcVorAFilter;
@@ -153,7 +153,7 @@ public class BiencoGUI {
 	private TableColumn<Building, String> tcType;
 
 	@FXML
-	private TableColumn<Building, Double> tcPrice;
+	private TableColumn<Building, String> tcPrice;
 
 	@FXML
 	private TableColumn<Building, String> tcVorA;
@@ -251,10 +251,22 @@ public class BiencoGUI {
 
 	@FXML
 	public void nextScreenAddDistances(ActionEvent event) throws IOException {
+		String option="VERSION 2";
+		if(rbVersion1.isSelected()) {
+			option="VERSION 1";
+			
+		}
+		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/addDistanceBetweeNearbyProperties.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
+		if(option.equals("VERSION 1")) {
+			rbVersion1.setSelected(true);
+		}else {
+			rbVersion2.setSelected(true);
+		}
+		
 		initializeComboBoxDistances();
 		initializeImageInButtons();
 	}
@@ -291,16 +303,28 @@ public class BiencoGUI {
 
 	@FXML
 	public void nextPageRoutes(ActionEvent event) throws IOException {
-		String message="Ya no podra regresar para asignar distancias. ";
+		String message=" Ya no podra regresar para asignar distancias. ";
 		if(!bienco.connectionFilterBuildings()) {
 			message+="Hay inmuebles que no se han conectado con algun otro.";
 		}
 		Optional<ButtonType> result = askToContinue(message);
 		if (result.get() == ButtonType.OK){
+			
+			String option="VERSION 2";
+			if(rbVersion1.isSelected()) {
+				option="VERSION 1";
+				
+			}
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/routes.fxml"));
 			fxmlLoader.setController(this);
 			Parent menuPane = fxmlLoader.load();
 			mainPane.setCenter(menuPane);
+			
+			if(option.equals("VERSION 1")) {
+				rbVersion1.setSelected(true);
+			}else {
+				rbVersion2.setSelected(true);
+			}
 			initializeComboBoxBuildingsFindRoutes();
 			initializeImageInButtons();
 		}
@@ -321,16 +345,22 @@ public class BiencoGUI {
 		}else if(rbRent.isSelected()) {
 			purpose="A";
 		}
-		if( !txtNbd.getText().isEmpty() || cbxZone.getValue()!=null || cbxType.getValue()!=null && !txtFromPrice.getText().isEmpty() || !txtToPrice.getText().isEmpty() || VorA.getSelectedToggle()!=null) {
+		String type = cbxType.getValue();
+		String zone = cbxZone.getValue();
+		if(type==null) {
+			type = "";
+		}
+		if(zone==null) {
+			zone ="";
+		}
+		if( !txtNbd.getText().isEmpty() || !zone.isEmpty() || !type.isEmpty()|| !txtFromPrice.getText().isEmpty() || !txtToPrice.getText().isEmpty() || !purpose.isEmpty()) {
 			try {
-				String type = cbxType.getValue();
-				String zone = cbxZone.getValue();
-				if(type==null) {
-					type = "";
+				bienco.resetGraph();
+				String option="VERSION 1";
+				if(rbVersion2.isSelected()) {
+					option="VERSION 2";
 				}
-				if(zone==null) {
-					zone ="";
-				}
+				bienco.changeVersionProgram(option);
 				bienco.filterBuildings(txtNbd.getText(),zone,type,txtFromPrice.getText(),txtToPrice.getText(),purpose);
 				btFilterProperty.setDisable(false);
 
@@ -355,7 +385,9 @@ public class BiencoGUI {
 			alert1.setHeaderText(null);
 			alert1.setContentText("No se encontraron inmuebles con los criterios definidos dentro del sistema.");
 			alert1.showAndWait();
+			btFilterProperty.setDisable(true);
 		}
+		tvOfFoundedBuildings.getItems().clear();
 		initializeTableViewOfFoundedBuildings(bienco.getFilterBuildings());
 
 
@@ -391,7 +423,7 @@ public class BiencoGUI {
 		tcNbdFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Neighborhood"));
 		tcZoneFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Zone"));
 		tcTypeFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Type"));
-		tcPriceFilter.setCellValueFactory(new PropertyValueFactory<Building, Double>("Price"));
+		tcPriceFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("PriceToString"));
 		tcVorAFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Purpose"));
 		tcObsFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Observations"));
 	}
@@ -468,7 +500,7 @@ public class BiencoGUI {
 		tcNbd.setCellValueFactory(new PropertyValueFactory<Building, String>("Neighborhood"));
 		tcZone.setCellValueFactory(new PropertyValueFactory<Building, String>("Zone"));
 		tcType.setCellValueFactory(new PropertyValueFactory<Building, String>("Type"));
-		tcPrice.setCellValueFactory(new PropertyValueFactory<Building, Double>("Price"));
+		tcPrice.setCellValueFactory(new PropertyValueFactory<Building, String>("PriceToString"));
 		tcVorA.setCellValueFactory(new PropertyValueFactory<Building, String>("Purpose"));
 		tcObs.setCellValueFactory(new PropertyValueFactory<Building, String>("Observations"));
 		tvOfAddedBuildings.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
