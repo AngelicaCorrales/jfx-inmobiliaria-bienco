@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -8,95 +9,99 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;">
          <children>
-            <Label layoutX="263.0" layoutY="107.0" text="Desde:">
+            <Label layoutX="263.0" layoutY="34.0" text="Desde:">
                <font>
                   <Font name="Book Antiqua" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="542.0" layoutY="107.0" text="Hasta:">
+            <Label layoutX="542.0" layoutY="34.0" text="Hasta:">
                <font>
                   <Font name="Book Antiqua" size="20.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cBoxChoiceDistance1" layoutX="340.0" layoutY="104.0" prefWidth="150.0" promptText="Elija Una" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" />
-            <Label layoutX="340.0" layoutY="162.0" text="Distancia en metros:">
+            <ComboBox fx:id="cBoxChoiceDistance1" layoutX="340.0" layoutY="32.0" prefWidth="150.0" promptText="Elija Una" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" />
+            <Label layoutX="340.0" layoutY="89.0" text="Distancia en metros:">
                <font>
                   <Font name="Book Antiqua" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="txtFDistanceInM" layoutX="534.0" layoutY="161.0" promptText="Distancia en metros">
+            <TextField fx:id="txtFDistanceInM" layoutX="534.0" layoutY="88.0" promptText="Distancia en metros">
                <font>
                   <Font name="Book Antiqua" size="15.0" />
                </font>
             </TextField>
-            <Button layoutX="383.0" layoutY="258.0" mnemonicParsing="false" onAction="#addDistances" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Agregar">
+            <Button layoutX="456.0" layoutY="186.0" mnemonicParsing="false" onAction="#addDistances" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Agregar">
                <font>
                   <Font name="Britannic Bold" size="25.0" />
                </font>
             </Button>
-            <Button layoutX="558.0" layoutY="258.0" mnemonicParsing="false" onAction="#nextPageRoutes" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Continuar">
-               <font>
-                  <Font name="Britannic Bold" size="25.0" />
-               </font>
-            </Button>
-            <ComboBox fx:id="cBoxChoiceDistance2" layoutX="607.0" layoutY="105.0" prefWidth="150.0" promptText="Elija Una" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" />
-            <TextArea fx:id="taFFinalDistance" editable="false" layoutX="240.0" layoutY="335.0" prefHeight="292.0" prefWidth="588.0" promptText="Distancias Agregadas" />
+            <ComboBox fx:id="cBoxChoiceDistance2" layoutX="607.0" layoutY="32.0" prefWidth="150.0" promptText="Elija Una" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" />
+            <TextArea fx:id="taFFinalDistance" editable="false" layoutX="275.0" layoutY="300.0" prefHeight="209.0" prefWidth="566.0" promptText="Distancias Agregadas">
+               <padding>
+                  <Insets left="-60.0" right="-60.0" />
+               </padding></TextArea>
+            <HBox alignment="CENTER" layoutX="420.0" layoutY="546.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#nextPageRoutes" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Continuar">
+                     <font>
+                        <Font name="Britannic Bold" size="25.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="80.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </Pane>
    </center>
    <top>
-      <GridPane BorderPane.alignment="CENTER">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="753.0" minWidth="10.0" prefWidth="593.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="559.0" minWidth="10.0" prefWidth="426.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane GridPane.columnIndex="1">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <RadioButton fx:id="rbVersion1" mnemonicParsing="false" onMouseClicked="#changeVersionProgram" prefHeight="23.0" prefWidth="120.0" selected="true" text="Version 1">
-                     <font>
-                        <Font name="Book Antiqua" size="17.0" />
-                     </font>
-                     <toggleGroup>
-                        <ToggleGroup fx:id="versionsProgram" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="rbVersion2" mnemonicParsing="false" onMouseClicked="#changeVersionProgram" text="Version 2" toggleGroup="$versionsProgram" GridPane.columnIndex="2">
-                     <font>
-                        <Font name="Book Antiqua" size="17.0" />
-                     </font>
-                  </RadioButton>
-                  <Button fx:id="imgF" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#informationVersions" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #FFFFFF;" GridPane.columnIndex="3" />
-               </children>
-            </GridPane>
-            <Label prefHeight="25.0" prefWidth="508.0" text="Agregar distancia entre inmuebles cercanos">
+            <Label prefHeight="25.0" prefWidth="522.0" text="Agregar distancia entre inmuebles cercanos">
                <font>
                   <Font name="Britannic Bold" size="25.0" />
                </font>
+               <HBox.margin>
+                  <Insets left="-600.0" />
+               </HBox.margin>
             </Label>
+            <RadioButton fx:id="rbVersion1" mnemonicParsing="false" onMouseClicked="#changeVersionProgram" selected="true" text="Version 1">
+               <font>
+                  <Font name="Book Antiqua" size="17.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="versionsProgram" />
+               </toggleGroup>
+               <HBox.margin>
+                  <Insets left="60.0" right="40.0" />
+               </HBox.margin>
+            </RadioButton>
+            <RadioButton fx:id="rbVersion2" mnemonicParsing="false" onMouseClicked="#changeVersionProgram" text="Version 2" toggleGroup="$versionsProgram">
+               <font>
+                  <Font name="Book Antiqua" size="17.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="40.0" />
+               </HBox.margin>
+            </RadioButton>
+            <Button fx:id="imgF" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#informationVersions" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #FFFFFF;">
+               <HBox.margin>
+                  <Insets right="-600.0" />
+               </HBox.margin>
+            </Button>
          </children>
-      </GridPane>
+         <BorderPane.margin>
+            <Insets top="60.0" />
+         </BorderPane.margin>
+      </HBox>
    </top>
 </BorderPane>
