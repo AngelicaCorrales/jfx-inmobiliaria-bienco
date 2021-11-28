@@ -168,23 +168,25 @@ public class Bienco implements Serializable {
 
 		for(int i=0; i<graph.getVertices().size();i++) {
 			Vertex<Building> vertex=graph.getVertices().get(i);
-			paths.add(new Stack<>());
+			if(vertex.getValue()!=building) {
+				paths.add(new Stack<>());
 
-			while(vertex!=null) {
-				paths.get(i).push(vertex);
-				vertex=vertex.getPredecesor();
-			}
+				while(vertex!=null) {
+					paths.get(i).push(vertex);
+					vertex=vertex.getPredecesor();
+				}
 
-			if(paths.get(i).peek()!=bv) {
-				paths.remove(i);
+				if(paths.get(i).peek()!=bv) {
+					paths.remove(i);
 
-			}else {
-
-				if(suggested==-1) {
-					suggested=i;
 				}else {
-					if(paths.get(suggested).size()<paths.get(i).size()) {
+
+					if(suggested==-1) {
 						suggested=i;
+					}else {
+						if(paths.get(suggested).size()<paths.get(i).size()) {
+							suggested=i;
+						}
 					}
 				}
 			}
@@ -194,9 +196,10 @@ public class Bienco implements Serializable {
 
 		for(int i=0; i<paths.size();i++) {
 			String route="";
+			int distance=0;
 			while(!paths.get(i).isEmpty()) {
 				Vertex<Building> property=paths.get(i).pop();
-				int distance=property.getDistance();
+				distance+=property.getDistance();
 				route+= property.getValue();
 
 				if(!paths.get(i).isEmpty()) {

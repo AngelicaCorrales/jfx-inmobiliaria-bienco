@@ -37,6 +37,8 @@ import javafx.stage.FileChooser;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import model.Bienco;
 import model.Building;
 
@@ -163,6 +165,51 @@ public class BiencoGUI {
 
 	@FXML
 	private TextArea taRoutes;
+        
+        //--------Program versions (AL or AM)
+        
+        //Filter page
+        
+        @FXML
+        private RadioButton rbVersion2Filter;
+
+        @FXML
+        private ToggleGroup versionsfilter;
+
+        @FXML
+        private RadioButton rbVersion1Filter;
+        
+        @FXML
+        private Button imgF;
+        
+        //Distance page
+        
+        @FXML
+        private RadioButton rbVersion1Distance;
+
+        @FXML
+        private ToggleGroup versionsDistance;
+
+        @FXML
+        private RadioButton rbVersion2Distance;
+        
+        @FXML
+        private Button imgD;
+        
+        //Routes page
+        
+        @FXML
+        private RadioButton rbVersion2Routes;
+
+        @FXML
+        private ToggleGroup versionsRoutes;
+
+        @FXML
+        private RadioButton rbVersion1Routes;
+        
+        @FXML
+        private Button imgR;
+        
 	//--------------------------------------
 
 
@@ -238,6 +285,7 @@ public class BiencoGUI {
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
 		initializeComboBoxDistances();
+                initializeImageInButtons();
 	}
 
 	@FXML
@@ -273,7 +321,7 @@ public class BiencoGUI {
 
 	@FXML
 	public void nextPageRoutes(ActionEvent event) throws IOException {
-		String message="Ya no podrá regresar para asignar distancias. ";
+		String message="Ya no podrï¿½ regresar para asignar distancias. ";
 		if(!bienco.connectionFilterBuildings()) {
 			message+="Hay inmuebles que no se han conectado con algun otro.";
 		}
@@ -284,6 +332,7 @@ public class BiencoGUI {
 			Parent menuPane = fxmlLoader.load();
 			mainPane.setCenter(menuPane);
 			initializeComboBoxBuildingsFindRoutes();
+                        initializeImageInButtons();
 		}
 	}
 
@@ -348,7 +397,15 @@ public class BiencoGUI {
 			alert1.showAndWait();
 		}
 
+		if(bienco.getFilterBuildings().isEmpty()) {
+			alert1.setTitle("Informacion");
+			alert1.setHeaderText(null);
+			alert1.setContentText("No se encontraron inmuebles con los criterios definidos dentro del sistema.");
+			alert1.showAndWait();
+		}
 		initializeTableViewOfFoundedBuildings(bienco.getFilterBuildings());
+		
+		
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
 		txtNbd.clear();
@@ -410,6 +467,7 @@ public class BiencoGUI {
 		mainPane.setCenter(menuPane);
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
+                initializeImageInButtons();
 	}
 
 	@FXML
@@ -557,7 +615,7 @@ public class BiencoGUI {
 		Alert alert1 = new Alert(AlertType.CONFIRMATION);
 		alert1.setTitle("Confirmacion de proceso");
 		alert1.setHeaderText(null);
-		alert1.setContentText("¿Esta seguro de que quiere eliminar este inmueble?");
+		alert1.setContentText("ï¿½Esta seguro de que quiere eliminar este inmueble?");
 		Optional<ButtonType> result = alert1.showAndWait();
 		if (result.get() == ButtonType.OK){
 			bienco.deleteBuilding(tvOfAddedBuildings.getSelectionModel().getSelectedItem());
@@ -682,6 +740,44 @@ public class BiencoGUI {
 
 
 
+        private void initializeImageInButtons() {
+            
+                Image imageF = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
+                imgF.setGraphic(new ImageView(imageF));
+                
+		Image imageD = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
+                imgD.setGraphic(new ImageView(imageD));
+                
+                Image imageR = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
+                imgR.setGraphic(new ImageView(imageR));
+	}
+        
+        @FXML
+        public void informationVersionsF(ActionEvent event) {
+            Alert alert1 = new Alert(AlertType.INFORMATION);
+            alert1.setTitle("Informacion de las versiones");
+            alert1.setHeaderText(null);
+            alert1.setContentText("VERSION 1: Lista de adyacencia. VERSION 2: Matriz de adyacencia");
+            alert1.showAndWait();
+        }
+        
+        @FXML
+        public void informationVersionsD(ActionEvent event) {
+            Alert alert1 = new Alert(AlertType.INFORMATION);
+            alert1.setTitle("Informacion de las versiones");
+            alert1.setHeaderText(null);
+            alert1.setContentText("VERSION 1: Lista de adyacencia. VERSION 2: Matriz de adyacencia");
+            alert1.showAndWait();
+        }
+        
+        @FXML
+        public void informationVersionsR(ActionEvent event) {
+            Alert alert1 = new Alert(AlertType.INFORMATION);
+            alert1.setTitle("Informacion de las versiones");
+            alert1.setHeaderText(null);
+            alert1.setContentText("VERSION 1: Lista de adyacencia. VERSION 2: Matriz de adyacencia");
+            alert1.showAndWait();
+        }
 
 
 	public void showValidationErrorAlert() {
@@ -694,7 +790,7 @@ public class BiencoGUI {
 
 	public Optional<ButtonType> askToContinue(String message) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("¿Esta seguro que desea continuar?"+message);
+		alert.setContentText("ï¿½Esta seguro que desea continuar?"+message);
 	
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;
