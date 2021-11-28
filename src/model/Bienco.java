@@ -173,8 +173,8 @@ public class Bienco implements Serializable {
 		graphAL.addEdge(uVertexAL,vVertexAL,distanceToInt);
 		graphAM.addEdge(uVertexAM,vVertexAM,distanceToInt);
 
-		for(int i=0;i<graph.getListEdges().size();i++){
-                    message+="-El inmueble: "+graph.getListEdges().get(i).getScr().getValue()+" con el inmueble: "+graph.getListEdges().get(i).getDest().getValue()+" ,tienen una distancia de: "+graph.getListEdges().get(i).getWeight()+"\n";
+		for(int i=0;i<graph.getEdges().size();i++){
+                    message+="-El inmueble: "+graph.getEdges().get(i).getScr().getValue()+" con el inmueble: "+graph.getEdges().get(i).getDest().getValue()+" ,tienen una distancia de: "+graph.getEdges().get(i).getWeight()+"\n";
                 }
 
 		return inicialMessage+="\n"+message+"\n";
