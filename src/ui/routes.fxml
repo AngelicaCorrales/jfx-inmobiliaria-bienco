@@ -81,28 +81,28 @@
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="418.0" minWidth="10.0" prefWidth="136.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="583.0" minWidth="2.0" prefWidth="154.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="583.0" minWidth="10.0" prefWidth="154.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="821.0" minWidth="10.0" prefWidth="729.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="583.0" minWidth="10.0" prefWidth="153.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="821.0" minWidth="10.0" prefWidth="654.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <HBox prefHeight="48.0" prefWidth="729.0" GridPane.columnIndex="3" />
-            <RadioButton fx:id="rbVersion2Routes" mnemonicParsing="false" text="Version 2" GridPane.columnIndex="1">
+            <RadioButton fx:id="rbVersion2" mnemonicParsing="false" onMouseClicked="#changeVersionProgram" text="Version 2" GridPane.columnIndex="1">
                <font>
                   <Font name="Book Antiqua" size="17.0" />
                </font>
                <toggleGroup>
-                  <ToggleGroup fx:id="versionsRoutes" />
+                  <ToggleGroup fx:id="versionsProgram" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rbVersion1Routes" mnemonicParsing="false" selected="true" text="Version 1" toggleGroup="$versionsRoutes">
+            <RadioButton fx:id="rbVersion1" mnemonicParsing="false" onMouseClicked="#changeVersionProgram" prefHeight="23.0" prefWidth="118.0" selected="true" text="Version 1" toggleGroup="$versionsProgram">
                <font>
                   <Font name="Book Antiqua" size="17.0" />
                </font>
             </RadioButton>
-            <Button fx:id="imgR" mnemonicParsing="false" onAction="#informationVersionsR" prefHeight="26.0" prefWidth="82.0" text="Button" GridPane.columnIndex="2" />
+            <Button fx:id="imgF" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#informationVersions" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #FFFFFF;" GridPane.columnIndex="2" />
          </children>
       </GridPane>
    </top>

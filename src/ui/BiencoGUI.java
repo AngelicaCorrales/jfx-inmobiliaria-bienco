@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import javax.swing.JFileChooser;
 
-import com.itextpdf.text.DocumentException;
+//import com.itextpdf.text.DocumentException;
 
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
@@ -168,47 +168,17 @@ public class BiencoGUI {
         
         //--------Program versions (AL or AM)
         
-        //Filter page
-        
-        @FXML
-        private RadioButton rbVersion2Filter;
-
-        @FXML
-        private ToggleGroup versionsfilter;
-
-        @FXML
-        private RadioButton rbVersion1Filter;
-        
         @FXML
         private Button imgF;
         
-        //Distance page
-        
         @FXML
-        private RadioButton rbVersion1Distance;
+        private RadioButton rbVersion2;
 
         @FXML
-        private ToggleGroup versionsDistance;
+        private ToggleGroup versionsProgram;
 
         @FXML
-        private RadioButton rbVersion2Distance;
-        
-        @FXML
-        private Button imgD;
-        
-        //Routes page
-        
-        @FXML
-        private RadioButton rbVersion2Routes;
-
-        @FXML
-        private ToggleGroup versionsRoutes;
-
-        @FXML
-        private RadioButton rbVersion1Routes;
-        
-        @FXML
-        private Button imgR;
+        private RadioButton rbVersion1;
         
 	//--------------------------------------
 
@@ -217,7 +187,30 @@ public class BiencoGUI {
 		bienco=b;
 	}
 
-
+        @FXML
+        public void changeVersionProgram(MouseEvent event){
+            String option="";
+            if(rbVersion1.isSelected()) {
+                option="VERSION 1";
+                Alert alert1 = new Alert(AlertType.INFORMATION);
+                alert1.setTitle("Informacion de las versiones");
+                alert1.setHeaderText(null);
+                alert1.setContentText("La version de su programa ha sido cambiada a la Version 1: Lista de adyacencia");
+                alert1.showAndWait();
+            }
+            else if(rbVersion2.isSelected()) {
+                option="VERSION 2";
+                Alert alert1 = new Alert(AlertType.INFORMATION);
+                alert1.setTitle("Informacion de las versiones");
+                alert1.setHeaderText(null);
+                alert1.setContentText("La version de su programa ha sido cambiada a la Version 2: Matriz de adyacencia");
+                alert1.showAndWait();
+            }
+            
+            if(versionsProgram.getSelectedToggle()!=null) {
+                bienco.changeVersionProgram(option);
+            }
+        }
 
 	@FXML
 	public void calculateRoute(ActionEvent event) {
@@ -290,7 +283,6 @@ public class BiencoGUI {
 
 	@FXML
 	public void addDistances(ActionEvent event) throws SimpleGraphException {
-
 		if(cBoxChoiceDistance1.getValue()!=null && cBoxChoiceDistance2.getValue()!=null && !txtFDistanceInM.getText().equals("")) {
 			Alert alert1 = new Alert(AlertType.INFORMATION);
 			alert1.setTitle("Error de validacion");
@@ -683,7 +675,7 @@ public class BiencoGUI {
 		btDelete.setDisable(true);
 	}
 
-	@FXML
+	/*@FXML
 	public void downloadReport(ActionEvent event) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Elija la carpeta en la cual desea guardar el reporte");
@@ -708,7 +700,7 @@ public class BiencoGUI {
 				alert.showAndWait();
 			}
 		}	
-	}
+	}*/
 
 
 
@@ -741,37 +733,12 @@ public class BiencoGUI {
 
 
         private void initializeImageInButtons() {
-            
-                Image imageF = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
-                imgF.setGraphic(new ImageView(imageF));
-                
-		Image imageD = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
-                imgD.setGraphic(new ImageView(imageD));
-                
-                Image imageR = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
-                imgR.setGraphic(new ImageView(imageR));
+            Image imageF = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
+            imgF.setGraphic(new ImageView(imageF));
 	}
         
         @FXML
-        public void informationVersionsF(ActionEvent event) {
-            Alert alert1 = new Alert(AlertType.INFORMATION);
-            alert1.setTitle("Informacion de las versiones");
-            alert1.setHeaderText(null);
-            alert1.setContentText("VERSION 1: Lista de adyacencia. VERSION 2: Matriz de adyacencia");
-            alert1.showAndWait();
-        }
-        
-        @FXML
-        public void informationVersionsD(ActionEvent event) {
-            Alert alert1 = new Alert(AlertType.INFORMATION);
-            alert1.setTitle("Informacion de las versiones");
-            alert1.setHeaderText(null);
-            alert1.setContentText("VERSION 1: Lista de adyacencia. VERSION 2: Matriz de adyacencia");
-            alert1.showAndWait();
-        }
-        
-        @FXML
-        public void informationVersionsR(ActionEvent event) {
+        public void informationVersions(ActionEvent event) {
             Alert alert1 = new Alert(AlertType.INFORMATION);
             alert1.setTitle("Informacion de las versiones");
             alert1.setHeaderText(null);

@@ -21,7 +21,7 @@ import dataStructures.Vertex;
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
 import exceptions.SimpleGraphException;
-import com.itextpdf.text.BadElementException;
+/*import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -35,7 +35,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.PdfWriter;*/
 
 public class Bienco implements Serializable {
 
@@ -106,7 +106,15 @@ public class Bienco implements Serializable {
 		this.graphAM = graphAM;
 	}
 
-
+        public void changeVersionProgram(String option){
+            if(option.equalsIgnoreCase("VERSION 1")){
+                graph=graphAL;
+            }
+            
+            else if(option.equalsIgnoreCase("VERSION 2")){
+                graph=graphAM;
+            }
+        }
 
 	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, boolean forSale, String observations) throws NoValueException, NegativeValueException, IOException {
 		boolean added= false;
@@ -319,7 +327,7 @@ public class Bienco implements Serializable {
 		return updated;
 	}
 
-	public void generatePDFReport(OutputStream txt, ArrayList<Building> buildings) throws DocumentException{
+	/*public void generatePDFReport(OutputStream txt, ArrayList<Building> buildings) throws DocumentException{
 		Document doc = new Document(PageSize.LETTER.rotate());
 		PdfWriter.getInstance(doc, txt);
 		doc.open();
@@ -402,7 +410,7 @@ public class Bienco implements Serializable {
 			e.printStackTrace();
 		}
 		return cell;
-	}
+	}*/
 
 	public void filterBuildings(String neighborhood, String zone, String typeOfBuilding, String pFrom, String pTo, String purpose) throws NegativeValueException, NoValueException {
 		
