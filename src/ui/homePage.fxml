@@ -24,7 +24,7 @@
          <children>
             <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #0A4F90;">
                <children>
-                  <Label layoutX="65.0" layoutY="123.0" prefHeight="99.0" prefWidth="381.0" text="Bienvenido al sistema de la inmobiliaria Bienco S.A." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label layoutX="65.0" layoutY="123.0" prefHeight="99.0" prefWidth="381.0" text="Bienvenido al sistema de la inmobiliaria Bienco S.A.S" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Britannic Bold" size="25.0" />
                      </font>
