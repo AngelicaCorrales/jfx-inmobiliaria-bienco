@@ -203,7 +203,7 @@ public class Bienco implements Serializable {
 			}else {
 
 				if(suggested==-1) {
-					suggested=i;
+					suggested=(paths.size()-1);
 				}else {
 					
 					if(paths.get(suggested).size()<paths.get(paths.size()-1).size()) {
