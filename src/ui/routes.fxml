@@ -32,7 +32,7 @@
             </TextArea>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#downloadReport" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text=" Descargar reporte">
+                  <Button fx:id="btReport" disable="true" mnemonicParsing="false" onAction="#downloadReport" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text=" Descargar reporte">
                      <HBox.margin>
                         <Insets right="40.0" />
                      </HBox.margin>

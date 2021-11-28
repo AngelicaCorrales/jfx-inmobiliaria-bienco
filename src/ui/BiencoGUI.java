@@ -160,6 +160,8 @@ public class BiencoGUI {
 
 	@FXML
 	private TableColumn<Building, String> tcObs;
+	@FXML
+	private Button imgManage;
 
 
 	//------routes.fxml
@@ -168,24 +170,27 @@ public class BiencoGUI {
 
 	@FXML
 	private TextArea taRoutes;
-        
-        //--------Program versions (AL or AM)
-        
-        @FXML
-        private Button imgF;
-        
-        @FXML
-        private RadioButton rbVersion2;
 
-        @FXML
-        private ToggleGroup versionsProgram;
+	@FXML
+	private Button btReport;
 
-        @FXML
-        private RadioButton rbVersion1;
+	//--------Program versions (AL or AM)
+
+	@FXML
+	private Button imgF;
+
+	@FXML
+	private RadioButton rbVersion2;
+
+	@FXML
+	private ToggleGroup versionsProgram;
+
+	@FXML
+	private RadioButton rbVersion1;
 
 	@FXML
 	private Button btFilterProperty;
-        
+
 	//--------------------------------------
 
 
@@ -193,36 +198,36 @@ public class BiencoGUI {
 		bienco=b;
 	}
 
-        @FXML
-        public void changeVersionProgram(MouseEvent event){
-            String option="";
-            if(rbVersion1.isSelected()) {
-                option="VERSION 1";
-                Alert alert1 = new Alert(AlertType.INFORMATION);
-                alert1.setTitle("Informacion de las versiones");
-                alert1.setHeaderText(null);
-                alert1.setContentText("La version de su programa ha sido cambiada a la Version 1: Lista de adyacencia");
-                alert1.showAndWait();
-            }
-            else if(rbVersion2.isSelected()) {
-                option="VERSION 2";
-                Alert alert1 = new Alert(AlertType.INFORMATION);
-                alert1.setTitle("Informacion de las versiones");
-                alert1.setHeaderText(null);
-                alert1.setContentText("La version de su programa ha sido cambiada a la Version 2: Matriz de adyacencia");
-                alert1.showAndWait();
-            }
-            
-            if(versionsProgram.getSelectedToggle()!=null) {
-                bienco.changeVersionProgram(option);
-            }
-        }
+	@FXML
+	public void changeVersionProgram(MouseEvent event){
+		String option="";
+		if(rbVersion1.isSelected()) {
+			option="VERSION 1";
+			Alert alert1 = new Alert(AlertType.INFORMATION);
+			alert1.setTitle("Informacion de las versiones");
+			alert1.setHeaderText(null);
+			alert1.setContentText("La version de su programa ha sido cambiada a la Version 1: Lista de adyacencia");
+			alert1.showAndWait();
+		}
+		else if(rbVersion2.isSelected()) {
+			option="VERSION 2";
+			Alert alert1 = new Alert(AlertType.INFORMATION);
+			alert1.setTitle("Informacion de las versiones");
+			alert1.setHeaderText(null);
+			alert1.setContentText("La version de su programa ha sido cambiada a la Version 2: Matriz de adyacencia");
+			alert1.showAndWait();
+		}
+
+		if(versionsProgram.getSelectedToggle()!=null) {
+			bienco.changeVersionProgram(option);
+		}
+	}
 
 	@FXML
 	public void calculateRoute(ActionEvent event) {
 		if(cmbBuildings.getValue()!=null) {
 			taRoutes.setText(bienco.calculateRoute(cmbBuildings.getValue()));
-
+			btReport.setDisable(false);
 		}else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
@@ -251,7 +256,7 @@ public class BiencoGUI {
 		Parent menuPane = fxmlLoader.load();
 		mainPane.setCenter(menuPane);
 		initializeComboBoxDistances();
-        initializeImageInButtons();
+		initializeImageInButtons();
 	}
 
 	@FXML
@@ -297,7 +302,7 @@ public class BiencoGUI {
 			Parent menuPane = fxmlLoader.load();
 			mainPane.setCenter(menuPane);
 			initializeComboBoxBuildingsFindRoutes();
-            initializeImageInButtons();
+			initializeImageInButtons();
 		}
 	}
 
@@ -327,7 +332,7 @@ public class BiencoGUI {
 					zone ="";
 				}
 				bienco.filterBuildings(txtNbd.getText(),zone,type,txtFromPrice.getText(),txtToPrice.getText(),purpose);
-                                btFilterProperty.setDisable(false);
+				btFilterProperty.setDisable(false);
 
 			} catch (NoValueException nv) {
 				alert1.setContentText(nv.getMessage());
@@ -352,8 +357,8 @@ public class BiencoGUI {
 			alert1.showAndWait();
 		}
 		initializeTableViewOfFoundedBuildings(bienco.getFilterBuildings());
-		
-		
+
+
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
 		txtNbd.clear();
@@ -407,13 +412,13 @@ public class BiencoGUI {
 		tvOfFoundedBuildings.setStyle("-fx-background-image:url('/ui/btv.jpg')");
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
-        	initializeImageInButtons();
+		initializeImageInButtons();
 		btFilterProperty.setDisable(true);
 	}
 
 	@FXML
 	public  void importProperty(ActionEvent event) throws IOException {
-		
+
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
 		alert.setTitle("Importante al importar");
@@ -449,6 +454,9 @@ public class BiencoGUI {
 		initializeCmbxOfTB();
 		btUpdate.setDisable(true);
 		btDelete.setDisable(true);
+		
+		Image imageM = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
+		imgManage.setGraphic(new ImageView(imageM));
 	}
 
 
@@ -633,11 +641,11 @@ public class BiencoGUI {
 			alert.setTitle("Descargar reporte");
 			try {
 				String TIME_FORMAT = "yyyy-MM-dd h mm ss";
-				 SimpleDateFormat format=new SimpleDateFormat(TIME_FORMAT);
-				 Date date=new Date();
+				SimpleDateFormat format=new SimpleDateFormat(TIME_FORMAT);
+				Date date=new Date();
 				String dateClock=format.format(date);
-				
-				 
+
+
 				OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\Reporte_"+dateClock+".pdf");
 				bienco.generatePDFReport(text_exit, bienco.getFilterBuildings());
 				alert.setHeaderText(null);
@@ -657,20 +665,29 @@ public class BiencoGUI {
 
 
 
-        private void initializeImageInButtons() {
-            Image imageF = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
-            imgF.setGraphic(new ImageView(imageF));
+	private void initializeImageInButtons() {
+		Image imageF = new Image(getClass().getResourceAsStream("SIGNO.png"),30,30,false,true);
+		imgF.setGraphic(new ImageView(imageF));
 	}
-        
-        @FXML
-        public void informationVersions(ActionEvent event) {
-            Alert alert1 = new Alert(AlertType.INFORMATION);
-            alert1.setTitle("Informacion de las versiones");
-            alert1.setHeaderText(null);
-            alert1.setContentText("VERSION 1: Lista de adyacencia. VERSION 2: Matriz de adyacencia");
-            alert1.showAndWait();
-        }
 
+	@FXML
+	public void informationVersions(ActionEvent event) {
+		Alert alert1 = new Alert(AlertType.INFORMATION);
+		alert1.setTitle("Informacion de las versiones");
+		alert1.setHeaderText(null);
+		alert1.setContentText("VERSION 1: Lista de adyacencia. VERSION 2: Matriz de adyacencia");
+		alert1.showAndWait();
+	}
+
+	@FXML
+	public  void informationManageBuilding(ActionEvent event) {
+		Alert alert1 = new Alert(AlertType.INFORMATION);
+		alert1.setTitle("Informacion ");
+		alert1.setHeaderText(null);
+		alert1.setContentText("Para actualizar o eliminar un inmueble, seleccione su fila en la lista de inmuebles agregados.");
+		alert1.showAndWait();
+		
+	}
 
 	public void showValidationErrorAlert() {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -683,7 +700,7 @@ public class BiencoGUI {
 	public Optional<ButtonType> askToContinue(String message) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setContentText("Esta seguro que desea continuar?"+message);
-	
+
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;
 	}
