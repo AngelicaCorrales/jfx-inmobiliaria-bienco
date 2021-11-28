@@ -9,6 +9,8 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
+import dataStructures.GraphAL;
+import dataStructures.GraphAM;
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
 import exceptions.SimpleGraphException;
@@ -566,7 +568,9 @@ public class BiencoTest {
 	@Test
 	public void testFilterAddDistanceAndCalculateRoute1() {
 		setupScenary1();
-		//******VERSION 1 GRAFO
+		bienco.changeVersionProgram("VERSION 1");
+
+		assertTrue(bienco.getGraph() instanceof GraphAL);
 		String priceFrom="500000";
 		String	priceTo="350000000";
 		
@@ -629,7 +633,8 @@ public class BiencoTest {
 	@Test
 	public void testFilterAddDistanceAndCalculateRoute2() {
 		setupScenary1();
-		//******VERSION 2 GRAFO
+		bienco.changeVersionProgram("VERSION 2");
+		assertTrue(bienco.getGraph() instanceof GraphAM);
 		String priceFrom="500000";
 		String	priceTo="350000000";
 		
