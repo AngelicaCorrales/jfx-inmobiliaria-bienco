@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
+import exceptions.SimpleGraphException;
 
 public class BiencoTest {
 	
@@ -424,5 +425,211 @@ public class BiencoTest {
 			fail("NegativeValueException not expected");
 		}
 	}
+	
+	@Test
+	public void testFilterBuildings1() {
+		setupScenary1();
+		
+		String priceFrom="500000";
+		String	priceTo="350000000";
+		try {
+			bienco.filterBuildings("", "", "", priceFrom, priceTo, "");
+			
+			assertEquals(bienco.getFilterBuildings().size(),6);
+			assertTrue(bienco.getBuildings().get(0)==bienco.getFilterBuildings().get(0));
+			assertTrue(bienco.getBuildings().get(1)==bienco.getFilterBuildings().get(1));
+			assertTrue(bienco.getBuildings().get(2)==bienco.getFilterBuildings().get(2));
+			assertTrue(bienco.getBuildings().get(3)==bienco.getFilterBuildings().get(3));
+			assertTrue(bienco.getBuildings().get(4)==bienco.getFilterBuildings().get(4));
+			assertTrue(bienco.getBuildings().get(5)==bienco.getFilterBuildings().get(5));
+			
+			
+		}  catch (NoValueException e) {
+			fail("NoValueException not expected");
+		} catch (NegativeValueException e) {
+			fail("NegativeValueException not expected");
+		}
+		
+	}
+	
+	@Test
+	public void testFilterBuildings2() {
+		setupScenary1();
+		
+		String zone="NORTE";
+		String	type="CASA";
+		String purpose="V";
+		try {
+			bienco.filterBuildings("", zone, type, "", "", purpose);
+			
+			assertEquals(bienco.getFilterBuildings().size(),2);
+			assertTrue(bienco.getBuildings().get(2)==bienco.getFilterBuildings().get(0));
+			assertTrue(bienco.getBuildings().get(4)==bienco.getFilterBuildings().get(1));
+			
+			
+		}  catch (NoValueException e) {
+			fail("NoValueException not expected");
+		} catch (NegativeValueException e) {
+			fail("NegativeValueException not expected");
+		}
+		
+	}
+	
+	@Test
+	public void testFilterBuildings3() {
+		setupScenary1();
+		
+		
+		String	type="APARTAMENTO";
+		String priceFrom="100000000";
+		String	priceTo="360000000";
+		try {
+			bienco.filterBuildings("", "", type, priceFrom, priceTo, "");
+			
+			assertEquals(bienco.getFilterBuildings().size(),2);
+			assertTrue(bienco.getBuildings().get(5)==bienco.getFilterBuildings().get(0));
+			assertTrue(bienco.getBuildings().get(9)==bienco.getFilterBuildings().get(1));
+			
+			
+		}  catch (NoValueException e) {
+			fail("NoValueException not expected");
+		} catch (NegativeValueException e) {
+			fail("NegativeValueException not expected");
+		}
+		
+	}
+	
+	@Test
+	public void testFilterBuildings4() {
+		setupScenary1();
+		
+		String purpose="V";
+		try {
+			bienco.filterBuildings("", "", "", "", "", purpose);
+			
+			assertEquals(bienco.getFilterBuildings().size(),6);
+			assertTrue(bienco.getBuildings().get(2)==bienco.getFilterBuildings().get(0));
+			assertTrue(bienco.getBuildings().get(4)==bienco.getFilterBuildings().get(1));
+			assertTrue(bienco.getBuildings().get(6)==bienco.getFilterBuildings().get(2));
+			assertTrue(bienco.getBuildings().get(7)==bienco.getFilterBuildings().get(3));
+			assertTrue(bienco.getBuildings().get(8)==bienco.getFilterBuildings().get(4));
+			assertTrue(bienco.getBuildings().get(9)==bienco.getFilterBuildings().get(5));
+			
+			
+		}  catch (NoValueException e) {
+			fail("NoValueException not expected");
+		} catch (NegativeValueException e) {
+			fail("NegativeValueException not expected");
+		}
+		
+	}
+	
+	@Test
+	public void testFilterBuildings5() {
+		setupScenary1();
+		
+		String neighborhood="Porvenir";
+		String zone="SUR";
+		
+		try {
+			bienco.filterBuildings(neighborhood, zone, "", "", "", "");
+			
+			assertEquals(bienco.getFilterBuildings().size(),3);
+			assertTrue(bienco.getBuildings().get(0)==bienco.getFilterBuildings().get(0));
+			assertTrue(bienco.getBuildings().get(1)==bienco.getFilterBuildings().get(1));
+			assertTrue(bienco.getBuildings().get(3)==bienco.getFilterBuildings().get(2));
+			
+			
+		}  catch (NoValueException e) {
+			fail("NoValueException not expected");
+		} catch (NegativeValueException e) {
+			fail("NegativeValueException not expected");
+		}
+		
+	}
+	
+	@Test
+	public void testFilterBuildings6() {
+		setupScenary1();
+		
+		String zone="ESTE";
+		String type="APARTAMENTO";
+		
+		try {
+			bienco.filterBuildings("", zone, type, "", "", "");
+			
+			assertTrue(bienco.getFilterBuildings().isEmpty());
+			
+			
+		}  catch (NoValueException e) {
+			fail("NoValueException not expected");
+		} catch (NegativeValueException e) {
+			fail("NegativeValueException not expected");
+		}
+		
+	}
+	
+	@Test
+	public void testFilterAddDistanceAndCalculateRoute() {
+		setupScenary1();
+		//******VERSION 1 GRAFO
+		String priceFrom="500000";
+		String	priceTo="350000000";
+		
+		try {
+			bienco.filterBuildings("", "", "", priceFrom, priceTo, "");
+
+			assertEquals(bienco.getFilterBuildings().size(),6);
+		}catch (NoValueException e) {
+			fail("NoValueException not expected");
+		} catch (NegativeValueException e) {
+			fail("NegativeValueException not expected");
+		}
+		
+		try {
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(0), bienco.getBuildings().get(1), "4");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(1), bienco.getBuildings().get(2), "5");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(2), bienco.getBuildings().get(3), "8");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(3), bienco.getBuildings().get(4), "10");
+			boolean connection=bienco.connectionFilterBuildings();
+			assertFalse(connection);
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(4), bienco.getBuildings().get(5), "3");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(0), bienco.getBuildings().get(3), "2");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(1), bienco.getBuildings().get(3), "1");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(2), bienco.getBuildings().get(4), "2");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(2), bienco.getBuildings().get(5), "6");
+			connection=bienco.connectionFilterBuildings();
+			assertTrue(connection);
+			
+			assertEquals(bienco.getGraph().getEdges().size(),9);
+		} catch (SimpleGraphException e) {
+			fail("SimpleGraphException not expected");
+		}
+		
+		Building source=bienco.getBuildings().get(0);
+		
+		String routes=bienco.calculateRoute(source);
+		
+		String expected=
+				"*** Rutas calculadas: ***\n\n"
+				+"Calle 4C # 5-29 --> Calle 3A # 5-29 |Distancia: 2 metros\n"
+				+ "\n"
+				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 |Distancia: 3 metros\n"
+				+ "\n"
+				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 --> Calle 7A # 4-15 |Distancia: 8 metros\n"
+				+ "\n"
+				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 --> Calle 7A # 4-15 --> Calle 9B # 8-19 |Distancia: 10 metros\n"
+				+ "\n"
+				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 --> Calle 7A # 4-15 --> Calle 9B # 8-19 --> Calle 11B # 2-16 |Distancia: 13 metros\n"
+				+ "\n"
+				+ "\n"
+				+ "*** Ruta sugerida: ***\n\n"
+				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 --> Calle 7A # 4-15 --> Calle 9B # 8-19 --> Calle 11B # 2-16 |Distancia: 13 metros\n"
+				+ "";
+		
+		assertEquals(expected,routes);
+		
+	}
+	
 }
 

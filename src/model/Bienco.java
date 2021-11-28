@@ -60,6 +60,8 @@ public class Bienco implements Serializable {
 			BIENCO_SAVE_PATH_FILE ="data/biencoTest.ackldo";
 		}
 		buildings=new ArrayList<>();
+		graphAL=new GraphAL<Building>(true,false);
+		graphAM=new GraphAM<Building>(true,false);
 		graph=graphAL;
 		routes ="";
 	}
@@ -160,7 +162,7 @@ public class Bienco implements Serializable {
 	}
 
 	public String calculateRoute(Building building) {
-		routes="*** Rutas calculadas: ***\n";
+		routes="*** Rutas calculadas: ***\n\n";
 		int suggested=-1;
 		ArrayList<Stack<Vertex<Building>>> paths= new ArrayList<>();
 		Vertex<Building> bv=graph.searchVertex(building);
@@ -206,7 +208,7 @@ public class Bienco implements Serializable {
 					route+=" --> ";
 
 				}else {
-					route+="|Distancia: "+ distance +"metros\n\n";
+					route+=" |Distancia: "+ distance +"metros\n\n";
 				}
 			}
 			routes+=route;
@@ -216,7 +218,7 @@ public class Bienco implements Serializable {
 
 		}
 
-		routes+="*** Ruta sugerida: ***\n"+suggRoute+"\n";
+		routes+="\n*** Ruta sugerida: ***\n\n"+suggRoute+"\n";
 
 
 		return routes;
@@ -401,8 +403,7 @@ public class Bienco implements Serializable {
 	}
 
 	public void filterBuildings(String neighborhood, String zone, String typeOfBuilding, String pFrom, String pTo, String purpose) throws NegativeValueException, NoValueException {
-		graphAL=new GraphAL<Building>(true,false);
-		graphAM=new GraphAM<Building>(true,false);
+		
 		double priceFrom = 0;
 		double priceTo = Double.MAX_VALUE;
 		if(!pFrom.isEmpty()) {
