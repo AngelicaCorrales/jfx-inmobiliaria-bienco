@@ -327,7 +327,7 @@ public class BiencoGUI {
 					zone ="";
 				}
 				bienco.filterBuildings(txtNbd.getText(),zone,type,txtFromPrice.getText(),txtToPrice.getText(),purpose);
-
+                                btFilterProperty.setDisable(false);
 
 			} catch (NoValueException nv) {
 				alert1.setContentText(nv.getMessage());
