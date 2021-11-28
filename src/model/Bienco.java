@@ -265,7 +265,7 @@ public class Bienco implements Serializable {
 
 					//String address, String neighborhood,Zone zone,TypeOfBuilding type, double price, boolean forSale,String observations
 
-					if(!parts[0].equals("Tm")) {
+					if(!parts[0].equals("Direccion")) {
 						double price = Double.parseDouble(parts[4]);
 						boolean forSale=false;
 						if(parts[5].equalsIgnoreCase("Venta")) {

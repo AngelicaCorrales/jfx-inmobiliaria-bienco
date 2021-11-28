@@ -371,7 +371,15 @@ public class BiencoGUI {
 		}
 		if( !txtNbd.getText().isEmpty() || cbxZone.getValue()!=null || cbxType.getValue()!=null && !txtFromPrice.getText().isEmpty() || !txtToPrice.getText().isEmpty() || VorA.getSelectedToggle()!=null) {
 			try {
-				bienco.filterBuildings(txtNbd.getText(),cbxZone.getValue(),cbxType.getValue(),txtFromPrice.getText(),txtToPrice.getText(),purpose);
+				String type = cbxType.getValue();
+				String zone = cbxZone.getValue();
+				if(type==null) {
+					type = "";
+				}
+				if(zone==null) {
+					zone ="";
+				}
+				bienco.filterBuildings(txtNbd.getText(),zone,type,txtFromPrice.getText(),txtToPrice.getText(),purpose);
 
 
 			} catch (NoValueException nv) {
@@ -402,8 +410,12 @@ public class BiencoGUI {
 		initializeCmbxOfZone();
 		initializeCmbxOfTB();
 		txtNbd.clear();
-		txtPrice.clear();
-		VorA.getSelectedToggle().setSelected(false);
+		txtFromPrice.clear();
+		txtToPrice.clear();
+		if(VorA.getSelectedToggle()!=null) {
+			VorA.getSelectedToggle().setSelected(false);			
+		}
+
 	}
 
 	@FXML
@@ -441,15 +453,15 @@ public class BiencoGUI {
 	private void initializeTableViewOfFoundedBuildings(ArrayList<Building> buildings) {
 		ObservableList<Building> observableList;
 		observableList = FXCollections.observableArrayList(buildings);
-		tvOfAddedBuildings.setItems(observableList);
-		tcAddress.setCellValueFactory(new PropertyValueFactory<Building, String>("Address"));
-		tcNbd.setCellValueFactory(new PropertyValueFactory<Building, String>("Neighborhood"));
-		tcZone.setCellValueFactory(new PropertyValueFactory<Building, String>("Zone"));
-		tcType.setCellValueFactory(new PropertyValueFactory<Building, String>("Type"));
-		tcPrice.setCellValueFactory(new PropertyValueFactory<Building, Double>("Price"));
-		tcVorA.setCellValueFactory(new PropertyValueFactory<Building, String>("Purpose"));
-		tcObs.setCellValueFactory(new PropertyValueFactory<Building, String>("Observations"));
-		tvOfAddedBuildings.setStyle("-fx-background-image:url('/ui/btv.jpg')");
+		tvOfFoundedBuildings.setItems(observableList);
+		tcAddressFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Address"));
+		tcNbdFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Neighborhood"));
+		tcZoneFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Zone"));
+		tcTypeFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Type"));
+		tcPriceFilter.setCellValueFactory(new PropertyValueFactory<Building, Double>("Price"));
+		tcVorAFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Purpose"));
+		tcObsFilter.setCellValueFactory(new PropertyValueFactory<Building, String>("Observations"));
+		tvOfFoundedBuildings.setStyle("-fx-background-image:url('/ui/btv.jpg')");
 	}
 
 
