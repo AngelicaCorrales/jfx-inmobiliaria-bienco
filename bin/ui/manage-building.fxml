@@ -10,6 +10,8 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -22,12 +24,20 @@
    <top>
       <HBox prefHeight="80.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Gestionar inmueble">
+            <ImageView fitHeight="96.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@prestamo-hipotecario.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="30.0" top="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label prefWidth="164.0" text="Gestionar inmueble" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Britannic Bold" size="25.0" />
                </font>
                <HBox.margin>
-                  <Insets left="70.0" top="40.0" />
+                  <Insets left="30.0" top="40.0" />
                </HBox.margin>
             </Label>
             <Label text="Lista de inmuebles agregados">
@@ -35,10 +45,13 @@
                   <Font name="Britannic Bold" size="25.0" />
                </font>
                <HBox.margin>
-                  <Insets left="220.0" top="40.0" />
+                  <Insets left="180.0" top="40.0" />
                </HBox.margin>
             </Label>
          </children>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
       </HBox>
    </top>
    <center>
@@ -51,7 +64,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView fx:id="tvOfAddedBuildings" onMouseClicked="#clickOnTVofAddedBuildings" prefHeight="570.0" prefWidth="636.0" GridPane.columnIndex="1">
+            <TableView fx:id="tvOfAddedBuildings" onMouseClicked="#clickOnTVofAddedBuildings" prefHeight="570.0" prefWidth="636.0" style="-fx-background-image: &quot;ICON.png&quot;;" GridPane.columnIndex="1">
               <columns>
                 <TableColumn fx:id="tcAddress" prefWidth="93.0" text="Dirección" />
                 <TableColumn fx:id="tcNbd" prefWidth="93.0" text="Barrio" />
@@ -171,14 +184,14 @@
                         <Font name="Britannic Bold" size="17.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="20.0" left="130.0" />
+                        <Insets bottom="10.0" left="130.0" top="10.0" />
                      </VBox.margin>
                   </Button>
                </children>
             </VBox>
             <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Atrás" GridPane.columnIndex="1">
                <GridPane.margin>
-                  <Insets left="310.0" top="530.0" />
+                  <Insets left="310.0" top="510.0" />
                </GridPane.margin>
                <font>
                   <Font name="Britannic Bold" size="17.0" />

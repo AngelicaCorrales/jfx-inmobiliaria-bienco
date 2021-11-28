@@ -32,6 +32,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.scene.control.Alert.AlertType;
@@ -456,6 +459,7 @@ public class BiencoGUI {
 		tcPrice.setCellValueFactory(new PropertyValueFactory<Building, Double>("Price"));
 		tcVorA.setCellValueFactory(new PropertyValueFactory<Building, String>("Purpose"));
 		tcObs.setCellValueFactory(new PropertyValueFactory<Building, String>("Observations"));
+		tvOfAddedBuildings.setStyle("-fx-background-image:url('/ui/btv.jpg')");
 	}
 
 
@@ -527,6 +531,7 @@ public class BiencoGUI {
 		tcVorA.setCellValueFactory(new PropertyValueFactory<Building, String>("Purpose"));
 		tcObs.setCellValueFactory(new PropertyValueFactory<Building, String>("Observations"));
 		tvOfAddedBuildings.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		tvOfAddedBuildings.setStyle("-fx-background-image:url('/ui/btv.jpg')");
 	}
 
 	private void initializeCmbxOfZone() {
