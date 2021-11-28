@@ -1,6 +1,10 @@
 package dataStructures;
 
-public class Edge<V> implements Comparable<Edge<V>>{
+import java.io.Serializable;
+
+public class Edge<V> implements Comparable<Edge<V>>, Serializable {
+
+	private static final long serialVersionUID = 1;
 	private Vertex<V> scr;
 	private Vertex<V> dest;
 	private int weight;

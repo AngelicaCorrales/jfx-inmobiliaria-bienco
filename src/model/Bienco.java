@@ -21,7 +21,7 @@ import dataStructures.Vertex;
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
 import exceptions.SimpleGraphException;
-import com.itextpdf.text.BadElementException;
+/*import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -35,7 +35,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.PdfWriter;*/
 
 public class Bienco implements Serializable {
 
@@ -60,6 +60,8 @@ public class Bienco implements Serializable {
 			BIENCO_SAVE_PATH_FILE ="data/biencoTest.ackldo";
 		}
 		buildings=new ArrayList<>();
+		graphAL=new GraphAL<Building>(true,false);
+		graphAM=new GraphAM<Building>(true,false);
 		graph=graphAL;
 		routes ="";
 	}
@@ -104,9 +106,17 @@ public class Bienco implements Serializable {
 		this.graphAM = graphAM;
 	}
 
+        public void changeVersionProgram(String option){
+            if(option.equalsIgnoreCase("VERSION 1")){
+                graph=graphAL;
+            }
+            
+            else if(option.equalsIgnoreCase("VERSION 2")){
+                graph=graphAM;
+            }
+        }
 
-
-	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, boolean forSale, String observations) throws NoValueException, NegativeValueException {
+	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, boolean forSale, String observations) throws NoValueException, NegativeValueException, IOException {
 		boolean added= false;
 		double price = Double.parseDouble(p);
 		if(price<0) {
@@ -121,7 +131,7 @@ public class Bienco implements Serializable {
 
 			added = true;
 		}
-		//saveDataBienco();
+		saveDataBienco();
 		return added;
 	}
 
@@ -148,11 +158,14 @@ public class Bienco implements Serializable {
 		int distanceToInt = Integer.valueOf(weight);
 		String inicialMessage="***DISTANCIAS AGREGADAS: ***\n";
 
-		Vertex<Building> uVertex = graph.searchVertex(u);
-		Vertex<Building> vVertex = graph.searchVertex(v);
+		Vertex<Building> uVertexAL = graphAL.searchVertex(u);
+		Vertex<Building> vVertexAL = graphAL.searchVertex(v);
+		
+		Vertex<Building> uVertexAM = graphAM.searchVertex(u);
+		Vertex<Building> vVertexAM = graphAM.searchVertex(v);
 
-		graphAL.addEdge(uVertex,vVertex,distanceToInt);
-		graphAM.addEdge(uVertex,vVertex,distanceToInt);
+		graphAL.addEdge(uVertexAL,vVertexAL,distanceToInt);
+		graphAM.addEdge(uVertexAM,vVertexAM,distanceToInt);
 
 		String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+distanceToInt;
 
@@ -160,7 +173,7 @@ public class Bienco implements Serializable {
 	}
 
 	public String calculateRoute(Building building) {
-		routes="*** Rutas calculadas: ***\n";
+		routes="*** Rutas calculadas: ***\n\n";
 		int suggested=-1;
 		ArrayList<Stack<Vertex<Building>>> paths= new ArrayList<>();
 		Vertex<Building> bv=graph.searchVertex(building);
@@ -168,45 +181,44 @@ public class Bienco implements Serializable {
 
 		for(int i=0; i<graph.getVertices().size();i++) {
 			Vertex<Building> vertex=graph.getVertices().get(i);
-			if(vertex.getValue()!=building) {
-				paths.add(new Stack<>());
 
-				while(vertex!=null) {
-					paths.get(i).push(vertex);
-					vertex=vertex.getPredecesor();
-				}
+			paths.add(new Stack<>());
 
-				if(paths.get(i).peek()!=bv) {
-					paths.remove(i);
+			while(vertex!=null) {
+				paths.get(paths.size()-1).push(vertex);
+				vertex=vertex.getPredecesor();
+			}
 
+			if(paths.get(paths.size()-1).peek()!=bv || graph.getVertices().get(i).getValue()==building) {
+				paths.remove(paths.size()-1);
+
+			}else {
+
+				if(suggested==-1) {
+					suggested=i;
 				}else {
-
-					if(suggested==-1) {
+					if(paths.get(suggested).size()<paths.get(paths.size()-1).size()) {
 						suggested=i;
-					}else {
-						if(paths.get(suggested).size()<paths.get(i).size()) {
-							suggested=i;
-						}
 					}
 				}
 			}
+
 		}
 
 		String suggRoute="";
 
 		for(int i=0; i<paths.size();i++) {
 			String route="";
-			int distance=0;
 			while(!paths.get(i).isEmpty()) {
 				Vertex<Building> property=paths.get(i).pop();
-				distance+=property.getDistance();
+				int distance=property.getDistance();
 				route+= property.getValue();
 
 				if(!paths.get(i).isEmpty()) {
 					route+=" --> ";
 
 				}else {
-					route+="|Distancia: "+ distance +"metros\n\n";
+					route+=" |Distancia: "+ distance +" metros\n\n";
 				}
 			}
 			routes+=route;
@@ -216,7 +228,7 @@ public class Bienco implements Serializable {
 
 		}
 
-		routes+="*** Ruta sugerida: ***\n"+suggRoute+"\n";
+		routes+="\n*** Ruta sugerida: ***\n\n"+suggRoute+"\n";
 
 
 		return routes;
@@ -315,7 +327,7 @@ public class Bienco implements Serializable {
 		return updated;
 	}
 
-	public void generatePDFReport(OutputStream txt, ArrayList<Building> buildings) throws DocumentException{
+	/*public void generatePDFReport(OutputStream txt, ArrayList<Building> buildings) throws DocumentException{
 		Document doc = new Document(PageSize.LETTER.rotate());
 		PdfWriter.getInstance(doc, txt);
 		doc.open();
@@ -398,11 +410,10 @@ public class Bienco implements Serializable {
 			e.printStackTrace();
 		}
 		return cell;
-	}
+	}*/
 
 	public void filterBuildings(String neighborhood, String zone, String typeOfBuilding, String pFrom, String pTo, String purpose) throws NegativeValueException, NoValueException {
-		graphAL=new GraphAL<Building>(true,false);
-		graphAM=new GraphAM<Building>(true,false);
+		
 		double priceFrom = 0;
 		double priceTo = Double.MAX_VALUE;
 		if(!pFrom.isEmpty()) {
@@ -436,7 +447,7 @@ public class Bienco implements Serializable {
 
 
 		for(int i=0;i<buildings.size();i++) {
-			if(!neighborhood.isEmpty() &&buildings.get(i).getAddress().equalsIgnoreCase(neighborhood)) {
+			if(!neighborhood.isEmpty() &&buildings.get(i).getNeighborhood().equalsIgnoreCase(neighborhood)) {
 				if(!zone.isEmpty() &&buildings.get(i).getZone().equalsIgnoreCase(zone)) {
 					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType().equalsIgnoreCase(typeOfBuilding)) {
 

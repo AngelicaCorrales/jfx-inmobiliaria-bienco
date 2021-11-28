@@ -68,26 +68,27 @@
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <RadioButton fx:id="rbVersion1Distance" mnemonicParsing="false" prefHeight="23.0" prefWidth="120.0" selected="true" text="Version 1">
+                  <RadioButton fx:id="rbVersion1" mnemonicParsing="false" onMouseClicked="#changeVersionProgram" prefHeight="23.0" prefWidth="120.0" selected="true" text="Version 1">
                      <font>
                         <Font name="Book Antiqua" size="17.0" />
                      </font>
                      <toggleGroup>
-                        <ToggleGroup fx:id="versionsDistance" />
+                        <ToggleGroup fx:id="versionsProgram" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbVersion2Distance" mnemonicParsing="false" text="Version 2" toggleGroup="$versionsDistance" GridPane.columnIndex="1">
+                  <RadioButton fx:id="rbVersion2" mnemonicParsing="false" onMouseClicked="#changeVersionProgram" text="Version 2" toggleGroup="$versionsProgram" GridPane.columnIndex="2">
                      <font>
                         <Font name="Book Antiqua" size="17.0" />
                      </font>
                   </RadioButton>
-                  <Button fx:id="imgD" mnemonicParsing="false" onAction="#informationVersionsD" prefHeight="27.0" prefWidth="86.0" style="-fx-background-color: #FFFFFF;" GridPane.columnIndex="2" />
+                  <Button fx:id="imgF" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#informationVersions" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #FFFFFF;" GridPane.columnIndex="3" />
                </children>
             </GridPane>
             <Label prefHeight="25.0" prefWidth="508.0" text="Agregar distancia entre inmuebles cercanos">

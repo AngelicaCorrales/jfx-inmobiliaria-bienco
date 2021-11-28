@@ -40,20 +40,20 @@
                </rowConstraints>
                <children>
                   <HBox prefHeight="80.0" prefWidth="200.0" />
-                  <RadioButton fx:id="rbVersion2Filter" mnemonicParsing="false" text="Version 2" GridPane.columnIndex="2">
+                  <RadioButton fx:id="rbVersion2" mnemonicParsing="false" onMouseClicked="#changeVersionProgram" text="Version 2" GridPane.columnIndex="2">
                      <font>
                         <Font name="Book Antiqua" size="17.0" />
                      </font>
                      <toggleGroup>
-                        <ToggleGroup fx:id="versionsfilter" />
+                        <ToggleGroup fx:id="versionsProgram" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbVersion1Filter" mnemonicParsing="false" selected="true" text="Version 1" toggleGroup="$versionsfilter" GridPane.columnIndex="1">
+                  <RadioButton fx:id="rbVersion1" mnemonicParsing="false" onMouseClicked="#changeVersionProgram" selected="true" text="Version 1" toggleGroup="$versionsProgram" GridPane.columnIndex="1">
                      <font>
                         <Font name="Book Antiqua" size="17.0" />
                      </font>
                   </RadioButton>
-                  <Button fx:id="imgF" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#informationVersionsF" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #FFFFFF;" GridPane.columnIndex="3" />
+                  <Button fx:id="imgF" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#informationVersions" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #FFFFFF;" GridPane.columnIndex="3" />
                </children>
             </GridPane>
             <Label text="Lista de inmuebles encontrados">

@@ -1,11 +1,13 @@
 package dataStructures;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import exceptions.SimpleGraphException;
 
-public class GraphAM <V> extends Graph<V> {
+public class GraphAM <V> extends Graph<V> implements Serializable {
 
+	private static final long serialVersionUID = 1;
 	private ArrayList<ArrayList<Vertex<V>>> adjMatrix;
 
 
@@ -211,7 +213,6 @@ public class GraphAM <V> extends Graph<V> {
 				if(adjMatrix.get(i).get(j).getValue()!=null) {
 					Vertex<V> v = adjMatrix.get(i).get(j);
 					if(v.getColor()=='W') {
-						super.getBF().insertNode(v);
 						v.setColor('G');
 						v.setDistance((u.getDistance())+1);
 						v.setPredecesor(u);
