@@ -624,12 +624,13 @@ public class BiencoGUI {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Descargar reporte");
 			try {
-				String TIME_FORMAT = "yyyy-MM-dd h:mm:ss a";
+				String TIME_FORMAT = "yyyy-MM-dd h mm ss";
 				 SimpleDateFormat format=new SimpleDateFormat(TIME_FORMAT);
 				 Date date=new Date();
 				String dateClock=format.format(date);
+				
 				 
-				OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\Reporte "+dateClock+".pdf");
+				OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\Reporte_"+dateClock+".pdf");
 				bienco.generatePDFReport(text_exit, bienco.getFilterBuildings());
 				alert.setHeaderText(null);
 				alert.setContentText("El reporte ha sido exportado exitosamente");
