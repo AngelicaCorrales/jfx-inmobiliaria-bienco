@@ -501,7 +501,7 @@ public class BiencoGUI {
 			alert1.setHeaderText(null);
 			try {
 				boolean added = bienco.addBuilding(txtAddress.getText(),txtNbd.getText(),cbxZone.getValue(),cbxType.getValue(),txtPrice.getText(),getRadioButtonSaleOrRent(),txaObs.getText());
-				if(added==false) {
+				if(added==true) {
 					alert1.setContentText("El inmueble ha sido agregado exitosamente");
 					alert1.showAndWait();
 				}else {
@@ -636,12 +636,15 @@ public class BiencoGUI {
 			alert.setTitle("Descargar reporte");
 			try {
 				OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\Reporte.pdf");
-				//bienco.generateReport(text_exit);
-
+				bienco.generatePDFReport(text_exit, bienco.getFilterBuildings());
 				alert.setHeaderText(null);
-				alert.setContentText("La factura ha sido exportada exitosamente");
+				alert.setContentText("El reporte ha sido exportado exitosamente");
 				alert.showAndWait();
-			} catch (DocumentException | FileNotFoundException e) {
+			} catch (FileNotFoundException e) {
+				alert.setHeaderText(null);
+				alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso, intentelo nuevamente.");
+				alert.showAndWait();
+			} catch (DocumentException e) {
 				alert.setHeaderText(null);
 				alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso, intentelo nuevamente.");
 				alert.showAndWait();

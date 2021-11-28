@@ -17,8 +17,8 @@ public class Main extends Application{
 	private BiencoGUI biencoGUI;
 	
 	public Main() {
-		Bienco biencoData = new Bienco(Bienco.PROGRAM);
-		bienco=new Bienco(Bienco.PROGRAM);
+		Bienco biencoData = new Bienco(0);
+		bienco=new Bienco(0);
 		
 		try {
 			bienco = bienco.loadDataBienco(biencoData);

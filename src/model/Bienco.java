@@ -50,6 +50,7 @@ public class Bienco implements Serializable {
 
 	private ArrayList<Building> buildings;
 
+	private String routes;
 
 	public Bienco(int num) {
 		if(num==PROGRAM) {
@@ -60,6 +61,7 @@ public class Bienco implements Serializable {
 		}
 		buildings=new ArrayList<>();
 		graph=graphAL;
+		routes ="";
 	}
 
 
@@ -123,7 +125,7 @@ public class Bienco implements Serializable {
 		return added;
 	}
 
-	private Building searchBuilding(String address) {
+	public Building searchBuilding(String address) {
 		Building founded = null;
 		for(int k=0; k<buildings.size();k++) {
 			if(buildings.get(k).getAddress().equals(address)) {
@@ -141,24 +143,24 @@ public class Bienco implements Serializable {
 		return filter;
 	}
 
-        
-        public String addDistancesBetweenProperties (Building u,Building v,String weight) throws SimpleGraphException{
-            int distanceToInt = Integer.valueOf(weight);
-            String inicialMessage="***DISTANCIAS AGREGADAS: ***\n";
-            
-            Vertex<Building> uVertex = graph.searchVertex(u);
-            Vertex<Building> vVertex = graph.searchVertex(v);
-            
-            graphAL.addEdge(uVertex,vVertex,distanceToInt);
-            graphAM.addEdge(uVertex,vVertex,distanceToInt);
-            
-            String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+distanceToInt;
-            
-            return inicialMessage+="\n"+message+"\n";
-        }
+
+	public String addDistancesBetweenProperties (Building u,Building v,String weight) throws SimpleGraphException{
+		int distanceToInt = Integer.valueOf(weight);
+		String inicialMessage="***DISTANCIAS AGREGADAS: ***\n";
+
+		Vertex<Building> uVertex = graph.searchVertex(u);
+		Vertex<Building> vVertex = graph.searchVertex(v);
+
+		graphAL.addEdge(uVertex,vVertex,distanceToInt);
+		graphAM.addEdge(uVertex,vVertex,distanceToInt);
+
+		String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+distanceToInt;
+
+		return inicialMessage+="\n"+message+"\n";
+	}
 
 	public String calculateRoute(Building building) {
-		String routes="*** Rutas calculadas: ***\n";
+		routes="*** Rutas calculadas: ***\n";
 		int suggested=-1;
 		ArrayList<Stack<Vertex<Building>>> paths= new ArrayList<>();
 		Vertex<Building> bv=graph.searchVertex(building);
@@ -310,24 +312,40 @@ public class Bienco implements Serializable {
 		return updated;
 	}
 
-	public void generatePDFReport(OutputStream txt, ArrayList<Building> buildings) throws DocumentException {
-		Document doc = new Document(PageSize.LETTER);
+	public void generatePDFReport(OutputStream txt, ArrayList<Building> buildings) throws DocumentException{
+		Document doc = new Document(PageSize.LETTER.rotate());
 		PdfWriter.getInstance(doc, txt);
 		doc.open();
-		//Font negrilla = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+		Font negrilla = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 		Font normal = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK);
 		PdfPTable tbl_routes = new PdfPTable(2);
 		Paragraph texto = null;
-		
+
 		try {
-			Image imagen = Image.getInstance("src/ui/Plantilla.png");
-			 imagen.setAlignment(Element.ALIGN_CENTER);
-			 doc.add(imagen);
+			Image image = Image.getInstance("src/ui/Plantilla.png");
+			float origWidth = image.getWidth();
+			float origHeight = image.getHeight();
+			image.scaleToFit(origWidth,origHeight);
+			image.setAbsolutePosition(0,0);
+			Rectangle rectangle = new Rectangle(origWidth,origHeight);
+			doc.setPageSize(rectangle);
+			doc.newPage();
+			doc.add(image);
 		} catch (BadElementException | IOException e) {
 			e.printStackTrace();
 		} 
-		
+
 		texto = new Paragraph();
+		texto.add(new Phrase(routes));
+		doc.add(texto);
+
+		texto = new Paragraph();
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
+		
+		texto = new Paragraph("Listado de Inmuebles filtrados por las caracteristicas dadas", negrilla);
+		texto.setAlignment(Element.ALIGN_CENTER);
+		texto.add(new Phrase(Chunk.NEWLINE));
 		texto.add(new Phrase(Chunk.NEWLINE));
 		doc.add(texto);
 
@@ -352,7 +370,7 @@ public class Bienco implements Serializable {
 		doc.add(texto);
 		doc.close();
 	}
-	
+
 	public PdfPCell createTextCell(String content, Font f, int colspan, int alignment) {
 		PdfPCell cell = new PdfPCell(new Phrase(content, f));
 		cell.setBorder(Rectangle.NO_BORDER);
@@ -360,7 +378,7 @@ public class Bienco implements Serializable {
 		cell.setHorizontalAlignment(alignment);
 		return cell;
 	}
-	
+
 	public PdfPCell createImageCell(int colspan, int alignment) {
 		PdfPCell cell = null;
 		try {
@@ -479,9 +497,9 @@ public class Bienco implements Serializable {
 						}
 					}
 				}
-				
-				
-				
+
+
+
 			}else if(neighborhood.isEmpty()) {
 				if(!zone.isEmpty() &&buildings.get(i).getZone().equalsIgnoreCase(zone)) {
 					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType().equalsIgnoreCase(typeOfBuilding)) {
@@ -550,7 +568,7 @@ public class Bienco implements Serializable {
 
 		}
 	}
-	
+
 	public boolean connectionFilterBuildings() {
 		boolean conected=true;
 		if(!graph.getVertices().isEmpty()) {
@@ -561,7 +579,7 @@ public class Bienco implements Serializable {
 				conected=false;
 			}
 		}
-		
+
 		return conected;
 	}
 
