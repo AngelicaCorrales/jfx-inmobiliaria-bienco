@@ -413,9 +413,12 @@ public class BiencoGUI {
 
 	@FXML
 	public  void importProperty(ActionEvent event) throws IOException {
+		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
-
+		alert.setTitle("Importante al importar");
+		alert.setContentText("Tenga en cuenta que el archivo debe ser .csv. El orden de las columnas debe ser: Direccion, Barrio, Zona, Tipo de inmueble, Precio, Proposito (venta o alquiler), Observaciones.");
+		alert.showAndWait();
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Abrir el archivo");
 		File f=fileChooser.showOpenDialog(mainPane.getScene().getWindow());
