@@ -10,7 +10,8 @@ import java.util.Optional;
 
 import javax.swing.JFileChooser;
 
-//import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.DocumentException;
+
 
 import exceptions.NegativeValueException;
 import exceptions.NoValueException;
@@ -32,9 +33,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.scene.control.Alert.AlertType;
@@ -680,7 +678,7 @@ public class BiencoGUI {
 		btDelete.setDisable(true);
 	}
 
-	/*@FXML
+	@FXML
 	public void downloadReport(ActionEvent event) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Elija la carpeta en la cual desea guardar el reporte");
@@ -705,7 +703,7 @@ public class BiencoGUI {
 				alert.showAndWait();
 			}
 		}	
-	}*/
+	}
 
 
 
