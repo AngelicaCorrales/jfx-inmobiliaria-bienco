@@ -106,15 +106,20 @@ public class Bienco implements Serializable {
 		this.graphAM = graphAM;
 	}
 
-        public void changeVersionProgram(String option){
-            if(option.equalsIgnoreCase("VERSION 1")){
-                graph=graphAL;
-            }
-            
-            else if(option.equalsIgnoreCase("VERSION 2")){
-                graph=graphAM;
-            }
-        }
+	public void changeVersionProgram(String option){
+		if(option.equalsIgnoreCase("VERSION 1")){
+			graph=graphAL;
+		}
+
+		else if(option.equalsIgnoreCase("VERSION 2")){
+			graph=graphAM;
+		}
+	}
+	
+	public void resetGraph() {
+		graphAL=new GraphAL<Building>(true,false);
+		graphAM=new GraphAM<Building>(true,false);
+	}
 
 	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, boolean forSale, String observations) throws NoValueException, NegativeValueException, IOException {
 		boolean added= false;
