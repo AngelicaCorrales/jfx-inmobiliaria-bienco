@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ public class BiencoTest {
 	private Bienco bienco;
 	
 	public void setupScenary1() {
-		bienco = new Bienco(1);
+		bienco = new Bienco(Bienco.TEST);
 		bienco.getBuildings().add(new Building("Calle 4C # 5-29", "Porvenir", Zone.SUR, TypeOfBuilding.CASA, 580000, false, "Casa de 1 planta que contiene 2 habitaciones, sala, comedor, 1 banio y un pequenio patio trasero."));
 		bienco.getBuildings().add(new Building("Calle 5B # 3-10", "Porvenir", Zone.SUR, TypeOfBuilding.LOCAL, 620000, false, "Local de 500 metros cuadrados con segundo piso que contiene un banio"));
 		bienco.getBuildings().add(new Building("Calle 7A # 4-15", "Vipasa", Zone.NORTE, TypeOfBuilding.CASA, 205000000, true, "Casa de 3 plantas que contiene 4 habitaciones, sala, terraza, comedor, 2 banios, garaje y patio trasero."));
@@ -35,7 +36,7 @@ public class BiencoTest {
 	}
 
 	@Test
-	public void testAddBuilding1() {
+	public void testAddBuilding1() throws IOException {
 		setupScenary2();
 		String address = "Calle 15 # 4-89";
 		String neighborhood = "Libertadores";
@@ -57,7 +58,7 @@ public class BiencoTest {
 	}
 	
 	@Test
-	public void testAddBuilding2() {
+	public void testAddBuilding2() throws IOException {
 		setupScenary1();
 		String address = "Calle 15 # 4-89";
 		String neighborhood = "Libertadores";
@@ -79,7 +80,7 @@ public class BiencoTest {
 	}
 	
 	@Test
-	public void testAddBuilding3() {
+	public void testAddBuilding3() throws IOException {
 		setupScenary1();
 		String address = "Calle 15 # 4-89";
 		String neighborhood = "Libertadores";
@@ -98,7 +99,7 @@ public class BiencoTest {
 	}
 	
 	@Test
-	public void testAddBuilding4() {
+	public void testAddBuilding4() throws IOException {
 		setupScenary1();
 		String address = "Calle 15 # 4-89";
 		String neighborhood = "Libertadores";
@@ -117,7 +118,7 @@ public class BiencoTest {
 	}
 	
 	@Test
-	public void testAddBuilding5() {
+	public void testAddBuilding5() throws IOException {
 		setupScenary1();
 		String address = "Calle 9B # 8-19";
 		String neighborhood = "Libertadores";
@@ -563,7 +564,7 @@ public class BiencoTest {
 	}
 	
 	@Test
-	public void testFilterAddDistanceAndCalculateRoute() {
+	public void testFilterAddDistanceAndCalculateRoute1() {
 		setupScenary1();
 		//******VERSION 1 GRAFO
 		String priceFrom="500000";
@@ -605,11 +606,12 @@ public class BiencoTest {
 		
 		String expected=
 				"*** Rutas calculadas: ***\n\n"
-				+"Calle 4C # 5-29 --> Calle 3A # 5-29 |Distancia: 2 metros\n"
-				+ "\n"
+				
 				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 |Distancia: 3 metros\n"
 				+ "\n"
 				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 --> Calle 7A # 4-15 |Distancia: 8 metros\n"
+				+ "\n"
+				+"Calle 4C # 5-29 --> Calle 3A # 5-29 |Distancia: 2 metros\n"
 				+ "\n"
 				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 --> Calle 7A # 4-15 --> Calle 9B # 8-19 |Distancia: 10 metros\n"
 				+ "\n"
@@ -617,7 +619,70 @@ public class BiencoTest {
 				+ "\n"
 				+ "\n"
 				+ "*** Ruta sugerida: ***\n\n"
+				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 --> Calle 7A # 4-15 --> Calle 9B # 8-19 --> Calle 11B # 2-16 |Distancia: 13 metros\n\n\n"
+				+ "";
+		
+		assertEquals(expected,routes);
+		
+	}
+	
+	@Test
+	public void testFilterAddDistanceAndCalculateRoute2() {
+		setupScenary1();
+		//******VERSION 2 GRAFO
+		String priceFrom="500000";
+		String	priceTo="350000000";
+		
+		try {
+			bienco.filterBuildings("", "", "", priceFrom, priceTo, "");
+
+			assertEquals(bienco.getFilterBuildings().size(),6);
+		}catch (NoValueException e) {
+			fail("NoValueException not expected");
+		} catch (NegativeValueException e) {
+			fail("NegativeValueException not expected");
+		}
+		
+		try {
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(0), bienco.getBuildings().get(1), "4");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(1), bienco.getBuildings().get(2), "5");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(2), bienco.getBuildings().get(3), "8");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(3), bienco.getBuildings().get(4), "10");
+			boolean connection=bienco.connectionFilterBuildings();
+			assertFalse(connection);
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(4), bienco.getBuildings().get(5), "3");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(0), bienco.getBuildings().get(3), "2");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(1), bienco.getBuildings().get(3), "1");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(2), bienco.getBuildings().get(4), "2");
+			bienco.addDistancesBetweenProperties(bienco.getBuildings().get(2), bienco.getBuildings().get(5), "6");
+			connection=bienco.connectionFilterBuildings();
+			assertTrue(connection);
+			
+			assertEquals(bienco.getGraph().getEdges().size(),9);
+		} catch (SimpleGraphException e) {
+			fail("SimpleGraphException not expected");
+		}
+		
+		Building source=bienco.getBuildings().get(0);
+		
+		String routes=bienco.calculateRoute(source);
+		
+		String expected=
+				"*** Rutas calculadas: ***\n\n"
+				
+				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 |Distancia: 3 metros\n"
+				+ "\n"
+				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 --> Calle 7A # 4-15 |Distancia: 8 metros\n"
+				+ "\n"
+				+"Calle 4C # 5-29 --> Calle 3A # 5-29 |Distancia: 2 metros\n"
+				+ "\n"
+				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 --> Calle 7A # 4-15 --> Calle 9B # 8-19 |Distancia: 10 metros\n"
+				+ "\n"
 				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 --> Calle 7A # 4-15 --> Calle 9B # 8-19 --> Calle 11B # 2-16 |Distancia: 13 metros\n"
+				+ "\n"
+				+ "\n"
+				+ "*** Ruta sugerida: ***\n\n"
+				+ "Calle 4C # 5-29 --> Calle 3A # 5-29 --> Calle 5B # 3-10 --> Calle 7A # 4-15 --> Calle 9B # 8-19 --> Calle 11B # 2-16 |Distancia: 13 metros\n\n\n"
 				+ "";
 		
 		assertEquals(expected,routes);

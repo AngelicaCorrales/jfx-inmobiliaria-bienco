@@ -1,11 +1,14 @@
 package dataStructures;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import exceptions.SimpleGraphException;
 
 
-public class GraphAL<V> extends Graph<V> {
+public class GraphAL<V> extends Graph<V> implements Serializable {
+
+	private static final long serialVersionUID = 1;
 
 	private ArrayList<ArrayList<Vertex<V>>> adjList;
 
@@ -177,7 +180,6 @@ public class GraphAL<V> extends Graph<V> {
 			for(int k=0;k<adjList.get(index).size();k++) {
 				Vertex<V> v = adjList.get(index).get(k);
 				if(v.getColor()=='W') {
-					super.getBF().insertNode(v);
 					v.setColor('G');
 					v.setDistance((u.getDistance())+1);
 					v.setPredecesor(u);

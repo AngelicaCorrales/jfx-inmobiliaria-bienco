@@ -1,5 +1,6 @@
 package dataStructures;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -8,7 +9,9 @@ import java.util.Queue;
 
 import exceptions.SimpleGraphException;
 
-public  class Graph<V> implements IGraph<V> {
+public  class Graph<V> implements IGraph<V>, Serializable {
+
+	private static final long serialVersionUID = 1;
 
 	private ArrayList<Vertex<V>> vertices;
 	private ArrayList<Edge<V>> edges;
@@ -20,8 +23,6 @@ public  class Graph<V> implements IGraph<V> {
 	private ArrayList<Edge<V>> listEdges;
 	private PriorityQueue<Vertex<V>> PQ; 
 	private Queue<Vertex<V>> Q;
-	private BinaryTree<Vertex<V>> BF;
-	private BinaryTree<Vertex<V>> DF;
 
 	public Graph(boolean isWeighted, boolean isDirected) {
 		this.isWeighted=isWeighted;
@@ -103,21 +104,7 @@ public  class Graph<V> implements IGraph<V> {
 		this.weights = weights;
 	}
 
-	public BinaryTree<Vertex<V>> getBF() {
-		return BF;
-	}
-
-	public void setBF(BinaryTree<Vertex<V>> bF) {
-		BF = bF;
-	}
-
-	public BinaryTree<Vertex<V>> getDF() {
-		return DF;
-	}
-
-	public void setDF(BinaryTree<Vertex<V>> dF) {
-		DF = dF;
-	}
+	
 
 	@Override
 	public void addVertex(V value) {
@@ -246,7 +233,6 @@ public  class Graph<V> implements IGraph<V> {
 	public void bfs(Vertex<V> source) {
 		if(isWeighted) {
 			Q = new LinkedList<>();
-			BF = new BinaryTree<Vertex<V>>(source);
 			for(int k=0;k<vertices.size();k++) {
 				if(vertices.get(k)==source) {
 					vertices.get(k).setColor('G');

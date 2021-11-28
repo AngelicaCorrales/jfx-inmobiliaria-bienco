@@ -1,6 +1,10 @@
 package dataStructures;
 
-public class Vertex<V> implements Comparable<Vertex<V>>{
+import java.io.Serializable;
+
+public class Vertex<V> implements Comparable<Vertex<V>>, Serializable {
+
+	private static final long serialVersionUID = 1;
 	private V value;
 	private char color; //W=white; B=black; G=gray
 	private int distance;

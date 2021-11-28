@@ -552,7 +552,7 @@ public class BiencoGUI {
 	}
 
 	@FXML
-	public void addBuilding(ActionEvent event) {
+	public void addBuilding(ActionEvent event) throws IOException {
 		if(!txtAddress.getText().equals("") && !txtNbd.getText().equals("") && cbxZone.getValue()!=null && cbxType.getValue()!=null && !txtPrice.getText().equals("") && VorA.getSelectedToggle()!=null && !txaObs.getText().equals("")) {
 			Alert alert1 = new Alert(AlertType.INFORMATION);
 			alert1.setTitle("Error de validacion");

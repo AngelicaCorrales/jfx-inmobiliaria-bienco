@@ -108,7 +108,7 @@ public class Bienco implements Serializable {
 
 
 
-	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, boolean forSale, String observations) throws NoValueException, NegativeValueException {
+	public boolean addBuilding(String address, String neighborhood, String zone, String typeOfBuilding, String p, boolean forSale, String observations) throws NoValueException, NegativeValueException, IOException {
 		boolean added= false;
 		double price = Double.parseDouble(p);
 		if(price<0) {
@@ -123,7 +123,7 @@ public class Bienco implements Serializable {
 
 			added = true;
 		}
-		//saveDataBienco();
+		saveDataBienco();
 		return added;
 	}
 
@@ -150,11 +150,14 @@ public class Bienco implements Serializable {
 		int distanceToInt = Integer.valueOf(weight);
 		String inicialMessage="***DISTANCIAS AGREGADAS: ***\n";
 
-		Vertex<Building> uVertex = graph.searchVertex(u);
-		Vertex<Building> vVertex = graph.searchVertex(v);
+		Vertex<Building> uVertexAL = graphAL.searchVertex(u);
+		Vertex<Building> vVertexAL = graphAL.searchVertex(v);
+		
+		Vertex<Building> uVertexAM = graphAM.searchVertex(u);
+		Vertex<Building> vVertexAM = graphAM.searchVertex(v);
 
-		graphAL.addEdge(uVertex,vVertex,distanceToInt);
-		graphAM.addEdge(uVertex,vVertex,distanceToInt);
+		graphAL.addEdge(uVertexAL,vVertexAL,distanceToInt);
+		graphAM.addEdge(uVertexAM,vVertexAM,distanceToInt);
 
 		String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+distanceToInt;
 
@@ -170,45 +173,44 @@ public class Bienco implements Serializable {
 
 		for(int i=0; i<graph.getVertices().size();i++) {
 			Vertex<Building> vertex=graph.getVertices().get(i);
-			if(vertex.getValue()!=building) {
-				paths.add(new Stack<>());
 
-				while(vertex!=null) {
-					paths.get(i).push(vertex);
-					vertex=vertex.getPredecesor();
-				}
+			paths.add(new Stack<>());
 
-				if(paths.get(i).peek()!=bv) {
-					paths.remove(i);
+			while(vertex!=null) {
+				paths.get(paths.size()-1).push(vertex);
+				vertex=vertex.getPredecesor();
+			}
 
+			if(paths.get(paths.size()-1).peek()!=bv || graph.getVertices().get(i).getValue()==building) {
+				paths.remove(paths.size()-1);
+
+			}else {
+
+				if(suggested==-1) {
+					suggested=i;
 				}else {
-
-					if(suggested==-1) {
+					if(paths.get(suggested).size()<paths.get(paths.size()-1).size()) {
 						suggested=i;
-					}else {
-						if(paths.get(suggested).size()<paths.get(i).size()) {
-							suggested=i;
-						}
 					}
 				}
 			}
+
 		}
 
 		String suggRoute="";
 
 		for(int i=0; i<paths.size();i++) {
 			String route="";
-			int distance=0;
 			while(!paths.get(i).isEmpty()) {
 				Vertex<Building> property=paths.get(i).pop();
-				distance+=property.getDistance();
+				int distance=property.getDistance();
 				route+= property.getValue();
 
 				if(!paths.get(i).isEmpty()) {
 					route+=" --> ";
 
 				}else {
-					route+=" |Distancia: "+ distance +"metros\n\n";
+					route+=" |Distancia: "+ distance +" metros\n\n";
 				}
 			}
 			routes+=route;
@@ -437,7 +439,7 @@ public class Bienco implements Serializable {
 
 
 		for(int i=0;i<buildings.size();i++) {
-			if(!neighborhood.isEmpty() &&buildings.get(i).getAddress().equalsIgnoreCase(neighborhood)) {
+			if(!neighborhood.isEmpty() &&buildings.get(i).getNeighborhood().equalsIgnoreCase(neighborhood)) {
 				if(!zone.isEmpty() &&buildings.get(i).getZone().equalsIgnoreCase(zone)) {
 					if(!typeOfBuilding.isEmpty() &&buildings.get(i).getType().equalsIgnoreCase(typeOfBuilding)) {
 
