@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 import javax.swing.JFileChooser;
@@ -233,39 +235,6 @@ public class BiencoGUI {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private void initializeComboBoxDistances() {
 		ObservableList<Building> options =FXCollections.observableArrayList(bienco.getFilterBuildings());
 		cBoxChoiceDistance1.setItems(options);
@@ -328,31 +297,6 @@ public class BiencoGUI {
                         initializeImageInButtons();
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -431,25 +375,6 @@ public class BiencoGUI {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private void initializeTableViewOfFoundedBuildings(ArrayList<Building> buildings) {
 		ObservableList<Building> observableList;
 		observableList = FXCollections.observableArrayList(buildings);
@@ -518,13 +443,6 @@ public class BiencoGUI {
 		btUpdate.setDisable(true);
 		btDelete.setDisable(true);
 	}
-
-
-
-
-
-
-
 
 
 	private void initializeTableViewOfAddedBuildings() {
@@ -628,7 +546,7 @@ public class BiencoGUI {
 		Alert alert1 = new Alert(AlertType.CONFIRMATION);
 		alert1.setTitle("Confirmacion de proceso");
 		alert1.setHeaderText(null);
-		alert1.setContentText("�Esta seguro de que quiere eliminar este inmueble?");
+		alert1.setContentText("Esta seguro de que quiere eliminar este inmueble?");
 		Optional<ButtonType> result = alert1.showAndWait();
 		if (result.get() == ButtonType.OK){
 			bienco.deleteBuilding(tvOfAddedBuildings.getSelectionModel().getSelectedItem());
@@ -706,7 +624,12 @@ public class BiencoGUI {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Descargar reporte");
 			try {
-				OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\Reporte.pdf");
+				String TIME_FORMAT = "yyyy-MM-dd h:mm:ss a";
+				 SimpleDateFormat format=new SimpleDateFormat(TIME_FORMAT);
+				 Date date=new Date();
+				String dateClock=format.format(date);
+				 
+				OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\Reporte "+dateClock+".pdf");
 				bienco.generatePDFReport(text_exit, bienco.getFilterBuildings());
 				alert.setHeaderText(null);
 				alert.setContentText("El reporte ha sido exportado exitosamente");
@@ -722,34 +645,6 @@ public class BiencoGUI {
 			}
 		}	
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -778,7 +673,7 @@ public class BiencoGUI {
 
 	public Optional<ButtonType> askToContinue(String message) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setContentText("�Esta seguro que desea continuar?"+message);
+		alert.setContentText("Esta seguro que desea continuar?"+message);
 	
 		Optional<ButtonType> result = alert.showAndWait();
 		return result;

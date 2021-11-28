@@ -162,6 +162,7 @@ public class Bienco implements Serializable {
 	public String addDistancesBetweenProperties (Building u,Building v,String weight) throws SimpleGraphException{
 		int distanceToInt = Integer.valueOf(weight);
 		String inicialMessage="***DISTANCIAS AGREGADAS: ***\n";
+                String message="";
 
 		Vertex<Building> uVertexAL = graphAL.searchVertex(u);
 		Vertex<Building> vVertexAL = graphAL.searchVertex(v);
@@ -172,7 +173,9 @@ public class Bienco implements Serializable {
 		graphAL.addEdge(uVertexAL,vVertexAL,distanceToInt);
 		graphAM.addEdge(uVertexAM,vVertexAM,distanceToInt);
 
-		String message="El inmueble: "+u.getAddress()+" con el inmueble: "+v.getAddress()+" ,tienen una distancia de: "+distanceToInt;
+		for(int i=0;i<graph.getListEdges().size();i++){
+                    message+="-El inmueble: "+graph.getListEdges().get(i).getScr().getValue()+" con el inmueble: "+graph.getListEdges().get(i).getDest().getValue()+" ,tienen una distancia de: "+graph.getListEdges().get(i).getWeight()+"\n";
+                }
 
 		return inicialMessage+="\n"+message+"\n";
 	}
